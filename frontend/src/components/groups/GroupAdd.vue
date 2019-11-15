@@ -1,0 +1,49 @@
+<template>
+  <div class="mx-1">
+    <v-form @submit.prevent="handleSubmit">
+      <v-row align="center">
+        <v-col cols="8">
+          <v-text-field
+            v-model="groupName"
+            label="Group name"
+            required
+          />
+        </v-col>
+
+        <v-col cols="4">
+          <v-btn
+            @click="handleSubmit"
+            :disabled="!groupName"
+            color="purple"
+            text
+          >
+            Add Group
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    onSubmit: {
+      type: Function,
+      required: true
+    }
+  },
+
+  data () {
+    return {
+      groupName: null
+    };
+  },
+
+  methods: {
+    handleSubmit () {
+      this.onSubmit(this.groupName)
+    }
+  }
+};
+</script>
