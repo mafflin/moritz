@@ -9,36 +9,26 @@
     </v-img>
 
     <v-card-text class="text--primary text-left">
-      <div>
-        Cats are very good hunters and use their strong,
-        sharp claws and teeth to grab and hold their prey.
-        In the wild, cats feed on mice, birds and other small animals.
-      </div>
-      <div>
-        Cats see and hear extremely well.
-        They can see in the dark and hear many sounds that humans are not able to hear.
-        To feel their way round, cats use their whiskers.
-      </div>
+      <report-add :onSubmit="onFileUpload" />
     </v-card-text>
-
-    <v-card-actions>
-      <v-btn
-        color="orange"
-        text
-      >
-        Upload Report
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import ReportAdd from "./ReportAdd.vue";
+
 export default {
   name: "UserCard",
+
+  components: { ReportAdd },
 
   props: {
     user: {
       type: Object,
+      required: true
+    },
+    onFileUpload: {
+      type: Function,
       required: true
     }
   }

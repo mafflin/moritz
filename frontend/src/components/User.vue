@@ -4,7 +4,7 @@
     v-if="selected"
   >
     <v-col cols="12">
-      <user-card :user="selected" />
+      <user-card :user="selected" :onFileUpload="uploadReport" />
     </v-col>
     <v-col cols="12">
       <groups />
@@ -38,6 +38,7 @@ export default {
 
   methods: {
     ...mapActions("users", ["fetchUser"]),
+    ...mapActions("reports", ["uploadReport"]),
   }
 };
 </script>

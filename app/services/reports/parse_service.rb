@@ -13,7 +13,7 @@ module Reports
     end
 
     def perform
-      CSV.read(@report, **params).map { |line| parse(line.to_hash) }
+      CSV.parse(@report, **params).map { |line| parse(line.to_hash) }
     end
 
     private
@@ -45,7 +45,7 @@ module Reports
     end
 
     def parse_amount(value)
-      value.gsub(THOUSAND_SEP, '').to_f
+      value ? value.gsub(THOUSAND_SEP, '').to_f : 0.00
     end
   end
 end
