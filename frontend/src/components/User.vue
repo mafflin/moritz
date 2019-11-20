@@ -1,21 +1,26 @@
 <template>
-  <router-view></router-view>
+  <v-container>
+    <v-row dense>
+      <v-col cols="12">
+        <user-card :user="selected" />
+      </v-col>
+    </v-row>
+
+    <router-view></router-view>
+  </v-container>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import UserCard from "./user/UserCard";
+import { mapGetters } from "vuex";
 
 export default {
   name: "User",
 
-  async mounted () {
-    const { id } = this.$route.params;
+  components: { UserCard },
 
-    await this.fetchUser(id);
-  },
-
-  methods: {
-    ...mapActions("users", ["fetchUser"]),
+  computed: {
+    ...mapGetters("users", ["selected"])
   }
 };
 </script>

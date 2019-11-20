@@ -2,7 +2,7 @@
   <div class="mx-1">
     <v-form @submit.prevent="handleSubmit">
       <v-row align="center">
-        <v-col cols="8">
+        <v-col cols="8" md="6">
           <v-text-field
             v-model="groupName"
             label="Group name"
@@ -10,7 +10,7 @@
           />
         </v-col>
 
-        <v-col cols="4">
+        <v-col cols="4" md="6">
           <v-btn
             @click="handleSubmit"
             :disabled="!groupName"

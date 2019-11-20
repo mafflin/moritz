@@ -5,9 +5,16 @@ const ENTITY_TYPE = "reports";
 export default {
   namespaced: true,
 
+  state: {
+    file: null
+  },
+
   actions: {
-    async uploadReport(_, report) {
-      await createEntity(ENTITY_TYPE, { report });
+    async uploadReport({ commit }, report) {
+      const {
+        item: { payments }
+      } = await createEntity(ENTITY_TYPE, { report });
+      commit("payments/setPayments", payments, { root: true });
     }
   }
 };

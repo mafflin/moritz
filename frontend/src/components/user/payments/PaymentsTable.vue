@@ -1,21 +1,25 @@
 <template>
-  <v-row v-if="payments.length > 0" justify="center">
-    <v-data-table :headers="headers" :items="payments" item-key="id" class="elevation-1" />
-  </v-row>
+  <v-card>
+    <v-data-table
+      :headers="headers"
+      :items="payments"
+      :items-per-page="-1"
+      item-key="id"
+      class="elevation-1"
+    />
+  </v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-
 export default {
-  name: "Payments",
+  name: "PaymentsTable",
 
   components: {},
 
   data() {
     return {
       headers: [
-        { text: "Booked At", align: "left", value: "bookedAt" },
+        { text: "Booked At", align: "left", value: "bookedAt", width: "10%" },
         { text: "Transaction Type", value: "transactionType" },
         { text: "Details", value: "details" },
         { text: "Beneficiary", value: "beneficiary" },
@@ -26,16 +30,11 @@ export default {
     };
   },
 
-  mounted() {
-    this.fetchPayments();
-  },
-
-  computed: {
-    ...mapGetters("payments", ["payments"])
-  },
-
-  methods: {
-    ...mapActions("payments", ["fetchPayments"])
+  props: {
+    payments: {
+      type: Array,
+      required: true
+    }
   }
 };
 </script>

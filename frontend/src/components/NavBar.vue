@@ -10,7 +10,7 @@
       color="teal"
       primary
       dark
-    >Home</v-btn>
+    >Users</v-btn>
   </v-app-bar>
 </template>
 
