@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Booked At", align: "left", value: "bookedAt", width: "10%" },
+        { text: "Booked At", align: "left", value: "bookedAt", width: "15%" },
         { text: "Transaction Type", value: "transactionType" },
         { text: "Details", value: "details" },
         { text: "Beneficiary", value: "beneficiary" },

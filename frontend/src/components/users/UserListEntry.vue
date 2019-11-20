@@ -12,7 +12,7 @@
       <v-card-text>{{ user.id }}</v-card-text>
       <v-card-actions>
         <v-btn
-          :to="userPageRoute"
+          :to="{ name: 'User', params: { id: user.id }}"
           color="teal"
           primary
           dark
@@ -36,12 +36,6 @@ export default {
     user: {
       type: Object,
       required: true,
-    },
-  },
-
-  computed: {
-    userPageRoute () {
-      return { name: 'User', params: { id: this.user.id } };
     },
   },
 };

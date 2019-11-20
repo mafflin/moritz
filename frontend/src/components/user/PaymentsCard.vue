@@ -5,9 +5,11 @@
       <span class="title font-weight-light">Payments</span>
     </v-card-title>
 
-    <v-card-text class="text--primary text-left">
+    <v-card-text class="text--primary text-left">Payments</v-card-text>
+
+    <v-card-actions>
       <v-btn :to="{ name: 'Payments' }" color="teal" text>Payments</v-btn>
-    </v-card-text>
+    </v-card-actions>
   </v-card>
 </template>
 

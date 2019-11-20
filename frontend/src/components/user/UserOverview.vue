@@ -5,6 +5,10 @@
     </v-col>
 
     <v-col cols="12" md="4">
+      <rules-card />
+    </v-col>
+
+    <v-col cols="12" md="4">
       <payments-card />
     </v-col>
 
@@ -20,6 +24,7 @@ import { mapActions, mapGetters } from "vuex";
 import GroupsCard from "./GroupsCard";
 import PaymentsCard from "./PaymentsCard";
 import ReportsCard from "./ReportsCard";
+import RulesCard from "./RulesCard";
 
 export default {
   name: "UserOverview",
@@ -27,7 +32,8 @@ export default {
   components: {
     GroupsCard,
     PaymentsCard,
-    ReportsCard
+    ReportsCard,
+    RulesCard
   },
 
   computed: {

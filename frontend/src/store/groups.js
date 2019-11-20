@@ -1,4 +1,4 @@
-import { fetchEntities, createEntity } from "../api";
+import { fetchEntities, createEntity, deleteEntity, fetchEntity } from "../api";
 import { convertArrayToObject } from "../utils";
 
 const ENTITY_TYPE = "groups";
@@ -8,7 +8,8 @@ export default {
 
   state: {
     ids: [],
-    entities: {}
+    entities: {},
+    selectedId: null
   },
 
   mutations: {
@@ -17,9 +18,19 @@ export default {
       state.entities = { ...state.entities, ...convertArrayToObject(groups) };
     },
 
-    addGroup(state, group) {
+    setSelectedGroup(state, group) {
+      state.selectedId = group.id;
+      state.entities = { ...state.entities, [group.id]: group };
+    },
+
+    createGroup(state, group) {
       state.ids = [...state.ids, group.id];
       state.entities = { ...state.entities, [group.id]: group };
+    },
+
+    deleteGroup(state, groupId) {
+      state.ids = state.ids.filter(id => id !== groupId);
+      state.selectedId = null;
     }
   },
 
@@ -31,17 +42,28 @@ export default {
       commit("setGroups", items);
     },
 
+    async fetchGroup({ commit }, id) {
+      const { item } = await fetchEntity(ENTITY_TYPE, id);
+
+      commit("setSelectedGroup", item);
+    },
+
     async createGroup({ commit }, group) {
       const { item } = await createEntity(ENTITY_TYPE, { group });
       if (!item) return;
 
-      commit("addGroup", item);
+      commit("createGroup", item);
+    },
+
+    deleteGroup({ commit }, id) {
+      commit("deleteGroup", id);
+
+      deleteEntity(ENTITY_TYPE, id);
     }
   },
 
   getters: {
-    groups({ ids, entities }) {
-      return ids.map(id => entities[id]);
-    }
+    groups: ({ ids, entities }) => ids.map(id => entities[id]),
+    selected: ({ selectedId, entities }) => entities[selectedId]
   }
 };

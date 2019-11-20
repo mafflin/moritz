@@ -1,6 +1,6 @@
 module Api::V1
   class GroupsController < ApplicationController
-    before_action :set_group, only: [:update, :destroy]
+    before_action :set_group, only: [:show, :update, :destroy]
 
     # GET /groups
     def index

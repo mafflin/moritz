@@ -14,6 +14,10 @@
       <group-list :groups="groups" />
       <group-add :on-submit="handleCreateGroup" />
     </v-card-text>
+
+    <v-card-actions>
+      <v-btn :to="{ name: 'Groups' }" color="teal" text>Groups</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
