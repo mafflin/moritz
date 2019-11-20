@@ -1,4 +1,5 @@
 // @flow
+import { camelizeKeys, decamelizeKeys } from "humps";
 import sync from "../utils/client";
 import store from "../store";
 
@@ -14,8 +15,8 @@ function buildEndpoint(...params) {
 
 async function handleRequest(method, url, params) {
   try {
-    const response = await method(url, params);
-    return response.data;
+    const response = await method(url, decamelizeKeys(params));
+    return camelizeKeys(response.data);
   } catch (error) {
     return { error: error.message };
   }

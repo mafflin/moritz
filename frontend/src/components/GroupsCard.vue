@@ -23,7 +23,7 @@ import GroupList from './groups/GroupList.vue';
 import GroupAdd from './groups/GroupAdd.vue';
 
 export default {
-  name: 'Groups',
+  name: 'GroupsCard',
 
   components: {
     GroupList,

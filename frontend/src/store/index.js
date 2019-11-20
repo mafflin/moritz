@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import client from "./client";
 import groups from "./groups";
+import payments from "./payments";
 import reports from "./reports";
 import users from "./users";
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   modules: {
     client,
     groups,
+    payments,
     reports,
     users
   }
