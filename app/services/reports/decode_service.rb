@@ -5,7 +5,7 @@ module Reports
     end
 
     def perform
-      Base64.decode64(@encoded_csv).gsub('"', '')
+      Base64.decode64(@encoded_csv).gsub('"', '').encode('UTF-8', 'ISO-8859-1')
     end
   end
 end

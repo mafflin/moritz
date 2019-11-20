@@ -3,7 +3,7 @@ require 'csv'
 module Reports
   class ParseService < ApplicationService
     COL_SEP = ';'
-    ENCODING = 'ISO-8859-1'
+    ENCODING = 'UTF-8'
     DATE_FORMAT = '%m/%d/%Y'
     LINE_MATCH = /^((?!(\d\d\/\d\d\/\d\d\d\d;\d\d\/\d\d\/\d\d\d\d|Booking)).)*$/
 

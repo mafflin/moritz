@@ -1,12 +1,7 @@
 module Api::V1
   class PaymentsController < ApplicationController
     def index
-    end
-
-    private
-
-    def payments_params
-
+      @payments = current_user.payments
     end
   end
 end
