@@ -1,11 +1,12 @@
 module Api::V1
   class ReportsController < ApplicationController
     def create
-      decoded = Base64.decode64(report_params[:encoded]).gsub('"', '')
-      report = Reports::UploadService.new(current_user, decoded).perform
+      decoded = Reports::DecodeService.new(report_params[:encoded]).perform
+      report = Reports::ParseService.new(decoded).perform
+      payments = Payments::ImportService.new(current_user, report).perform
 
-      if report
-        render :show, status: :created
+      if payments
+        head :created
       else
         head :unprocessable_entity
       end

@@ -36,7 +36,6 @@ export default {
       const {
         target: { result }
       } = await fileEncoder(this.file);
-      debugger
       const encoded = window.btoa(unescape(encodeURIComponent(result)));
       this.onSubmit({ encoded });
     }

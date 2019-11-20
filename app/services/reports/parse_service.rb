@@ -3,7 +3,6 @@ require 'csv'
 module Reports
   class ParseService < ApplicationService
     COL_SEP = ';'
-    THOUSAND_SEP = ','
     ENCODING = 'ISO-8859-1'
     DATE_FORMAT = '%m/%d/%Y'
     LINE_MATCH = /^((?!(\d\d\/\d\d\/\d\d\d\d;\d\d\/\d\d\/\d\d\d\d|Booking)).)*$/
@@ -45,7 +44,7 @@ module Reports
     end
 
     def parse_amount(value)
-      value ? value.gsub(THOUSAND_SEP, '').to_f : 0.00
+      value&.gsub(/[,]/, '')&.to_f || 0
     end
   end
 end

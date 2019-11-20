@@ -4,6 +4,8 @@ class Payment < ApplicationRecord
   scope :income, -> { where('credit > 0') }
   scope :expense, -> { where('debit < 0') }
 
+  validates :digest, presence: true, uniqueness: true
+
   private
 
   def self.by_month(date)

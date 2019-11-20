@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_17_094824) do
+ActiveRecord::Schema.define(version: 2019_11_20_101848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -56,12 +56,14 @@ ActiveRecord::Schema.define(version: 2019_11_17_094824) do
     t.string "currency"
     t.string "original_debit"
     t.string "original_credit"
-    t.integer "debit", default: 0
-    t.integer "credit", default: 0
+    t.decimal "debit", default: "0.0"
+    t.decimal "credit", default: "0.0"
     t.date "booked_at"
     t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "digest"
+    t.index ["digest"], name: "index_payments_on_digest", unique: true
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
