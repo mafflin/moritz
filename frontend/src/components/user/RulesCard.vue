@@ -8,10 +8,6 @@
     <v-card-text class="text--primary text-left">
       Rules
     </v-card-text>
-
-    <v-card-actions>
-      <v-btn :to="{ name: 'Rules' }" color="teal" text>Rules</v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 

@@ -11,7 +11,12 @@
         </v-col>
 
         <v-col cols="12">
-          <v-btn @click="handleSubmit" :disabled="!name" color="purple" text>Add Group</v-btn>
+          <v-btn
+            :disabled="loading || !name || !match"
+            type="submit"
+            color="purple"
+            text
+          >Add Rule</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -19,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
   name: "RuleAdd",
@@ -27,6 +32,10 @@ export default {
   props: {
     groupId: {
       type: String,
+      required: true
+    },
+    loading: {
+      type: Boolean,
       required: true
     }
   },

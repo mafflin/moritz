@@ -4,7 +4,7 @@
       v-for="group in groups"
       :key="group.id"
       outlined
-      color="teal lighten-4"
+      color="teal"
       class="ma-1"
       close
       @click:close="() => handleDeleteGroup(group.id)"
@@ -43,7 +43,7 @@ export default {
 <style scoped>
 .link {
   cursor: pointer;
-  color: black;
+  color: teal;
   text-decoration: none;
 }
 </style>

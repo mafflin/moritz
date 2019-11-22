@@ -31,8 +31,9 @@ const routes = [
         path: "groups/:groupId",
         name: "Group",
         component: Group,
-        beforeEnter: async (to, from, next) => {
-          await store.dispatch("groups/fetchGroup", to.params.groupId);
+        beforeEnter: async ({params: {groupId}}, from, next) => {
+          await store.dispatch("groups/fetchGroup", groupId);
+          await store.dispatch("rules/fetchRules", groupId);
           next();
         }
       },

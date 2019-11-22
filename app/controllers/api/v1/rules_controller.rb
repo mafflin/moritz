@@ -4,7 +4,7 @@ module Api::V1
 
     # GET /rules
     def index
-      @rules = current_user.rules
+      @rules = current_user.rules.where(group_id: params[:group_id])
     end
 
     # GET /users/1
@@ -16,7 +16,7 @@ module Api::V1
       @rule = Rule.new(rule_params)
 
       if @rule.save
-        head :created
+        render :show, status: :created
       else
         render json: @rule.errors, status: :unprocessable_entity
       end
