@@ -12,15 +12,15 @@ class Payment < ApplicationRecord
     where('extract(month from booked_at) = ?', date.month)
   end
 
-  def self.by_recipient(recipient)
-    where('details ~ ?', recipient.match_string)
+  def self.by_rule(rule)
+    where('details ~ ?', rule.match_string)
   end
 
   def self.by_group(group)
-    where('details ilike any (array[?])', group.recipients.map(&:match_string))
+    where('details ilike any (array[?])', group.rules.map(&:match_string))
   end
 
   def self.unmatched
-    where.not('details ilike any (array[?])', Recipient.all.map(&:match_string))
+    where.not('details ilike any (array[?])', Rule.all.map(&:match_string))
   end
 end

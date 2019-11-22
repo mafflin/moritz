@@ -7,6 +7,10 @@ module Api::V1
       @groups = current_user.groups
     end
 
+    # GET /users/1
+    def show
+    end
+
     # POST /groups
     def create
       @group = Group.new(group_params)

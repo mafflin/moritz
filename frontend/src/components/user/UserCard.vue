@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-img class="white--text align-end" height="200px" :src="user.avatar">
+    <v-img class="teal lighten-4 white--text align-end" height="200px" :src="user.avatar">
       <router-link
         active
         class="link"

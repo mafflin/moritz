@@ -4,7 +4,7 @@
       <v-row align="center">
         <v-col cols="8" md="6">
           <v-text-field
-            v-model="groupName"
+            v-model="name"
             label="Group name"
             required
           />
@@ -13,7 +13,7 @@
         <v-col cols="4" md="6">
           <v-btn
             @click="handleSubmit"
-            :disabled="!groupName"
+            :disabled="!name"
             color="purple"
             text
           >
@@ -36,13 +36,13 @@ export default {
 
   data () {
     return {
-      groupName: null
+      name: null
     };
   },
 
   methods: {
     handleSubmit () {
-      this.onSubmit(this.groupName)
+      this.onSubmit(this.name)
     }
   }
 };

@@ -1,6 +1,14 @@
 <template>
   <div>
-    <v-chip v-for="group in groups" :key="group.id" outlined class="ma-1">
+    <v-chip
+      v-for="group in groups"
+      :key="group.id"
+      outlined
+      color="teal lighten-4"
+      class="ma-1"
+      close
+      @click:close="() => handleDeleteGroup(group.id)"
+    >
       <router-link
         :to="{ name: 'Group', params: { groupId: group.id } }"
         class="link"
@@ -10,6 +18,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: "GroupList",
 
@@ -17,6 +27,14 @@ export default {
     groups: {
       type: Array,
       required: true
+    }
+  },
+
+  methods: {
+    ...mapActions("groups", ["deleteGroup"]),
+
+    handleDeleteGroup(id) {
+      this.deleteGroup(id);
     }
   }
 };
