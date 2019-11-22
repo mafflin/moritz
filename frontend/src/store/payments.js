@@ -20,7 +20,7 @@ export default {
 
   actions: {
     async fetchPayments({ commit }, query) {
-      const { items } = await fetchEntities(ENTITY_TYPE, { query });
+      const { items } = await fetchEntities(ENTITY_TYPE, query);
       if (!items) return;
 
       commit("setPayments", items);

@@ -8,7 +8,8 @@ module Payments
 
     def perform
       relation = @user.payments.by_month(@date)
-      relation.by_group(@group) if @group.present?
+      relation = relation.by_group(@group) if @group.present?
+      relation
     end
   end
 end

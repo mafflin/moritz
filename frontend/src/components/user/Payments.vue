@@ -12,8 +12,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import PaymentsTable from "./payments/PaymentsTable";
 import PaymentsSummary from "./payments/PaymentsSummary";
+import PaymentsTable from "./payments/PaymentsTable";
 
 export default {
   name: "Payments",
@@ -28,7 +28,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("payments", ["payments"])
+    ...mapGetters("payments", ["payments"]),
   },
 
   methods: {
