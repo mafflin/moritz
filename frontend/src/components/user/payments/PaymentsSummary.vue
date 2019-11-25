@@ -24,20 +24,14 @@
             </span>
           </v-chip>
 
-          <v-menu v-model="menu" :close-on-content-click="true" transition="scale-transition">
-            <template v-slot:activator="{ on }">
-              <v-chip label color="white">
-                <v-text-field color="teal lighten-4" v-model="date" v-on="on" readonly />
-              </v-chip>
-            </template>
-            <v-date-picker v-model="date" @input="handleDateChange" color="teal" />
-          </v-menu>
+          <date-picker :date="filter.date" :onChange="handleDateChange" />
         </v-col>
       </v-row>
 
       <v-row align="center">
         <v-col cols="6">
-          <groups-select :groups="groups" :onSelect="handleGroupChange" />
+          <groups-select
+            :groups="groups" :selected="filter.groupId" :onSelect="handleGroupChange" />
         </v-col>
       </v-row>
     </v-card-text>
@@ -46,42 +40,31 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import DatePicker from "./DatePicker.vue";
 import GroupsSelect from "./GroupsSelect.vue";
 
 export default {
   name: "PaymentsSummary",
 
-  components: { GroupsSelect },
-
-  data() {
-    return {
-      date: new Date().toISOString().substr(0, 10),
-      groupId: null,
-      menu: false
-    };
+  components: {
+    DatePicker,
+    GroupsSelect
   },
 
   computed: {
-    ...mapGetters("payments", ["total", "debit", "credit"]),
+    ...mapGetters("payments", ["total", "debit", "credit", "filter"]),
     ...mapGetters("groups", ["groups"])
   },
 
   methods: {
-    ...mapActions("payments", ["fetchPayments"]),
+    ...mapActions("payments", ["updateFilter"]),
 
-    handleDateChange() {
-      this.menu = false;
-      this.fetch();
+    handleDateChange(date) {
+      this.updateFilter({ date });
     },
 
-    handleGroupChange(event) {
-      this.groupId = event ? event.value : null;
-      this.fetch();
-    },
-
-    fetch() {
-      const { fetchPayments, date, groupId } = this;
-      fetchPayments({ date, groupId });
+    handleGroupChange(groupId) {
+      this.updateFilter({ groupId });
     }
   }
 };

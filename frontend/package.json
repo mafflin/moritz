@@ -46,11 +46,6 @@
       "eslint:recommended"
     ],
     "rules": {
-      "max-len": [
-        2,
-        100,
-        2
-      ],
       "no-console": "off",
       "no-debugger": "off"
     },

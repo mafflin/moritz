@@ -1,12 +1,14 @@
 <template>
-  <v-combobox
-    class="text-left"
-    :items="groups.map(({ id, name }) => ({ value: id, text: name }))"
-    @input="onSelect"
-    label="Group"
-    small-chips
-    clearable
-  />
+  <v-col class="d-flex" cols="12" sm="6">
+    <v-select
+      class="text-left"
+      :items="groups.map(({ id, name }) => ({ value: id, text: name }))"
+      :value="selected"
+      @input="onSelect"
+      label="Group"
+      clearable
+    />
+  </v-col>
 </template>
 
 <script>
@@ -18,10 +20,14 @@ export default {
       type: Array,
       required: true
     },
+    selected: {
+      type: String,
+      default: null
+    },
     onSelect: {
       type: Function,
       required: true
     }
-  },
+  }
 };
 </script>
