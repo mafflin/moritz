@@ -50,5 +50,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  ActiveSupport::Deprecation.silenced = true
+
   config.hosts.clear
 end
