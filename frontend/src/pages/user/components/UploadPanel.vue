@@ -14,15 +14,19 @@
             <v-file-input
               :value="file"
               @change="addFile"
-              show-size accept="csv/*"
+              show-size
+              accept="csv/*"
               label="Select report"
             />
           </v-col>
 
           <v-col cols="4" md="6">
-            <v-btn @click="uploadReport" :disabled="loading || !file" color="orange" text>
-              Upload File
-            </v-btn>
+            <v-btn
+              @click="uploadReport"
+              :disabled="loading || !file"
+              color="orange"
+              text
+            >Upload File</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -38,11 +42,11 @@ export default {
 
   computed: {
     ...mapGetters("reports", ["file"]),
-    ...mapGetters("client", ["loading"]),
+    ...mapGetters("client", ["loading"])
   },
 
   methods: {
-    ...mapActions("reports", ["addFile", "uploadReport"]),
+    ...mapActions("reports", ["addFile", "uploadReport"])
   }
 };
 </script>

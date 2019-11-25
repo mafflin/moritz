@@ -8,12 +8,8 @@
       class="ma-1"
       close
       @click:close="() => deleteGroup(group.id)"
-    >
-      <router-link
-        :to="{ name: 'Group', params: { groupId: group.id } }"
-        class="link"
-      >{{ group.name }}</router-link>
-    </v-chip>
+      @click="(event) => navigateToGroup(event, group.id)"
+    >{{ group.name }}</v-chip>
   </div>
 </template>
 
@@ -31,7 +27,14 @@ export default {
   },
 
   methods: {
-    ...mapActions("groups", ["deleteGroup"])
+    ...mapActions("groups", ["deleteGroup"]),
+    ...mapActions("router", ["changeRoute"]),
+
+    navigateToGroup(event, id) {
+      event.stopPropagation();
+      const { changeRoute } = this;
+      changeRoute({ name: "Group", params: { groupId: id } });
+    }
   }
 };
 </script>

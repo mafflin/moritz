@@ -11,6 +11,10 @@ export default {
     setMessage(state, message) {
       state.message = message
     },
+
+    setDialog(state, name, value) {
+      state.dialogs = { ...state.dialogs, [name]: value }
+    },
   },
 
   actions: {

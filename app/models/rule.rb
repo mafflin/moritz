@@ -2,9 +2,6 @@ class Rule < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
-  validates :name, presence: true, uniqueness: {
-    scope: [:user_id]
-  }
   validates :match, presence: true, uniqueness: {
     scope: [:user_id],
     case_sensitive: false,

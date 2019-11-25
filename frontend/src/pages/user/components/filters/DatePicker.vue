@@ -1,9 +1,14 @@
 <template>
-  <v-menu v-model="menu" :close-on-content-click="false" transition="scale-transition">
+  <v-menu
+    v-model="menu"
+    :close-on-content-click="false"
+    transition="scale-transition"
+    offset-y
+    max-width="290px"
+    min-width="290px"
+  >
     <template v-slot:activator="{ on }">
-      <v-chip label color="white">
-        <v-text-field color="teal" :value="date" v-on="on" readonly />
-      </v-chip>
+      <v-text-field color="teal" :value="date" v-on="on" readonly />
     </template>
     <v-date-picker :value="date" @input="handleChange" type="month" color="teal" />
   </v-menu>
@@ -30,6 +35,12 @@ export default {
     };
   },
 
+  mounted() {
+    if (this.date) return
+
+    this.onChange(new Date().toISOString().substr(0, 10));
+  },
+
   methods: {
     handleChange(date) {
       this.menu = false;
@@ -40,7 +51,4 @@ export default {
 </script>
 
 <style scoped>
-.in-chip input {
-  color: white !important;
-}
 </style>

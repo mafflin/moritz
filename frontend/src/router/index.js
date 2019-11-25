@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
+import Group from '../pages/user/components/group'
 import User from '../pages/user'
 import Users from '../pages/users'
 import NotFound from '../pages/NotFound.vue'
@@ -30,6 +31,18 @@ const routes = [
       store.dispatch('groups/fetchGroups')
       next()
     },
+    children: [
+      {
+        path: 'groups/:groupId',
+        name: 'Group',
+        component: Group,
+        beforeEnter: async ({ params: { groupId } }, from, next) => {
+          await store.dispatch('groups/fetchGroup', groupId)
+          store.dispatch('rules/fetchRules', groupId)
+          next()
+        },
+      },
+    ],
   },
   {
     path: '*',

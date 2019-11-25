@@ -1,4 +1,4 @@
-import router from '@admin/routes';
+import router from '../router';
 import { transformObject } from "../utils";
 
 export default {

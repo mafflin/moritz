@@ -7,21 +7,21 @@
       </div>
 
       <div class="text-right">
-        <v-chip label color="teal lighten-4" class="mx-2">
+        <v-chip label color="teal lighten-4" class="ma-2">
           <span>
             Debit:
-            <strong>{{ debit }}</strong>
+            <strong>{{ debit.toFixed() }}</strong>
           </span>
         </v-chip>
 
-        <v-chip label color="teal lighten-4" class="mx-2">
+        <v-chip label color="teal lighten-4" class="ma-2">
           <span>
             Credit:
-            <strong>{{ credit }}</strong>
+            <strong>{{ credit.toFixed() }}</strong>
           </span>
         </v-chip>
 
-        <v-chip label color="teal lighten-4" class="mx-2">
+        <v-chip label color="teal lighten-4" class="ma-2">
           <span>
             Payments:
             <strong>{{ total }}</strong>
@@ -31,7 +31,7 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      No content yet!
+      <v-icon large left>mdi-cat</v-icon>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>

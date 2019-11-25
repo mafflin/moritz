@@ -8,7 +8,7 @@
       class="ma-1"
       close
       @click:close="() => handleDeleteRule(rule.id)"
-    >{{ rule.name }}
+    >{{ rule.match }}
     </v-chip>
   </div>
 </template>
