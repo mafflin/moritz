@@ -1,22 +1,21 @@
 <template>
   <v-snackbar
-    :value="error"
-    color="error"
+    :value="error || message"
+    :color="error ? 'error' : 'success'"
     multi-line
     top
-  >
-    {{ error }}
-  </v-snackbar>
+  >{{ error || message }}</v-snackbar>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Notifications',
+  name: "Notifications",
 
   computed: {
-    ...mapGetters('client', ['error'])
+    ...mapGetters("client", ["error"]),
+    ...mapGetters("ui", ["message"])
   }
 };
 </script>

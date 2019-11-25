@@ -14,12 +14,8 @@ function buildEndpoint(...params) {
 }
 
 async function handleRequest(method, url, params) {
-  try {
-    const response = await method(url, decamelizeKeys(params));
-    return camelizeKeys(response.data);
-  } catch (error) {
-    return { error: error.message };
-  }
+  const response = await method(url, decamelizeKeys(params));
+  return camelizeKeys(response.data);
 }
 
 export const fetchEntities = (type, params = {}) =>

@@ -6,6 +6,7 @@ import groups from "./groups";
 import payments from "./payments";
 import reports from "./reports";
 import rules from "./rules";
+import ui from "./ui";
 import users from "./users";
 
 Vue.use(Vuex);
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     payments,
     reports,
     rules,
+    ui,
     users
   }
 });

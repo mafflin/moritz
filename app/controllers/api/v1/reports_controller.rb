@@ -5,7 +5,7 @@ module Api::V1
       report = Reports::ParseService.new(decoded).perform
       @payments = Payments::ImportService.new(current_user, report).perform
 
-      if @payments
+      if report.present?
         render :show, status: :created
       else
         head :unprocessable_entity
