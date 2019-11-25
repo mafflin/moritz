@@ -11,8 +11,9 @@
         <v-card>
           <v-expansion-panels accordion>
             <upload-panel />
-
             <summary-panel />
+            <groups-panel />
+            <filters-panel />
           </v-expansion-panels>
         </v-card>
       </v-col>
@@ -27,6 +28,8 @@
 </template>
 
 <script>
+import FiltersPanel from "./components/FiltersPanel.vue";
+import GroupsPanel from "./components/GroupsPanel.vue";
 import PaymentsTable from "./components/PaymentsTable.vue";
 import SummaryPanel from "./components/SummaryPanel.vue";
 import UploadPanel from "./components/UploadPanel.vue";
@@ -38,6 +41,8 @@ export default {
   name: "User",
 
   components: {
+    FiltersPanel,
+    GroupsPanel,
     PaymentsTable,
     SummaryPanel,
     UploadPanel,

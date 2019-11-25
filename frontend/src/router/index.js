@@ -3,56 +3,38 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
-import Group from '../components/user/Group.vue'
-import Groups from '../components/user/Groups.vue'
-import Payments from '../components/user/Payments.vue'
-import Rules from '../components/user/Rules.vue'
-import UserOld from '../components/User.vue'
 import User from '../pages/user'
-import UserOverview from '../components/user/UserOverview.vue'
-import Users from '../components/Users.vue'
+import Users from '../pages/users'
+import NotFound from '../pages/NotFound.vue'
 
 Vue.use(VueRouter)
 
 const mode = 'history'
 const routes = [
   { path: '/', redirect: '/users' },
-  { path: '/users', name: 'Users', component: Users },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
+    beforeEnter: (to, from, next) => {
+      store.dispatch('users/fetchUsers')
+      next()
+    },
+  },
   {
     path: '/users/:id',
     name: 'User',
     component: User,
     beforeEnter: async (to, from, next) => {
       await store.dispatch('users/fetchUser', to.params.id)
-      await store.dispatch('groups/fetchGroups')
+      store.dispatch('groups/fetchGroups')
       next()
     },
   },
-
   {
-    path: '/users-old/:id',
-    component: UserOld,
-    beforeEnter: async (to, from, next) => {
-      await store.dispatch('users/fetchUser', to.params.id)
-      await store.dispatch('groups/fetchGroups')
-      next()
-    },
-    children: [
-      { path: '', name: 'UserOld', component: UserOverview },
-      { path: 'groups', name: 'Groups', component: Groups },
-      {
-        path: 'groups/:groupId',
-        name: 'Group',
-        component: Group,
-        beforeEnter: async ({ params: { groupId } }, from, next) => {
-          await store.dispatch('groups/fetchGroup', groupId)
-          await store.dispatch('rules/fetchRules', groupId)
-          next()
-        },
-      },
-      { path: 'payments', name: 'Payments', component: Payments },
-      { path: 'rules', name: 'Rules', component: Rules },
-    ],
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 

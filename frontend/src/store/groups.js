@@ -37,7 +37,6 @@ export default {
   actions: {
     async fetchGroups({ commit }) {
       const { items } = await fetchEntities(ENTITY_TYPE);
-      if (!items) return;
 
       commit("setGroups", items);
     },

@@ -1,15 +1,21 @@
-import Vue from 'vue';
+import Vue from 'vue'
+import { sync } from 'vuex-router-sync'
 
-import App from './App.vue';
-import store from './store';
-import router from './router';
-import vuetify from './plugins/vuetify';
+import App from './App.vue'
+import store from './store'
+import router from './router'
+import vuetify from './plugins/vuetify'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
+
+const unsync = sync(store, router)
 
 new Vue({
   store,
   vuetify,
   router,
-  render: (h) => h(App),
-}).$mount('#app');
+  beforeDestroy() {
+    unsync()
+  },
+  render: h => h(App),
+}).$mount('#app')
