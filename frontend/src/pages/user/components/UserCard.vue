@@ -10,6 +10,8 @@
         <v-card-title @click="navigate">
           <v-icon v-if="!isExactActive" class="mr-4" color="white">mdi-keyboard-backspace</v-icon>
           {{ user.name }}
+          <v-spacer />
+          <v-icon class="ml-4" color="white">mdi-dots-horizontal</v-icon>
         </v-card-title>
       </router-link>
     </v-img>

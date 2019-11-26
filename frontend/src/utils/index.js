@@ -14,4 +14,11 @@ export const fileEncoder = file =>
     reader.readAsText(file)
   })
 
+export const parseUrlQueryParams = (query, allowed) =>
+  transformObject(
+    query,
+    param => param,
+    (params, key) => allowed.includes(key) && params[key],
+  )
+
 export const UNMATCHED_GROUP_ID = 'unmatched'
