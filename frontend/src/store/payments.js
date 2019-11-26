@@ -10,7 +10,7 @@ export default {
     ids: [],
     entities: {},
     filter: {
-      date: null,
+      date: new Date().toISOString().substr(0, 7),
       groupId: null,
     },
   },
@@ -33,7 +33,8 @@ export default {
     },
 
     async fetchPayments({ commit, getters: { filter } }) {
-      const { items } = await fetchEntities(ENTITY_TYPE, filter)
+      const date = filter.date && `${filter.date}-01`
+      const { items } = await fetchEntities(ENTITY_TYPE, { ...filter, date })
       if (!items) return
 
       commit('setPayments', items)
@@ -42,10 +43,8 @@ export default {
 
   getters: {
     payments: ({ ids, entities }) => ids.map(id => entities[id]),
-    debit: ({ ids, entities }) =>
-      ids.map(id => entities[id].debit).reduce((a, b) => a + b, 0),
-    credit: ({ ids, entities }) =>
-      ids.map(id => entities[id].credit).reduce((a, b) => a + b, 0),
+    debit: ({ ids, entities }) => ids.map(id => entities[id].debit).reduce((a, b) => a + b, 0),
+    credit: ({ ids, entities }) => ids.map(id => entities[id].credit).reduce((a, b) => a + b, 0),
     total: ({ ids }) => ids.length,
     filter: ({ filter }) => filter,
   },

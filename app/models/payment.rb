@@ -22,4 +22,11 @@ class Payment < ApplicationRecord
       q: group.rules.map(&:match_string)
     )
   end
+
+  def self.unmatched(user)
+    where.not(
+      'details ilike any (array[:q]) OR beneficiary ilike any (array[:q])',
+      q: user.rules.map(&:match_string)
+    )
+  end
 end

@@ -1,7 +1,7 @@
 <template>
   <v-select
     class="text-left"
-    :items="groups.map(({ id, name }) => ({ value: id, text: name }))"
+    :items="items"
     :value="selected"
     @input="onSelect"
     label="Group"
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { UNMATCHED_GROUP_ID } from "../../../../utils";
+
 export default {
   name: "GroupSelect",
 
@@ -25,6 +27,17 @@ export default {
     onSelect: {
       type: Function,
       required: true
+    }
+  },
+
+  computed: {
+    items() {
+      const groups = this.groups.map(({ id, name }) => ({
+        value: id,
+        text: name
+      }));
+      const unmatched = { value: UNMATCHED_GROUP_ID, text: "Unmatched" };
+      return [...groups, unmatched];
     }
   }
 };

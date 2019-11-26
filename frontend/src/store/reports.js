@@ -17,10 +17,6 @@ export default {
   },
 
   actions: {
-    addFile({ commit }, file) {
-      commit('setFile', file)
-    },
-
     async uploadReport({ commit, dispatch, getters: { file } }) {
       try {
         const {

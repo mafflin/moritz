@@ -35,16 +35,10 @@ export default {
     };
   },
 
-  mounted() {
-    if (this.date) return
-
-    this.onChange(new Date().toISOString().substr(0, 10));
-  },
-
   methods: {
     handleChange(date) {
       this.menu = false;
-      this.onChange(`${date}-01`);
+      this.onChange(date);
     }
   }
 };

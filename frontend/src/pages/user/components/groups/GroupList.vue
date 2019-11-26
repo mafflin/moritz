@@ -7,7 +7,7 @@
       color="teal"
       class="ma-1"
       close
-      @click:close="() => deleteGroup(group.id)"
+      @click:close="() => navigateToDeleteGroup(group.id)"
       @click="(event) => navigateToGroup(event, group.id)"
     >{{ group.name }}</v-chip>
   </div>
@@ -27,13 +27,15 @@ export default {
   },
 
   methods: {
-    ...mapActions("groups", ["deleteGroup"]),
     ...mapActions("router", ["changeRoute"]),
 
     navigateToGroup(event, id) {
       event.stopPropagation();
-      const { changeRoute } = this;
-      changeRoute({ name: "Group", params: { groupId: id } });
+      this.changeRoute({ name: "Group", params: { groupId: id } });
+    },
+
+    navigateToDeleteGroup(id) {
+      this.changeRoute({ name: "GroupDelete", params: { groupId: id } });
     }
   }
 };

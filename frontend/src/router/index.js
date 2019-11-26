@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
-import Group from '../pages/user/components/group'
+import GroupShow from '../pages/user/pages/group/GroupShow.vue'
+import GroupDelete from '../pages/user/pages/group/GroupDelete.vue'
 import User from '../pages/user'
 import Users from '../pages/users'
 import NotFound from '../pages/NotFound.vue'
@@ -35,7 +36,17 @@ const routes = [
       {
         path: 'groups/:groupId',
         name: 'Group',
-        component: Group,
+        component: GroupShow,
+        beforeEnter: async ({ params: { groupId } }, from, next) => {
+          await store.dispatch('groups/fetchGroup', groupId)
+          store.dispatch('rules/fetchRules', groupId)
+          next()
+        },
+      },
+      {
+        path: 'groups/:groupId/delete',
+        name: 'GroupDelete',
+        component: GroupDelete,
         beforeEnter: async ({ params: { groupId } }, from, next) => {
           await store.dispatch('groups/fetchGroup', groupId)
           store.dispatch('rules/fetchRules', groupId)

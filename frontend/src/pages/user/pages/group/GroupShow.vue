@@ -2,13 +2,14 @@
   <v-dialog :value="true" @input="handleClose" max-width="600px">
     <v-card>
       <v-card-title>
-        <v-icon large left>mdi-cards</v-icon>
-        <span class="title font-weight-light">{{ selected.name }}</span>
+        <v-icon left>mdi-google-circles-extended</v-icon>
+        <span>{{ selected.name }}</span>
       </v-card-title>
 
       <v-card-text class="text-left">
         <rule-list class="my-4" />
         <v-divider />
+        <div class="mt-4">Add a new rule</div>
         <rule-add :groupId="selected.id" :loading="loading" />
       </v-card-text>
     </v-card>

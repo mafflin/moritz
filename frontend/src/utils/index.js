@@ -13,3 +13,5 @@ export const fileEncoder = file =>
     reader.onload = resolve
     reader.readAsText(file)
   })
+
+export const UNMATCHED_GROUP_ID = 'unmatched'

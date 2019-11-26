@@ -10,8 +10,8 @@ services:
       POSTGRES_PASSWORD: bankoque
 
   backend:
-    ports:
-      - 3000:3000
+    expose:
+      - 3000
     volumes:
       - .:/app
     tty: true

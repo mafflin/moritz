@@ -10,6 +10,9 @@ export default {
     ids: [],
     entities: {},
     selectedId: null,
+    newGroup: {
+      name: null,
+    },
   },
 
   mutations: {
@@ -32,6 +35,10 @@ export default {
       state.ids = state.ids.filter(id => id !== groupId)
       state.selectedId = null
     },
+
+    setNewGroup(state, name) {
+      state.newGroup = { name }
+    },
   },
 
   actions: {
@@ -47,24 +54,35 @@ export default {
       commit('setSelectedGroup', item)
     },
 
-    async createGroup({ commit, dispatch }, group) {
-      const { item } = await createEntity(ENTITY_TYPE, { group })
-      if (!item) return
+    async createGroup({ commit, dispatch, getters: { newGroup } }) {
+      try {
+        const { item } = await createEntity(ENTITY_TYPE, { group: newGroup })
+        if (!item) return
 
-      commit('createGroup', item)
+        commit('createGroup', item)
+        commit('setNewGroup', null)
 
-      dispatch('ui/showMessage', 'Group created!', { root: true })
+        dispatch('ui/showMessage', 'Group created!', { root: true })
+      } catch (error) {
+        dispatch('client/raiseError', 'Group exists!', { root: true })
+      }
     },
 
-    deleteGroup({ commit }, id) {
+    deleteGroup({ commit, dispatch, rootGetters }, id) {
       commit('deleteGroup', id)
 
       deleteEntity(ENTITY_TYPE, id)
+
+      const { groupId } = rootGetters['payments/filter']
+      if (id !== groupId) return
+
+      dispatch('payments/updateFilter', { groupId: null }, { root: true })
     },
   },
 
   getters: {
     groups: ({ ids, entities }) => ids.map(id => entities[id]),
     selected: ({ selectedId, entities }) => entities[selectedId],
+    newGroup: ({ newGroup }) => newGroup,
   },
 }

@@ -13,7 +13,7 @@
           <v-col cols="8" md="6">
             <v-file-input
               :value="file"
-              @change="addFile"
+              @change="setFile"
               show-size
               accept="csv/*"
               label="Select report"
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   name: "UploadPanel",
@@ -46,7 +46,8 @@ export default {
   },
 
   methods: {
-    ...mapActions("reports", ["addFile", "uploadReport"])
+    ...mapActions("reports", ["uploadReport"]),
+    ...mapMutations("reports", ["setFile"])
   }
 };
 </script>

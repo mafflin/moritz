@@ -2,12 +2,8 @@
   <div class="mx-1">
     <v-form @submit.prevent="handleSubmit">
       <v-row>
-        <v-col cols="12" class="title">Add a new rule!</v-col>
-      </v-row>
-
-      <v-row>
         <v-col cols="12">
-          <v-text-field v-model="match" label="Match" required />
+          <v-text-field v-model="match" label="Match" required autofocus />
         </v-col>
 
         <v-col cols="12" class="text-right">

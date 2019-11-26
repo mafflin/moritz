@@ -1,5 +1,5 @@
 import { fetchEntities, createEntity, deleteEntity } from '../api'
-import { convertArrayToObject } from '../utils'
+import { convertArrayToObject, UNMATCHED_GROUP_ID } from '../utils'
 
 const ENTITY_TYPE = 'rules'
 
@@ -35,11 +35,16 @@ export default {
       commit('setRules', items)
     },
 
-    async createRule({ commit }, rule) {
+    async createRule({ commit, dispatch, rootGetters }, rule) {
       const { item } = await createEntity(ENTITY_TYPE, { rule })
       if (!item) return
 
       commit('createRule', item)
+
+      const { groupId } = rootGetters['payments/filter']
+      if (groupId !== rule.groupId && groupId !== UNMATCHED_GROUP_ID) return
+
+      dispatch('payments/fetchPayments', {}, { root: true })
     },
 
     deleteRule({ commit }, id) {
