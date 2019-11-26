@@ -7,6 +7,13 @@
       </div>
 
       <div class="text-right">
+        <v-chip label color="indigo lighten-4" class="ma-2">
+          <span>
+            Delta:
+            <strong>{{ (debit + credit).toFixed() }}</strong>
+          </span>
+        </v-chip>
+
         <v-chip label color="teal lighten-4" class="ma-2">
           <span>
             Debit:
@@ -37,14 +44,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "SummaryPanel",
 
   computed: {
     ...mapGetters("payments", ["total", "debit", "credit"])
-  },
+  }
 };
 </script>
 

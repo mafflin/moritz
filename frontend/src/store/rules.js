@@ -36,15 +36,20 @@ export default {
     },
 
     async createRule({ commit, dispatch, rootGetters }, rule) {
-      const { item } = await createEntity(ENTITY_TYPE, { rule })
-      if (!item) return
+      try {
+        const { item } = await createEntity(ENTITY_TYPE, { rule })
+        if (!item) return
 
-      commit('createRule', item)
+        commit('createRule', item)
+        dispatch('ui/showMessage', 'Rule created!', { root: true })
 
-      const { groupId } = rootGetters['payments/filter']
-      if (groupId !== rule.groupId && groupId !== UNMATCHED_GROUP_ID) return
+        const { groupId } = rootGetters['payments/filter']
+        if (groupId !== rule.groupId && groupId !== UNMATCHED_GROUP_ID) return
 
-      dispatch('payments/fetchPayments', {}, { root: true })
+        dispatch('payments/fetchPayments', {}, { root: true })
+      } catch (error) {
+        dispatch('client/raiseError', 'Rule exists!', { root: true })
+      }
     },
 
     deleteRule({ commit }, id) {

@@ -1,5 +1,7 @@
 export const convertArrayToObject = (array, key = 'id') =>
-  array.map(item => ({ [item[key]]: item })).reduce((acc, current) => ({ ...acc, ...current }), {})
+  array
+    .map(item => ({ [item[key]]: item }))
+    .reduce((acc, current) => ({ ...acc, ...current }), {})
 
 export const transformObject = (object = {}, fn, filterFn = () => true) =>
   Object.keys(object)
@@ -20,5 +22,14 @@ export const parseUrlQueryParams = (query, allowed) =>
     param => param,
     (params, key) => allowed.includes(key) && params[key],
   )
+
+export const extractErrors = response => {
+  if (!response || !response.data) return null
+
+  const { data } = response
+  if (!Array.isArray(data)) return data
+
+  return Object.keys(data).map(key => `${key}: ${data[key]}`)
+}
 
 export const UNMATCHED_GROUP_ID = 'unmatched'

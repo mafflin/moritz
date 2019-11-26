@@ -11,16 +11,18 @@ export default {
     setMessage(state, message) {
       state.message = message
     },
-
-    setDialog(state, name, value) {
-      state.dialogs = { ...state.dialogs, [name]: value }
-    },
   },
 
   actions: {
     async showMessage({ commit }, message) {
       commit('setMessage', message)
+
       await new Promise(resolve => setTimeout(resolve, SLEEP_MS))
+
+      commit('setMessage', null)
+    },
+
+    clearMessage({ commit }) {
       commit('setMessage', null)
     },
   },

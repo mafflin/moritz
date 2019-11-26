@@ -11,8 +11,8 @@
         <v-card>
           <v-expansion-panels accordion>
             <upload-panel />
-            <summary-panel />
             <groups-panel />
+            <summary-panel />
             <filters-panel />
           </v-expansion-panels>
         </v-card>
