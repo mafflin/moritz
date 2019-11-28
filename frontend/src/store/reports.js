@@ -23,12 +23,10 @@ export default {
           target: { result },
         } = await fileEncoder(file)
         const encoded = window.btoa(unescape(encodeURIComponent(result)))
-        const {
-          item: { payments },
-        } = await createEntity(ENTITY_TYPE, { report: { encoded } })
+        await createEntity(ENTITY_TYPE, { report: { encoded } })
 
         dispatch('ui/showMessage', 'File uploaded!', { root: true })
-        commit('payments/setPayments', payments, { root: true })
+        dispatch('payments/fetchPayments', {}, { root: true })
       } catch (error) {
         dispatch('client/raiseError', 'Unsupported file format!', { root: true })
       }

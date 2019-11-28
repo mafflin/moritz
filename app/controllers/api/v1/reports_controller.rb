@@ -3,7 +3,7 @@ module Api::V1
     def create
       decoded = Reports::DecodeService.new(report_params[:encoded]).perform
       report = Reports::ParseService.new(decoded).perform
-      @payments = Payments::ImportService.new(current_user, report).perform
+      Payments::ImportService.new(current_user, report).perform
 
       if report.present?
         render :show, status: :created
