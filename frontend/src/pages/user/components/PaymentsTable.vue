@@ -1,7 +1,17 @@
 <template>
-  <v-card>
-    <v-data-table :headers="headers" :items="payments" :items-per-page="-1" item-key="id" />
-  </v-card>
+  <v-data-table
+    :headers="headers"
+    :items="payments"
+    :items-per-page="-1"
+    item-key="id"
+   >
+    <template v-slot:item.debit="{ item }">
+      <v-chip color="teal lighten-4">{{ item.debit.toFixed(2) }}</v-chip>
+    </template>
+    <template v-slot:item.credit="{ item }">
+      <v-chip color="indigo lighten-4">{{ item.credit.toFixed(2) }}</v-chip>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
@@ -13,13 +23,12 @@ export default {
   data() {
     return {
       headers: [
-        { text: "Booked At", align: "left", value: "bookedAt", width: "15%" },
-        { text: "Transaction Type", value: "transactionType" },
+        { text: "Booked at", align: "left", value: "bookedAt", width: "15%" },
+        { text: "Type", value: "transactionType" },
         { text: "Details", value: "details" },
         { text: "Beneficiary", value: "beneficiary" },
-        { text: "Customer Reference", value: "customerReference" },
-        { text: "Debit", value: "debit" },
-        { text: "Credit", value: "credit" }
+        { text: "Debit", value: "debit", width: "10%" },
+        { text: "Credit", value: "credit", width: "10%" }
       ]
     };
   },

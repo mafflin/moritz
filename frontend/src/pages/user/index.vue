@@ -13,7 +13,6 @@
             <upload-panel />
             <groups-panel />
             <summary-panel />
-            <filters-panel />
           </v-expansion-panels>
         </v-card>
       </v-col>
@@ -21,7 +20,11 @@
 
     <v-row>
       <v-col cols="12">
-        <payments-table />
+        <v-card>
+          <filters-panel />
+          <hr>
+          <payments-table />
+        </v-card>
       </v-col>
     </v-row>
 
@@ -48,11 +51,11 @@ export default {
     PaymentsTable,
     SummaryPanel,
     UploadPanel,
-    UserCard,
+    UserCard
   },
 
   computed: {
-    ...mapGetters("users", ["selected"]),
+    ...mapGetters("users", ["selected"])
   }
 };
 </script>
