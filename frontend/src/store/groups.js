@@ -22,8 +22,9 @@ export default {
     },
 
     setSelectedGroup(state, group) {
+      const item = state.entities[group.id]
       state.selectedId = group.id
-      state.entities = { ...state.entities, [group.id]: group }
+      state.entities = { ...state.entities, [group.id]: { ...item, ...group } }
     },
 
     createGroup(state, group) {
@@ -42,8 +43,9 @@ export default {
   },
 
   actions: {
-    async fetchGroups({ commit }) {
-      const { items } = await fetchEntities(ENTITY_TYPE)
+    async fetchGroups({ commit, rootGetters }) {
+      const { date } = rootGetters['payments/formattedFilter']
+      const { items } = await fetchEntities(ENTITY_TYPE, { date })
 
       commit('setGroups', items)
     },

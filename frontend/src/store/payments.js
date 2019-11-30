@@ -30,11 +30,11 @@ export default {
     updateFilter({ commit, dispatch }, filter) {
       commit('setFilter', filter)
       dispatch('fetchPayments')
+      dispatch('groups/fetchGroups', {}, { root: true })
     },
 
-    async fetchPayments({ commit, getters: { filter } }) {
-      const date = filter.date && `${filter.date}-01`
-      const { items } = await fetchEntities(ENTITY_TYPE, { ...filter, date })
+    async fetchPayments({ commit, getters: { formattedFilter } }) {
+      const { items } = await fetchEntities(ENTITY_TYPE, formattedFilter)
       if (!items) return
 
       commit('setPayments', items)
@@ -43,9 +43,15 @@ export default {
 
   getters: {
     payments: ({ ids, entities }) => ids.map(id => entities[id]),
-    debit: ({ ids, entities }) => ids.map(id => entities[id].debit).reduce((a, b) => a + b, 0),
-    credit: ({ ids, entities }) => ids.map(id => entities[id].credit).reduce((a, b) => a + b, 0),
+    debit: ({ ids, entities }) =>
+      ids.map(id => entities[id].debit).reduce((a, b) => a + b, 0),
+    credit: ({ ids, entities }) =>
+      ids.map(id => entities[id].credit).reduce((a, b) => a + b, 0),
     total: ({ ids }) => ids.length,
     filter: ({ filter }) => filter,
+    formattedFilter: ({ filter }) => {
+      const date = filter.date && `${filter.date}-01`
+      return { ...filter, date }
+    },
   },
 }

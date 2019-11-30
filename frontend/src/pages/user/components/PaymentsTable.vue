@@ -4,6 +4,7 @@
     :items="payments"
     :items-per-page="-1"
     item-key="id"
+    must-sort
    >
     <template v-slot:item.debit="{ item }">
       <v-chip color="teal lighten-4">{{ item.debit.toFixed(2) }}</v-chip>

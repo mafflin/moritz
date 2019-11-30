@@ -42,6 +42,7 @@ export default {
 
         commit('createRule', item)
         dispatch('ui/showMessage', 'Rule created!', { root: true })
+        dispatch('groups/fetchGroups', {}, { root: true })
 
         const { groupId } = rootGetters['payments/filter']
         if (groupId !== rule.groupId && groupId !== UNMATCHED_GROUP_ID) return
@@ -52,10 +53,12 @@ export default {
       }
     },
 
-    deleteRule({ commit }, id) {
+    deleteRule({ commit, dispatch }, id) {
       commit('deleteRule', id)
 
       deleteEntity(ENTITY_TYPE, id)
+      dispatch('groups/fetchGroups', {}, { root: true })
+      dispatch('payments/fetchPayments', {}, { root: true })
     },
   },
 
