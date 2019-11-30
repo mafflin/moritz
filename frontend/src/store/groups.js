@@ -43,9 +43,8 @@ export default {
   },
 
   actions: {
-    async fetchGroups({ commit, rootGetters }) {
-      const { date } = rootGetters['payments/formattedFilter']
-      const { items } = await fetchEntities(ENTITY_TYPE, { date })
+    async fetchGroups({ commit }) {
+      const { items } = await fetchEntities(ENTITY_TYPE)
 
       commit('setGroups', items)
     },

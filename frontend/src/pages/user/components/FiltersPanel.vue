@@ -2,7 +2,7 @@
   <v-card-title>
     Filters:
     <v-spacer />
-    <date-picker :date="filter.date" :onChange="handleDateChange" />
+    <date-picker :date="filter.date" :onChange="handleDateChange" class="ml-4" />
     <group-select
       :groups="groups"
       :selected="filter.groupId"

@@ -30,7 +30,6 @@ export default {
     updateFilter({ commit, dispatch }, filter) {
       commit('setFilter', filter)
       dispatch('fetchPayments')
-      dispatch('groups/fetchGroups', {}, { root: true })
     },
 
     async fetchPayments({ commit, getters: { formattedFilter } }) {

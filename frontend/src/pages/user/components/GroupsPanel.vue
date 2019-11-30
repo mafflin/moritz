@@ -6,7 +6,7 @@
         <span>Groups</span>
       </span>
 
-      <group-action-list :groups="groups" class="text-right" />
+      <group-list :groups="groups" class="text-right" />
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
@@ -18,14 +18,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import GroupAdd from "./groups/GroupAdd.vue";
-import GroupActionList from "./groups/GroupActionList.vue";
+import GroupList from "./groups/GroupList.vue";
 
 export default {
   name: "GroupsPanel",
 
   components: {
     GroupAdd,
-    GroupActionList
+    GroupList
   },
 
   computed: {

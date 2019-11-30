@@ -38,27 +38,19 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      <div class="text-right">
-        <group-list :groups="groups" />
-      </div>
+      <v-icon large left>mdi-cat</v-icon>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import GroupList from "./groups/GroupList";
 
 export default {
   name: "SummaryPanel",
 
-  components: {
-    GroupList
-  },
-
   computed: {
     ...mapGetters("payments", ["total", "debit", "credit"]),
-    ...mapGetters("groups", ["groups"])
   }
 };
 </script>
