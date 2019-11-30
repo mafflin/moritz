@@ -1,3 +1,3 @@
 json.item do
-  json.partial!('rule', rule: @rule)
+  json.extract! @rule, :id, :match
 end

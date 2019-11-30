@@ -6,27 +6,24 @@ class Payment < ApplicationRecord
 
   validates :digest, presence: true, uniqueness: true
 
-  private
+  class << self
+    def by_month(date)
+      where('extract(month from booked_at) = ?', date.month)
+    end
 
-  def self.by_month(date)
-    where('extract(month from booked_at) = ?', date.month)
-  end
+    def by_rule(rule)
+      where('concat(beneficiary, details) ilike ?', rule.match_string)
+    end
 
-  def self.by_rule(rule)
-    where('details ilike :q OR beneficiary ilike :q', q: rule.match_string)
-  end
+    def by_group(group)
+      where('concat(beneficiary, details) ilike any (array[?])', group.matches)
+    end
 
-  def self.by_group(group)
-    where(
-      'details ilike any (array[:q]) OR beneficiary ilike any (array[:q])',
-      q: group.rules.map(&:match_string)
-    )
-  end
-
-  def self.unmatched(user)
-    where.not(
-      'details ilike any (array[:q]) OR beneficiary ilike any (array[:q])',
-      q: user.rules.map(&:match_string)
-    )
+    def unmatched(user)
+      where(
+        'concat(beneficiary, details) not ilike all (array[?])',
+        user.rules.map(&:match_string)
+      )
+    end
   end
 end

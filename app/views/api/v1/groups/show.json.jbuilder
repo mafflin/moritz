@@ -1,3 +1,3 @@
 json.item do
-  json.partial!('group', group: @group)
+  json.extract! @group, :id, :name
 end

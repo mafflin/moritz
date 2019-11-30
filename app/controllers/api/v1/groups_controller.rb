@@ -4,7 +4,10 @@ module Api::V1
 
     # GET /groups
     def index
-      @groups = current_user.groups
+      @groups = Groups::SearchService.new(
+        user: current_user,
+        date: params[:date],
+      ).perform
     end
 
     # GET /users/1
