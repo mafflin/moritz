@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
+import Groups from '../pages/user/pages/groups'
 import GroupShow from '../pages/user/pages/group/GroupShow.vue'
 import GroupDelete from '../pages/user/pages/group/GroupDelete.vue'
+import Overview from '../pages/user/pages/overview'
 import User from '../pages/user'
 import Users from '../pages/users'
 import NotFound from '../pages/NotFound.vue'
@@ -25,7 +27,6 @@ const routes = [
   },
   {
     path: '/users/:id',
-    name: 'User',
     component: User,
     beforeEnter: async (to, from, next) => {
       await store.dispatch('users/fetchUser', to.params.id)
@@ -34,25 +35,37 @@ const routes = [
     },
     children: [
       {
-        path: 'groups/:groupId',
-        name: 'Group',
-        component: GroupShow,
-        beforeEnter: async ({ params: { groupId } }, from, next) => {
-          await store.dispatch('groups/fetchGroup', groupId)
-          store.dispatch('rules/fetchRules', groupId)
-          next()
-        },
+        path: '',
+        name: 'User',
+        component: Overview,
+        children: [
+          {
+            path: 'groups/:groupId',
+            name: 'Group',
+            component: GroupShow,
+            beforeEnter: async ({ params: { groupId } }, from, next) => {
+              await store.dispatch('groups/fetchGroup', groupId)
+              store.dispatch('rules/fetchRules', groupId)
+              next()
+            },
+          },
+          {
+            path: 'groups/:groupId/delete',
+            name: 'GroupDelete',
+            component: GroupDelete,
+            beforeEnter: async ({ params: { groupId } }, from, next) => {
+              await store.dispatch('groups/fetchGroup', groupId)
+              store.dispatch('rules/fetchRules', groupId)
+              next()
+            },
+          },
+        ],
       },
       {
-        path: 'groups/:groupId/delete',
-        name: 'GroupDelete',
-        component: GroupDelete,
-        beforeEnter: async ({ params: { groupId } }, from, next) => {
-          await store.dispatch('groups/fetchGroup', groupId)
-          store.dispatch('rules/fetchRules', groupId)
-          next()
-        },
-      },
+        path: 'groups',
+        name: 'Groups',
+        component: Groups,
+      }
     ],
   },
   {

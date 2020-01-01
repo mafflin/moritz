@@ -1,11 +1,5 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="payments"
-    :items-per-page="-1"
-    item-key="id"
-    must-sort
-   >
+  <v-data-table :headers="headers" :items="payments" :items-per-page="-1" item-key="id" must-sort>
     <template v-slot:item.debit="{ item }">
       <v-chip color="teal lighten-4">{{ item.debit.toFixed(2) }}</v-chip>
     </template>
@@ -16,10 +10,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-
 export default {
   name: "Payments",
+
+  props: {
+    payments: {
+      type: Array,
+      required: true
+    }
+  },
 
   data() {
     return {
@@ -32,18 +31,6 @@ export default {
         { text: "Credit", value: "credit", width: "10%" }
       ]
     };
-  },
-
-  mounted() {
-    this.fetchPayments();
-  },
-
-  computed: {
-    ...mapGetters("payments", ["payments"])
-  },
-
-  methods: {
-    ...mapActions("payments", ["fetchPayments"])
   }
 };
 </script>

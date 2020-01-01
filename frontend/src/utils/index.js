@@ -23,13 +23,4 @@ export const parseUrlQueryParams = (query, allowed) =>
     (params, key) => allowed.includes(key) && params[key],
   )
 
-export const extractErrors = response => {
-  if (!response || !response.data) return null
-
-  const { data } = response
-  if (!Array.isArray(data)) return data
-
-  return Object.keys(data).map(key => `${key}: ${data[key]}`)
-}
-
 export const UNMATCHED_GROUP_ID = 'unmatched'
