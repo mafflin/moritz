@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
-import Groups from '../pages/user/pages/groups'
+import Payments from '../pages/user/pages/payments'
 import GroupShow from '../pages/user/pages/group/GroupShow.vue'
 import GroupDelete from '../pages/user/pages/group/GroupDelete.vue'
 import Overview from '../pages/user/pages/overview'
@@ -62,9 +62,9 @@ const routes = [
         ],
       },
       {
-        path: 'groups',
-        name: 'Groups',
-        component: Groups,
+        path: 'payments',
+        name: 'Payments',
+        component: Payments,
       }
     ],
   },

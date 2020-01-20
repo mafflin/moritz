@@ -12,7 +12,7 @@ import PaymentsTable from "../../components/PaymentsTable.vue";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "Overview",
+  name: "Payments",
 
   components: {
     PaymentsTable

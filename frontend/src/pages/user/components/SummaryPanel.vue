@@ -50,7 +50,7 @@ export default {
   name: "SummaryPanel",
 
   computed: {
-    ...mapGetters("payments", ["total", "debit", "credit"]),
+    ...mapGetters("payments", ["total", "debit", "credit"])
   }
 };
 </script>
