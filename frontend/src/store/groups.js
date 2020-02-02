@@ -69,10 +69,16 @@ export default {
       }
     },
 
-    deleteGroup({ commit, dispatch, rootGetters }, id) {
-      commit('deleteGroup', id)
+    deleteGroup({ commit, dispatch, rootGetters, getters: { selected } }) {
+      const { id } = selected
+      dispatch('router/goToHomePage', {}, { root: true })
 
-      deleteEntity(ENTITY_TYPE, id)
+      try {
+        deleteEntity(ENTITY_TYPE, id)
+        commit('deleteGroup', id)
+      } catch (error) {
+        dispatch('client/raiseError', 'Something went wrong!', { root: true })
+      }
 
       const { groupId } = rootGetters['payments/filter']
       if (id !== groupId) return

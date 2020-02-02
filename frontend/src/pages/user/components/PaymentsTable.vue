@@ -1,5 +1,13 @@
 <template>
   <v-data-table :headers="headers" :items="payments" :items-per-page="-1" item-key="id" must-sort>
+    <template v-slot:item.note="{ item }">
+      <span>
+        {{ item.note }}
+        <router-link class="link" :to="{ name: 'Notes', params: { paymentId: item.id }}">
+          <v-icon class="ml-1">mdi-pencil-outline</v-icon>
+        </router-link>
+      </span>
+    </template>
     <template v-slot:item.debit="{ item }">
       <v-chip color="teal lighten-4">{{ item.debit.toFixed(2) }}</v-chip>
     </template>
@@ -27,6 +35,7 @@ export default {
         { text: "Type", value: "transactionType" },
         { text: "Details", value: "details" },
         { text: "Beneficiary", value: "beneficiary" },
+        { text: "Notes", value: "note", width: "10%" },
         { text: "Debit", value: "debit", width: "10%" },
         { text: "Credit", value: "credit", width: "10%" }
       ]
@@ -36,4 +45,7 @@ export default {
 </script>
 
 <style scoped>
+.link {
+  text-decoration: none;
+}
 </style>

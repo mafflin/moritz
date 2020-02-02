@@ -3,13 +3,13 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 
-import Payments from '../pages/user/pages/payments'
 import GroupShow from '../pages/user/pages/group/GroupShow.vue'
 import GroupDelete from '../pages/user/pages/group/GroupDelete.vue'
+import Notes from '../pages/user/pages/payments/Notes.vue'
+import NotFound from '../pages/NotFound.vue'
 import Overview from '../pages/user/pages/overview'
 import User from '../pages/user'
 import Users from '../pages/users'
-import NotFound from '../pages/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +40,15 @@ const routes = [
         component: Overview,
         children: [
           {
+            path: 'payments/:paymentId/notes',
+            name: 'Notes',
+            component: Notes,
+            beforeEnter: async ({ params: { paymentId } }, from, next) => {
+              await store.dispatch('payments/fetchPayment', paymentId)
+              next()
+            },
+          },
+          {
             path: 'groups/:groupId',
             name: 'Group',
             component: GroupShow,
@@ -61,11 +70,6 @@ const routes = [
           },
         ],
       },
-      {
-        path: 'payments',
-        name: 'Payments',
-        component: Payments,
-      }
     ],
   },
   {

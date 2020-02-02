@@ -1,5 +1,5 @@
-json.items @payments do |payment|
-  json.extract! payment,
+json.item do
+  json.extract! @payment,
     :id,
     :booked_at,
     :transaction_type,
@@ -11,6 +11,6 @@ json.items @payments do |payment|
     :currency,
     :note
 
-  json.debit payment.debit.to_f
-  json.credit payment.credit.to_f
+  json.debit @payment.debit.to_f
+  json.credit @payment.credit.to_f
 end

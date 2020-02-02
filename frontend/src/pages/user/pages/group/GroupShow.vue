@@ -1,5 +1,5 @@
 <template>
-  <v-dialog :value="true" @input="handleClose" max-width="600px">
+  <v-dialog :value="true" @input="goToHomePage" max-width="600px">
     <v-card>
       <v-card-title>
         <v-icon left>mdi-google-circles-extended</v-icon>
@@ -30,21 +30,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters("users", { user: "selected" }),
     ...mapGetters("groups", ["selected"]),
     ...mapGetters("client", ["loading"])
   },
 
   methods: {
-    ...mapActions("router", ["changeRoute"]),
-
-    handleClose() {
-      const {
-        changeRoute,
-        user: { id }
-      } = this;
-      changeRoute({ name: "User", params: { id } });
-    }
+    ...mapActions("router", ["goToHomePage"]),
   }
 };
 </script>
