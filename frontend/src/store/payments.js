@@ -2,6 +2,10 @@ import { fetchEntities, fetchEntity, updateEntity } from '../api';
 import { convertArrayToObject } from '../utils';
 
 const ENTITY_TYPE = 'payments';
+const initialFilter = {
+  date: new Date().toISOString().substr(0, 7),
+  groupId: null,
+};
 
 export default {
   namespaced: true,
@@ -10,10 +14,7 @@ export default {
     ids: [],
     entities: {},
     selectedId: null,
-    filter: {
-      date: new Date().toISOString().substr(0, 7),
-      groupId: null,
-    },
+    filter: { ...initialFilter },
   },
 
   mutations: {
@@ -61,6 +62,10 @@ export default {
 
       commit('setPayment', item);
       dispatch('router/goToHomePage', {}, { root: true });
+    },
+
+    resetFilter({ commit }) {
+      commit('setFilter', initialFilter);
     },
   },
 

@@ -21,10 +21,10 @@ export default {
   actions: {
     raiseError({ commit, dispatch }, error) {
       commit('setError', error);
-      dispatch('ui/clearMessage', null, { root: true });
+      dispatch('ui/resetMessage', null, { root: true });
     },
 
-    clearErrors({ commit }) {
+    resetErrors({ commit }) {
       commit('setError', null);
     },
 

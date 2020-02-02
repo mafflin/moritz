@@ -23,14 +23,15 @@ export default {
       state.entities = { ...state.entities, [user.id]: user };
     },
 
-    clearSelectedUser(state) {
+    resetSelectedUser(state) {
       state.selectedId = null;
     },
   },
 
   actions: {
-    async fetchUsers({ commit }) {
-      commit('clearSelectedUser');
+    async fetchUsers({ commit, dispatch }) {
+      commit('resetSelectedUser');
+      dispatch('payments/resetFilter', {}, { root: true });
 
       const { items } = await fetchEntities(ENTITY_TYPE);
       commit('setUsers', items);

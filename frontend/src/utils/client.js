@@ -12,7 +12,7 @@ export default ({ dispatch, getters }, client = axios) => {
 
   instance.interceptors.request.use(
     (config) => {
-      dispatch('client/clearErrors');
+      dispatch('client/resetErrors');
       dispatch('client/startFetching');
       return config;
     },

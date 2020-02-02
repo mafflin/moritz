@@ -22,7 +22,7 @@ export default {
       commit('setMessage', null);
     },
 
-    clearMessage({ commit }) {
+    resetMessage({ commit }) {
       commit('setMessage', null);
     },
   },
