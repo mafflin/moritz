@@ -3,8 +3,8 @@
     <v-expansion-panels popout>
       <user-list-entry
         v-for="user in users"
-        :user="user"
         :key="user.id"
+        :user="user"
       />
     </v-expansion-panels>
   </v-row>

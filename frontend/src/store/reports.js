@@ -1,7 +1,7 @@
-import { createEntity } from '../api'
-import { fileEncoder } from '../utils'
+import { createEntity } from '../api';
+import { fileEncoder } from '../utils';
 
-const ENTITY_TYPE = 'reports'
+const ENTITY_TYPE = 'reports';
 
 export default {
   namespaced: true,
@@ -12,7 +12,7 @@ export default {
 
   mutations: {
     setFile(state, file) {
-      state.file = file
+      state.file = file;
     },
   },
 
@@ -21,21 +21,21 @@ export default {
       try {
         const {
           target: { result },
-        } = await fileEncoder(file)
-        const encoded = window.btoa(unescape(encodeURIComponent(result)))
-        await createEntity(ENTITY_TYPE, { report: { encoded } })
+        } = await fileEncoder(file);
+        const encoded = window.btoa(unescape(encodeURIComponent(result)));
+        await createEntity(ENTITY_TYPE, { report: { encoded } });
 
-        dispatch('ui/showMessage', 'File uploaded!', { root: true })
-        dispatch('payments/fetchPayments', {}, { root: true })
+        dispatch('ui/showMessage', 'File uploaded!', { root: true });
+        dispatch('payments/fetchPayments', {}, { root: true });
       } catch (error) {
-        dispatch('client/raiseError', 'Unsupported file format!', { root: true })
+        dispatch('client/raiseError', 'Unsupported file format!', { root: true });
       }
 
-      commit('setFile', null)
+      commit('setFile', null);
     },
   },
 
   getters: {
     file: ({ file }) => file,
   },
-}
+};

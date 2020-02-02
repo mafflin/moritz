@@ -1,13 +1,32 @@
 <template>
-  <v-row align="center" class="spacer" no-gutters>
-    <v-col cols="4" sm="2" md="1">
+  <v-row
+    align="center"
+    class="spacer"
+    no-gutters
+  >
+    <v-col
+      cols="4"
+      sm="2"
+      md="1"
+    >
       <v-avatar size="64px">
-        <v-img v-if="avatar" :src="avatar" />
-        <v-icon v-else color="teal">mdi-account-tie</v-icon>
+        <v-img
+          v-if="avatar"
+          :src="avatar"
+        />
+        <v-icon
+          v-else
+          color="teal"
+        >
+          mdi-account-tie
+        </v-icon>
       </v-avatar>
     </v-col>
 
-    <v-col sm="5" md="3">
+    <v-col
+      sm="5"
+      md="3"
+    >
       <strong>{{ name }}</strong>
     </v-col>
   </v-row>
@@ -15,18 +34,18 @@
 
 <script>
 export default {
-  name: "UserInfo",
+  name: 'UserInfo',
 
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     avatar: {
       type: String,
-      default: null
-    }
-  }
+      default: null,
+    },
+  },
 };
 </script>
 

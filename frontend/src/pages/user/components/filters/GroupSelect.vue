@@ -3,42 +3,42 @@
     class="text-left"
     :items="items"
     :value="selected"
-    @input="onSelect"
     label="Group"
     clearable
+    @input="onSelect"
   />
 </template>
 
 <script>
-import { UNMATCHED_GROUP_ID } from "../../../../utils";
+import { UNMATCHED_GROUP_ID } from '../../../../utils';
 
 export default {
-  name: "GroupSelect",
+  name: 'GroupSelect',
 
   props: {
     groups: {
       type: Array,
-      required: true
+      required: true,
     },
     selected: {
       type: String,
-      default: null
+      default: null,
     },
     onSelect: {
       type: Function,
-      required: true
-    }
+      required: true,
+    },
   },
 
   computed: {
     items() {
       const groups = this.groups.map(({ id, name }) => ({
         value: id,
-        text: name
+        text: name,
       }));
-      const unmatched = { value: UNMATCHED_GROUP_ID, text: "Unmatched" };
+      const unmatched = { value: UNMATCHED_GROUP_ID, text: 'Unmatched' };
       return [...groups, unmatched];
-    }
-  }
+    },
+  },
 };
 </script>

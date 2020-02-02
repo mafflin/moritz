@@ -22,7 +22,7 @@
       <v-col cols="12">
         <v-card>
           <filters-panel />
-          <hr />
+          <hr>
           <payments-table :payments="payments" />
         </v-card>
       </v-col>
@@ -33,17 +33,17 @@
 </template>
 
 <script>
-import FiltersPanel from "../../components/FiltersPanel.vue";
-import GroupsPanel from "../../components/GroupsPanel.vue";
-import PaymentsTable from "../../components/PaymentsTable.vue";
-import SummaryPanel from "../../components/SummaryPanel.vue";
-import UploadPanel from "../../components/UploadPanel.vue";
-import UserCard from "../../components/UserCard.vue";
+import { mapActions, mapGetters } from 'vuex';
+import FiltersPanel from '../../components/FiltersPanel.vue';
+import GroupsPanel from '../../components/GroupsPanel.vue';
+import PaymentsTable from '../../components/PaymentsTable.vue';
+import SummaryPanel from '../../components/SummaryPanel.vue';
+import UploadPanel from '../../components/UploadPanel.vue';
+import UserCard from '../../components/UserCard.vue';
 
-import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "Overview",
+  name: 'Overview',
 
   components: {
     FiltersPanel,
@@ -51,21 +51,21 @@ export default {
     PaymentsTable,
     SummaryPanel,
     UploadPanel,
-    UserCard
+    UserCard,
+  },
+
+  computed: {
+    ...mapGetters('users', ['selected']),
+    ...mapGetters('payments', ['payments']),
   },
 
   mounted() {
     this.fetchPayments();
   },
 
-  computed: {
-    ...mapGetters("users", ["selected"]),
-    ...mapGetters("payments", ["payments"])
-  },
-
   methods: {
-    ...mapActions("payments", ["fetchPayments"])
-  }
+    ...mapActions('payments', ['fetchPayments']),
+  },
 };
 </script>
 

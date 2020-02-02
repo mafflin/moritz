@@ -16,30 +16,30 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
 export default {
-  name: "GroupList",
+  name: 'GroupList',
 
   props: {
     groups: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
-    ...mapActions("router", ["changeRoute"]),
+    ...mapActions('router', ['changeRoute']),
 
     navigateToGroup(event, id) {
       event.stopPropagation();
-      this.changeRoute({ name: "Group", params: { groupId: id } });
+      this.changeRoute({ name: 'Group', params: { groupId: id } });
     },
 
     navigateToDeleteGroup(id) {
-      this.changeRoute({ name: "GroupDelete", params: { groupId: id } });
-    }
-  }
+      this.changeRoute({ name: 'GroupDelete', params: { groupId: id } });
+    },
+  },
 };
 </script>
 

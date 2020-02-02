@@ -8,7 +8,8 @@
       class="ma-1"
       close
       @click:close="() => handleDeleteRule(rule.id)"
-    >{{ rule.match }}
+    >
+      {{ rule.match }}
     </v-chip>
   </div>
 </template>
@@ -17,19 +18,19 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "RuleList",
+  name: 'RuleList',
 
   computed: {
-    ...mapGetters("rules", ["rules"])
+    ...mapGetters('rules', ['rules']),
   },
 
   methods: {
-    ...mapActions("rules", ["deleteRule"]),
+    ...mapActions('rules', ['deleteRule']),
 
     handleDeleteRule(id) {
       this.deleteRule(id);
-    }
-  }
+    },
+  },
 };
 </script>
 

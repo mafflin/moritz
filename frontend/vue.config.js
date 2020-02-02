@@ -1,14 +1,14 @@
-const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 module.exports = {
   devServer: {
     proxy: {
-      "^/api|^/rails": {
-        target: "http://backend:3000"
-      }
-    }
+      '^/api|^/rails': {
+        target: 'http://backend:3000',
+      },
+    },
   },
   configureWebpack: {
-    plugins: [new VuetifyLoaderPlugin()]
-  }
+    plugins: [new VuetifyLoaderPlugin()],
+  },
 };

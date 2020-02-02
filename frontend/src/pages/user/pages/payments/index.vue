@@ -7,29 +7,29 @@
 </template>
 
 <script>
-import PaymentsTable from "../../components/PaymentsTable.vue";
+import { mapActions, mapGetters } from 'vuex';
+import PaymentsTable from '../../components/PaymentsTable.vue';
 
-import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "Payments",
+  name: 'Payments',
 
   components: {
-    PaymentsTable
+    PaymentsTable,
+  },
+
+  computed: {
+    ...mapGetters('payments', ['payments']),
+    ...mapGetters('groups', ['groups']),
   },
 
   mounted() {
     this.fetchPayments();
   },
 
-  computed: {
-    ...mapGetters("payments", ["payments"]),
-    ...mapGetters("groups", ["groups"])
-  },
-
   methods: {
-    ...mapActions("payments", ["fetchPayments"])
-  }
+    ...mapActions('payments', ['fetchPayments']),
+  },
 };
 </script>
 

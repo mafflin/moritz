@@ -8,30 +8,40 @@
     min-width="290px"
   >
     <template v-slot:activator="{ on }">
-      <v-text-field color="teal" :value="date" v-on="on" readonly />
+      <v-text-field
+        color="teal"
+        :value="date"
+        readonly
+        v-on="on"
+      />
     </template>
-    <v-date-picker :value="date" @input="handleChange" type="month" color="teal" />
+    <v-date-picker
+      :value="date"
+      type="month"
+      color="teal"
+      @input="handleChange"
+    />
   </v-menu>
 </template>
 
 <script>
 export default {
-  name: "DatePicker",
+  name: 'DatePicker',
 
   props: {
     onChange: {
       type: Function,
-      required: true
+      required: true,
     },
     date: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
 
   data() {
     return {
-      menu: false
+      menu: false,
     };
   },
 
@@ -39,8 +49,8 @@ export default {
     handleChange(date) {
       this.menu = false;
       this.onChange(date);
-    }
-  }
+    },
+  },
 };
 </script>
 

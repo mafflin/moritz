@@ -2,33 +2,47 @@
   <v-expansion-panel>
     <v-expansion-panel-header>
       <div>
-        <v-icon left>mdi-chart-line</v-icon>
+        <v-icon left>
+          mdi-chart-line
+        </v-icon>
         <span>Summary</span>
       </div>
 
       <div class="text-right">
-        <v-chip color="blue-gray lighten-4" class="ma-2">
+        <v-chip
+          color="blue-gray lighten-4"
+          class="ma-2"
+        >
           <span>
             Payments:
             <strong>{{ total }}</strong>
           </span>
         </v-chip>
 
-        <v-chip color="blue-gray lighten-4" class="ma-2">
+        <v-chip
+          color="blue-gray lighten-4"
+          class="ma-2"
+        >
           <span>
             Delta:
             <strong>{{ (debit + credit).toFixed() }}</strong>
           </span>
         </v-chip>
 
-        <v-chip color="teal lighten-4" class="ma-2">
+        <v-chip
+          color="teal lighten-4"
+          class="ma-2"
+        >
           <span>
             Debit:
             <strong>{{ debit.toFixed() }}</strong>
           </span>
         </v-chip>
 
-        <v-chip color="indigo lighten-4" class="ma-2">
+        <v-chip
+          color="indigo lighten-4"
+          class="ma-2"
+        >
           <span>
             Credit:
             <strong>{{ credit.toFixed() }}</strong>
@@ -38,20 +52,25 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      <v-icon large left>mdi-cat</v-icon>
+      <v-icon
+        large
+        left
+      >
+        mdi-cat
+      </v-icon>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
 export default {
-  name: "SummaryPanel",
+  name: 'SummaryPanel',
 
   computed: {
-    ...mapGetters("payments", ["total", "debit", "credit"])
-  }
+    ...mapGetters('payments', ['total', 'debit', 'credit']),
+  },
 };
 </script>
 

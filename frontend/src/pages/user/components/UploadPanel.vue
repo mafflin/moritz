@@ -10,23 +10,31 @@
     <v-expansion-panel-content>
       <v-form @submit.prevent="handleSubmit">
         <v-row align="center">
-          <v-col cols="8" md="6">
+          <v-col
+            cols="8"
+            md="6"
+          >
             <v-file-input
               :value="file"
-              @change="setFile"
               show-size
               accept="csv/*"
               label="Select report"
+              @change="setFile"
             />
           </v-col>
 
-          <v-col cols="4" md="6">
+          <v-col
+            cols="4"
+            md="6"
+          >
             <v-btn
-              @click="uploadReport"
               :disabled="loading || !file"
               color="orange"
               text
-            >Upload File</v-btn>
+              @click="uploadReport"
+            >
+              Upload File
+            </v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -35,20 +43,20 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
-  name: "UploadPanel",
+  name: 'UploadPanel',
 
   computed: {
-    ...mapGetters("reports", ["file"]),
-    ...mapGetters("client", ["loading"])
+    ...mapGetters('reports', ['file']),
+    ...mapGetters('client', ['loading']),
   },
 
   methods: {
-    ...mapActions("reports", ["uploadReport"]),
-    ...mapMutations("reports", ["setFile"])
-  }
+    ...mapActions('reports', ['uploadReport']),
+    ...mapMutations('reports', ['setFile']),
+  },
 };
 </script>
 

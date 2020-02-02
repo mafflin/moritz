@@ -1,7 +1,7 @@
 <template>
   <v-progress-linear
-    class="bar"
     v-if="loading"
+    class="bar"
     indeterminate
     fixed
   />
@@ -9,12 +9,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'Loading',
 
   computed: {
-    ...mapGetters('client', ['loading'])
-  }
+    ...mapGetters('client', ['loading']),
+  },
 };
 </script>
 

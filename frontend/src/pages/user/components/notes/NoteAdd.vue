@@ -3,11 +3,25 @@
     <v-form @submit.prevent="handleSubmit">
       <v-row>
         <v-col cols="12">
-          <v-text-field v-model="note" label="Note" autofocus />
+          <v-text-field
+            v-model="note"
+            label="Note"
+            autofocus
+          />
         </v-col>
 
-        <v-col cols="12" class="text-right">
-          <v-btn :disable="loading" type="submit" color="purple" text>Add Note</v-btn>
+        <v-col
+          cols="12"
+          class="text-right"
+        >
+          <v-btn
+            :disable="loading"
+            type="submit"
+            color="purple"
+            text
+          >
+            Add Note
+          </v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -16,26 +30,26 @@
 
 <script>
 export default {
-  name: "NoteAdd",
+  name: 'NoteAdd',
 
   props: {
     onSubmit: {
       type: Function,
-      required: true
+      required: true,
     },
     payment: {
       type: Object,
-      required: true
+      required: true,
     },
     loading: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
 
   data() {
     return {
-      note: null
+      note: null,
     };
   },
 
@@ -48,7 +62,7 @@ export default {
       const { note, payment, onSubmit } = this;
 
       onSubmit({ id: payment.id, note });
-    }
-  }
+    },
+  },
 };
 </script>

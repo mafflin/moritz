@@ -10,7 +10,9 @@
       color="teal"
       primary
       dark
-    >Users</v-btn>
+    >
+      Users
+    </v-btn>
   </v-app-bar>
 </template>
 

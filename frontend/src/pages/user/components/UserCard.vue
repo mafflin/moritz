@@ -1,17 +1,32 @@
 <template>
   <v-card>
-    <v-img class="teal lighten-4 white--text align-end" height="200px" :src="user.avatar">
+    <v-img
+      class="teal lighten-4 white--text align-end"
+      height="200px"
+      :src="user.avatar"
+    >
       <router-link
+        v-slot="{ navigate, isExactActive }"
         active
         class="link"
         :to="{ name: 'User', id: user.id }"
-        v-slot="{ navigate, isExactActive }"
       >
         <v-card-title @click="navigate">
-          <v-icon v-if="!isExactActive" class="mr-4" color="white">mdi-keyboard-backspace</v-icon>
+          <v-icon
+            v-if="!isExactActive"
+            class="mr-4"
+            color="white"
+          >
+            mdi-keyboard-backspace
+          </v-icon>
           {{ user.name }}
           <v-spacer />
-          <v-icon class="ml-4" color="white">mdi-dots-horizontal</v-icon>
+          <v-icon
+            class="ml-4"
+            color="white"
+          >
+            mdi-dots-horizontal
+          </v-icon>
         </v-card-title>
       </router-link>
     </v-img>
@@ -20,14 +35,14 @@
 
 <script>
 export default {
-  name: "UserCard",
+  name: 'UserCard',
 
   props: {
     user: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

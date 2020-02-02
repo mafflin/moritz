@@ -19,12 +19,12 @@ import NavBar from './components/NavBar.vue';
 import Notifications from './components/Notifications.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
 
   components: {
     Loading,
     NavBar,
-    Notifications
+    Notifications,
   },
 };
 </script>

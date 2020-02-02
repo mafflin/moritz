@@ -2,36 +2,40 @@
   <v-card-title>
     Filters:
     <v-spacer />
-    <date-picker :date="filter.date" :onChange="handleDateChange" class="ml-4" />
+    <date-picker
+      :date="filter.date"
+      :on-change="handleDateChange"
+      class="ml-4"
+    />
     <group-select
       :groups="groups"
       :selected="filter.groupId"
-      :onSelect="handleGroupChange"
+      :on-select="handleGroupChange"
       class="ml-4"
     />
   </v-card-title>
 </template>
 
 <script>
-import DatePicker from "./filters/DatePicker.vue";
-import GroupSelect from "./filters/GroupSelect.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
+import DatePicker from './filters/DatePicker.vue';
+import GroupSelect from './filters/GroupSelect.vue';
 
 export default {
-  name: "FiltersPanel",
+  name: 'FiltersPanel',
 
   components: {
     DatePicker,
-    GroupSelect
+    GroupSelect,
   },
 
   computed: {
-    ...mapGetters("payments", ["filter"]),
-    ...mapGetters("groups", ["groups"])
+    ...mapGetters('payments', ['filter']),
+    ...mapGetters('groups', ['groups']),
   },
 
   methods: {
-    ...mapActions("payments", ["updateFilter"]),
+    ...mapActions('payments', ['updateFilter']),
 
     handleDateChange(date) {
       this.updateFilter({ date });
@@ -39,8 +43,8 @@ export default {
 
     handleGroupChange(groupId) {
       this.updateFilter({ groupId });
-    }
-  }
+    },
+  },
 };
 </script>
 
