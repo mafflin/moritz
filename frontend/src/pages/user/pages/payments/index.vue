@@ -7,9 +7,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import PaymentsTable from '../../components/PaymentsTable.vue';
-
 
 export default {
   name: 'Payments',
@@ -21,14 +20,6 @@ export default {
   computed: {
     ...mapGetters('payments', ['payments']),
     ...mapGetters('groups', ['groups']),
-  },
-
-  mounted() {
-    this.fetchPayments();
-  },
-
-  methods: {
-    ...mapActions('payments', ['fetchPayments']),
   },
 };
 </script>

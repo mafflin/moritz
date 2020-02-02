@@ -10,6 +10,7 @@ import NotFound from '../pages/NotFound.vue';
 import Overview from '../pages/user/pages/overview';
 import User from '../pages/user';
 import Users from '../pages/users';
+import { parseUrlQueryParams } from '../utils';
 
 Vue.use(VueRouter);
 
@@ -30,7 +31,9 @@ const routes = [
     component: User,
     beforeEnter: async (to, from, next) => {
       await store.dispatch('users/fetchUser', to.params.id);
+      const filter = parseUrlQueryParams(to.query, ['date', 'groupId']);
       store.dispatch('groups/fetchGroups');
+      store.dispatch('payments/updateFilter', filter);
       next();
     },
     children: [
@@ -79,7 +82,9 @@ const routes = [
   },
 ];
 
-export default new VueRouter({
+const router = new VueRouter({
   mode,
   routes,
 });
+
+export default router;

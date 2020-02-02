@@ -13,7 +13,7 @@ export const fileEncoder = file => new Promise((resolve) => {
   reader.readAsText(file);
 });
 
-export const parseUrlQueryParams = (query, allowed) => transformObject(
+export const parseUrlQueryParams = (query, allowed = []) => transformObject(
   query,
   param => param,
   (params, key) => allowed.includes(key) && params[key],

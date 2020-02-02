@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import FiltersPanel from '../../components/FiltersPanel.vue';
 import GroupsPanel from '../../components/GroupsPanel.vue';
 import PaymentsTable from '../../components/PaymentsTable.vue';
@@ -57,14 +57,6 @@ export default {
   computed: {
     ...mapGetters('users', ['selected']),
     ...mapGetters('payments', ['payments']),
-  },
-
-  mounted() {
-    this.fetchPayments();
-  },
-
-  methods: {
-    ...mapActions('payments', ['fetchPayments']),
   },
 };
 </script>

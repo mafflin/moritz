@@ -11,12 +11,16 @@ export default {
         param => param,
         (params, key) => params[key],
       );
-      const params = to.query ? { ...to, query } : to;
-      router.push(params);
+      const route = to.query ? { ...to, query } : to;
+      router.push(route);
     },
 
-    goToHomePage({ dispatch, rootGetters: { 'users/selectedId': id } }) {
-      dispatch('changeRoute', { name: 'User', params: { id } });
+    goToHomePage({ dispatch, rootGetters }, params) {
+      const id = rootGetters['users/selectedId'];
+      const filter = rootGetters['payments/filter'];
+      const query = { ...filter, ...params };
+
+      dispatch('changeRoute', { name: 'User', params: { id }, query });
     },
   },
 };

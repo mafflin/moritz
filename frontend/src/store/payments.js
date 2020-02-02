@@ -41,11 +41,12 @@ export default {
       dispatch('fetchPayments');
     },
 
-    async fetchPayments({ commit, getters: { formattedFilter } }) {
+    async fetchPayments({ commit, dispatch, getters: { filter, formattedFilter } }) {
       const { items } = await fetchEntities(ENTITY_TYPE, formattedFilter);
       if (!items) return;
 
       commit('setPayments', items);
+      dispatch('router/goToHomePage', filter, { root: true });
     },
 
     async fetchPayment({ commit }, id) {
