@@ -16,11 +16,11 @@ export default {
     },
 
     goToHomePage({ dispatch, rootGetters }, params) {
-      const id = rootGetters['users/selectedId'];
+      const userId = rootGetters['users/selectedId'];
       const filter = rootGetters['payments/filter'];
       const query = { ...filter, ...params };
 
-      dispatch('changeRoute', { name: 'User', params: { id }, query });
+      dispatch('changeRoute', { name: 'User', params: { userId }, query });
     },
   },
 };

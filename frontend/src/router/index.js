@@ -27,10 +27,10 @@ const routes = [
     },
   },
   {
-    path: '/users/:id',
+    path: '/users/:userId',
     component: User,
     beforeEnter: async (to, from, next) => {
-      await store.dispatch('users/fetchUser', to.params.id);
+      await store.dispatch('users/fetchUser', to.params.userId);
       const filter = parseUrlQueryParams(to.query, ['date', 'groupId']);
       store.dispatch('groups/fetchGroups');
       store.dispatch('payments/updateFilter', filter);
