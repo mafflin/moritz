@@ -10,9 +10,8 @@ services:
 
   backend:
     build:
-      dockerfile: Dockerfile
       context: .
-    image: bankoque
+    image: bankoque_backend
     networks:
       - net
     depends_on:
@@ -22,7 +21,9 @@ services:
     stop_signal: SIGINT
 
   frontend:
-    image: node:12-alpine
+    build:
+      context: ./frontend
+    image: bankoque_frontend
     networks:
       - net
     working_dir: /app
