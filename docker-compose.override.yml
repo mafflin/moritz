@@ -6,8 +6,8 @@ services:
       - ./tmp/postgres/dev:/var/lib/postgresql/data
     environment: &postgres_env
       POSTGRES_DB: bankoque
-      POSTGRES_USER: bankoque
       POSTGRES_PASSWORD: bankoque
+      POSTGRES_USER: bankoque
 
   backend:
     expose:
@@ -18,11 +18,12 @@ services:
     stdin_open: true
     environment: &backend_env
       <<: *postgres_env
-      TERM: xterm-256color
-      RAILS_ENV: development
       POSTGRES_HOST: postgres
+      RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: enabled
+      RUBYOPT: -W:no-deprecated
       SECRET_KEY_BASE: 71111ea0be165cb505d97b496d3a0a012e1f6307a07c17993069206cece57526de5f852231bef8e48731567e6e6111a11a5ef52b6ca754d18743f1bd2a68cde5
+      TERM: xterm-256color
 
   frontend:
     ports:
