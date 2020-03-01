@@ -19,7 +19,7 @@ export default {
 
   mutations: {
     setGroups(state, groups) {
-      state.ids = groups.map(user => user.id);
+      state.ids = groups.map(group => group.id);
       state.entities = { ...state.entities, ...convertArrayToObject(groups) };
     },
 

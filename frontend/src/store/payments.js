@@ -19,7 +19,7 @@ export default {
 
   mutations: {
     setPayments(state, payments) {
-      state.ids = payments.map(user => user.id);
+      state.ids = payments.map(payment => payment.id);
       state.entities = { ...state.entities, ...convertArrayToObject(payments) };
     },
 
@@ -47,7 +47,7 @@ export default {
       if (!items) return;
 
       commit('setPayments', items);
-      dispatch('router/goToHomePage', filter, { root: true });
+      dispatch('router/changeRoute', { query: filter }, { root: true });
     },
 
     async fetchPayment({ commit }, id) {
@@ -61,6 +61,7 @@ export default {
       const { item } = await updateEntity(ENTITY_TYPE, payment.id, payment);
 
       commit('setPayment', item);
+      dispatch('fetchPayments');
       dispatch('router/goToHomePage', {}, { root: true });
     },
 

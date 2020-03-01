@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :payments, only: [:index, :show, :update]
       resources :reports, only: [:create]
       resources :rules, only: [:index, :show, :create, :destroy]
+      resources :summaries, only: [:index]
       resources :users, only: [:index, :show]
     end
   end

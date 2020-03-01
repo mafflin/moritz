@@ -52,12 +52,17 @@
     </v-expansion-panel-header>
 
     <v-expansion-panel-content>
-      <v-icon
+      <v-btn
+        icon
         large
-        left
+        :to="{ name: 'Summaries', query: filter }"
       >
-        mdi-cat
-      </v-icon>
+        <v-icon
+          large
+        >
+          mdi-cat
+        </v-icon>
+      </v-btn>
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
@@ -69,7 +74,7 @@ export default {
   name: 'SummaryPanel',
 
   computed: {
-    ...mapGetters('payments', ['total', 'debit', 'credit']),
+    ...mapGetters('payments', ['total', 'debit', 'credit', 'filter']),
   },
 };
 </script>

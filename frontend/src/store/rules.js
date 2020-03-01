@@ -13,7 +13,7 @@ export default {
 
   mutations: {
     setRules(state, rules) {
-      state.ids = rules.map(user => user.id);
+      state.ids = rules.map(rule => rule.id);
       state.entities = { ...state.entities, ...convertArrayToObject(rules) };
     },
 

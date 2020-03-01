@@ -12,6 +12,7 @@ export default {
         (params, key) => params[key],
       );
       const route = to.query ? { ...to, query } : to;
+
       router.push(route);
     },
 

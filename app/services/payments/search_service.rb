@@ -21,7 +21,7 @@ module Payments
     private
 
     def group
-      @group ||= Group.find_by(id: @group_id)
+      @group ||= @user.groups.find_by(id: @group_id)
     end
   end
 end

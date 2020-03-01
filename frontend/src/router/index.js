@@ -8,8 +8,10 @@ import GroupDelete from '../pages/user/pages/group/GroupDelete.vue';
 import Notes from '../pages/user/pages/payments/Notes.vue';
 import NotFound from '../pages/NotFound.vue';
 import Overview from '../pages/user/pages/overview';
+import Summaries from '../pages/user/pages/payments/Summaries';
 import User from '../pages/user';
 import Users from '../pages/users';
+
 import { parseUrlQueryParams } from '../utils';
 
 Vue.use(VueRouter);
@@ -41,7 +43,17 @@ const routes = [
         path: '',
         name: 'User',
         component: Overview,
+        props: ({ query: { q, groupId } }) => ({ query: { q, groupId } }),
         children: [
+          {
+            path: 'summaries',
+            name: 'Summaries',
+            component: Summaries,
+            beforeEnter: (to, from, next) => {
+              store.dispatch('summaries/fetchSummaries');
+              next();
+            },
+          },
           {
             path: 'payments/:paymentId/notes',
             name: 'Notes',
