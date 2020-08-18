@@ -47,7 +47,7 @@ export default {
         groups,
         filter: { groupId },
       } = this;
-      return groups.find(group => group.id === groupId);
+      return groups.find((group) => group.id === groupId);
     },
   },
 };

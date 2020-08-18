@@ -14,7 +14,7 @@ export default {
 
   mutations: {
     setUsers(state, users) {
-      state.ids = users.map(user => user.id);
+      state.ids = users.map((user) => user.id);
       state.entities = { ...state.entities, ...convertArrayToObject(users) };
     },
 
@@ -45,7 +45,7 @@ export default {
 
   getters: {
     users({ ids, entities }) {
-      return ids.map(id => entities[id]);
+      return ids.map((id) => entities[id]);
     },
 
     selected({ selectedId, entities }) {

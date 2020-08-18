@@ -19,7 +19,7 @@ export default {
 
   mutations: {
     setPayments(state, payments) {
-      state.ids = payments.map(payment => payment.id);
+      state.ids = payments.map((payment) => payment.id);
       state.entities = { ...state.entities, ...convertArrayToObject(payments) };
     },
 
@@ -71,10 +71,10 @@ export default {
   },
 
   getters: {
-    payments: ({ ids, entities }) => ids.map(id => entities[id]),
+    payments: ({ ids, entities }) => ids.map((id) => entities[id]),
     selected: ({ selectedId, entities }) => entities[selectedId],
-    debit: ({ ids, entities }) => ids.map(id => entities[id].debit).reduce((a, b) => a + b, 0),
-    credit: ({ ids, entities }) => ids.map(id => entities[id].credit).reduce((a, b) => a + b, 0),
+    debit: ({ ids, entities }) => ids.map((id) => entities[id].debit).reduce((a, b) => a + b, 0),
+    credit: ({ ids, entities }) => ids.map((id) => entities[id].credit).reduce((a, b) => a + b, 0),
     total: ({ ids }) => ids.length,
     filter: ({ filter }) => filter,
     formattedFilter: ({ filter }) => {

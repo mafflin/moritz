@@ -8,7 +8,7 @@ export default {
     changeRoute(_, to) {
       const query = transformObject(
         to.query,
-        param => param,
+        (param) => param,
         (params, key) => params[key],
       );
       const route = to.query ? { ...to, query } : to;

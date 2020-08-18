@@ -17,7 +17,7 @@ export default {
     async showMessage({ commit }, message) {
       commit('setMessage', message);
 
-      await new Promise(resolve => setTimeout(resolve, SLEEP_MS));
+      await new Promise((resolve) => setTimeout(resolve, SLEEP_MS));
 
       commit('setMessage', null);
     },

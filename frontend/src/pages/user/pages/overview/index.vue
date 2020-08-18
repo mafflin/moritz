@@ -41,7 +41,6 @@ import SummaryPanel from '../../components/SummaryPanel.vue';
 import UploadPanel from '../../components/UploadPanel.vue';
 import UserCard from '../../components/UserCard.vue';
 
-
 export default {
   name: 'Overview',
 

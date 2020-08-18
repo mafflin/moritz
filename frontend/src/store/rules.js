@@ -13,7 +13,7 @@ export default {
 
   mutations: {
     setRules(state, rules) {
-      state.ids = rules.map(rule => rule.id);
+      state.ids = rules.map((rule) => rule.id);
       state.entities = { ...state.entities, ...convertArrayToObject(rules) };
     },
 
@@ -23,7 +23,7 @@ export default {
     },
 
     deleteRule(state, ruleId) {
-      state.ids = state.ids.filter(id => id !== ruleId);
+      state.ids = state.ids.filter((id) => id !== ruleId);
     },
   },
 
@@ -58,6 +58,6 @@ export default {
   },
 
   getters: {
-    rules: ({ ids, entities }) => ids.map(id => entities[id]),
+    rules: ({ ids, entities }) => ids.map((id) => entities[id]),
   },
 };

@@ -16,7 +16,7 @@ export default ({ dispatch, getters }, client = axios) => {
       dispatch('client/startFetching');
       return config;
     },
-    error => Promise.reject(error),
+    (error) => Promise.reject(error),
   );
 
   instance.interceptors.response.use(

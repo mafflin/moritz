@@ -17,5 +17,5 @@ new Vue({
   beforeDestroy() {
     unsync();
   },
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app');

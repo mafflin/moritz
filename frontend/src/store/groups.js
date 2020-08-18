@@ -19,7 +19,7 @@ export default {
 
   mutations: {
     setGroups(state, groups) {
-      state.ids = groups.map(group => group.id);
+      state.ids = groups.map((group) => group.id);
       state.entities = { ...state.entities, ...convertArrayToObject(groups) };
     },
 
@@ -35,7 +35,7 @@ export default {
     },
 
     deleteGroup(state, groupId) {
-      state.ids = state.ids.filter(id => id !== groupId);
+      state.ids = state.ids.filter((id) => id !== groupId);
       state.selectedId = null;
     },
 
@@ -92,7 +92,7 @@ export default {
   },
 
   getters: {
-    groups: ({ ids, entities }) => ids.map(id => entities[id]),
+    groups: ({ ids, entities }) => ids.map((id) => entities[id]),
     selected: ({ selectedId, entities }) => entities[selectedId],
     newGroup: ({ newGroup }) => newGroup,
   },

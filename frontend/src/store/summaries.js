@@ -13,7 +13,7 @@ export default {
 
   mutations: {
     setSummaries(state, summaries) {
-      const ids = summaries.map(summary => summary.groupId);
+      const ids = summaries.map((summary) => summary.groupId);
       const entities = convertArrayToObject(summaries, 'groupId');
 
       state.ids = ids;
@@ -31,6 +31,6 @@ export default {
   },
 
   getters: {
-    summaries: ({ ids, entities }) => ids.map(id => entities[id]),
+    summaries: ({ ids, entities }) => ids.map((id) => entities[id]),
   },
 };

@@ -9,7 +9,7 @@ const API_URL = '/api/v1';
 const API_FORMAT = 'json';
 
 function buildEndpoint(...params) {
-  const url = [API_URL, ...params].filter(e => !!e).join('/');
+  const url = [API_URL, ...params].filter((e) => !!e).join('/');
   return [url, API_FORMAT].join('.');
 }
 
