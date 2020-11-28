@@ -11,7 +11,7 @@ services:
   backend:
     build:
       context: .
-    image: bankoque_backend
+    image: moritz_backend
     networks:
       - net
     depends_on:
@@ -23,7 +23,7 @@ services:
   frontend:
     build:
       context: ./frontend
-    image: bankoque_frontend
+    image: moritz_frontend
     networks:
       - net
     working_dir: /app

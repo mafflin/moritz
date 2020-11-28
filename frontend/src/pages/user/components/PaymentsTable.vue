@@ -6,7 +6,7 @@
     item-key="id"
     must-sort
   >
-    <template v-slot:item.note="{ item }">
+    <template #[`item.note`]="{ item }">
       <span>
         {{ item.note }}
         <router-link
@@ -17,12 +17,12 @@
         </router-link>
       </span>
     </template>
-    <template v-slot:item.debit="{ item }">
+    <template #[`item.debit`]="{ item }">
       <v-chip color="teal lighten-4">
         {{ item.debit.toFixed(2) }}
       </v-chip>
     </template>
-    <template v-slot:item.credit="{ item }">
+    <template #[`item.credit`]="{ item }">
       <v-chip color="indigo lighten-4">
         {{ item.credit.toFixed(2) }}
       </v-chip>

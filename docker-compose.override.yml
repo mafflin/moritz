@@ -5,9 +5,9 @@ services:
     volumes:
       - ./tmp/postgres/dev:/var/lib/postgresql/data
     environment: &postgres_env
-      POSTGRES_DB: bankoque
-      POSTGRES_PASSWORD: bankoque
-      POSTGRES_USER: bankoque
+      POSTGRES_DB: moritz
+      POSTGRES_PASSWORD: moritz
+      POSTGRES_USER: moritz
 
   backend:
     expose:
