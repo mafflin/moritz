@@ -8,6 +8,7 @@ import GroupDelete from '../pages/user/pages/group/GroupDelete.vue';
 import Notes from '../pages/user/pages/payments/Notes.vue';
 import NotFound from '../pages/NotFound.vue';
 import Overview from '../pages/user/pages/overview';
+import ProfileUpdate from '../pages/user/pages/ProfileUpdate.vue';
 import Summaries from '../pages/user/pages/payments/Summaries';
 import User from '../pages/user';
 import Users from '../pages/users';
@@ -45,6 +46,11 @@ const routes = [
         component: Overview,
         props: ({ query: { q, groupId } }) => ({ query: { q, groupId } }),
         children: [
+          {
+            path: 'profile/update',
+            name: 'ProfileUpdate',
+            component: ProfileUpdate,
+          },
           {
             path: 'summaries',
             name: 'Summaries',

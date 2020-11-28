@@ -11,7 +11,7 @@
         {{ item.note }}
         <router-link
           class="link"
-          :to="{ name: 'Notes', params: { paymentId: item.id }}"
+          :to="{ name: 'Notes', params: { paymentId: item.id } }"
         >
           <v-icon class="ml-1">mdi-pencil-outline</v-icon>
         </router-link>

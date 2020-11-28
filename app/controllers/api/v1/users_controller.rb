@@ -1,6 +1,6 @@
 module Api::V1
   class UsersController < ApplicationController
-    before_action :set_user, only: [:update, :destroy]
+    before_action :set_user, only: [:show, :update]
 
     # GET /users
     def index
@@ -9,7 +9,6 @@ module Api::V1
 
     # GET /users/1
     def show
-      @user = User.find(params[:id])
     end
 
     # POST /users
@@ -25,16 +24,11 @@ module Api::V1
 
     # PATCH/PUT /users/1
     def update
-      if @user.update(user_params)
+      if Users::UpdateService.new(user: current_user, params: user_params).perform
         render :show
       else
-        render json: @user.errors, status: :unprocessable_entity
+        head :unprocessable_entity
       end
-    end
-
-    # DELETE /users/1
-    def destroy
-      @user.destroy
     end
 
     private
@@ -44,7 +38,7 @@ module Api::V1
     end
 
     def user_params
-      params.require(:users).permit(:name)
+      params.require(:user).permit(:name, :avatar)
     end
 
     def search_params

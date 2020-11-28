@@ -7,10 +7,14 @@ export const transformObject = (object = {}, fn, filterFn = () => true) => Objec
   .map((field) => ({ [field]: fn(object[field]) }))
   .reduce((acc, current) => ({ ...acc, ...current }), {});
 
-export const fileEncoder = (file) => new Promise((resolve) => {
+export const fileEncoder = (file, readAsText = true) => new Promise((resolve) => {
   const reader = new FileReader();
   reader.onload = resolve;
-  reader.readAsText(file);
+  if (readAsText) {
+    reader.readAsText(file);
+    return;
+  }
+  reader.readAsDataURL(file);
 });
 
 export const parseUrlQueryParams = (query, allowed = []) => transformObject(

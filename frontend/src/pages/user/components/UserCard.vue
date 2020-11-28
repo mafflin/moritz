@@ -8,12 +8,18 @@
       <v-card-title>
         {{ user.name }}
         <v-spacer />
-        <v-icon
-          class="ml-4"
-          color="white"
+
+        <router-link
+          class="link"
+          :to="{ name: 'ProfileUpdate' }"
         >
-          mdi-dots-horizontal
-        </v-icon>
+          <v-icon
+            class="ml-4"
+            color="white"
+          >
+            mdi-dots-horizontal
+          </v-icon>
+        </router-link>
       </v-card-title>
     </v-img>
   </v-card>

@@ -1,5 +1,5 @@
-import { fetchEntities, fetchEntity } from '../api';
-import { convertArrayToObject } from '../utils';
+import { fetchEntities, fetchEntity, updateEntity } from '../api';
+import { convertArrayToObject, fileEncoder } from '../utils';
 
 const ENTITY_TYPE = 'users';
 
@@ -40,6 +40,15 @@ export default {
     async fetchUser({ commit }, id) {
       const { item } = await fetchEntity(ENTITY_TYPE, id);
       commit('setSelectedUser', item);
+    },
+
+    async updateUser({ commit, dispatch, getters: { selectedId } }, { file }) {
+      const {
+        target: { result: avatar },
+      } = await fileEncoder(file, false);
+      const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatar } });
+      commit('setSelectedUser', item);
+      dispatch('router/goToHomePage', {}, { root: true });
     },
   },
 
