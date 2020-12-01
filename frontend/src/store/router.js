@@ -13,7 +13,7 @@ export default {
       );
       const route = to.query ? { ...to, query } : to;
 
-      router.push(route);
+      router.push(route).catch(() => {});
     },
 
     goToHomePage({ dispatch, rootGetters }, params) {
