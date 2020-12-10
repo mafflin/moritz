@@ -17,8 +17,7 @@ export default {
     },
 
     goToHomePage({ dispatch, rootGetters }, params) {
-      const userId = rootGetters['users/selectedId'];
-      const filter = rootGetters['payments/filter'];
+      const { 'users/selectedId': userId, 'payments/filter': filter } = rootGetters;
       const query = { ...filter, ...params };
 
       dispatch('changeRoute', { name: 'User', params: { userId }, query });

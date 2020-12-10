@@ -3,9 +3,10 @@ module Api::V1
     def create
       decoded = Reports::DecodeService.new(report_params[:encoded]).perform
       report = Reports::ParseService.new(decoded).perform
-      Payments::ImportService.new(current_user, report).perform
 
       if report.present?
+        Payments::ImportService.new(current_user, report).perform
+
         render :show, status: :created
       else
         head :unprocessable_entity

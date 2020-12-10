@@ -44,9 +44,9 @@ export default {
 
     async updateUser({ commit, dispatch, getters: { selectedId } }, { file }) {
       const {
-        target: { result: avatar },
+        target: { result: avatarBase64 },
       } = await fileEncoder(file, false);
-      const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatar } });
+      const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatarBase64 } });
       commit('setSelectedUser', item);
       dispatch('router/goToHomePage', {}, { root: true });
     },

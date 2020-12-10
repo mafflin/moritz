@@ -38,7 +38,7 @@ module Api::V1
     end
 
     def user_params
-      params.require(:user).permit(:name, :avatar)
+      params.require(:user).permit(:name, :avatar_base64)
     end
 
     def search_params
