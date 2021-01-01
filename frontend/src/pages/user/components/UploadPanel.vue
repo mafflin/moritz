@@ -17,7 +17,7 @@
             <v-file-input
               :value="file"
               show-size
-              accept="csv/*"
+              accept=".csv"
               label="Select report"
               @change="setFile"
             />
