@@ -2,6 +2,7 @@ require 'csv'
 
 module Reports
   class DbParseService < ApplicationService
+    BANK = 'DB'
     COL_SEP = ';'
     ENCODING = 'UTF-8'
     DATE_FORMAT = '%m/%d/%Y'
@@ -19,6 +20,7 @@ module Reports
 
     def parse(entry)
       {
+        bank: BANK,
         booked_at: Date.strptime(entry['Booking date'], DATE_FORMAT),
         transaction_type: entry['Transaction Type'],
         details: entry['Payment Details'],

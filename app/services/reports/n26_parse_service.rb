@@ -2,6 +2,7 @@ require 'csv'
 
 module Reports
   class N26ParseService < ApplicationService
+    BANK = 'n26'
     COL_SEP = ','
     ENCODING = 'UTF-8'
     DATE_FORMAT = '%Y-%m-%d'
@@ -22,6 +23,7 @@ module Reports
       is_debit = is_debit?(amount)
 
       {
+        bank: BANK,
         booked_at: Date.strptime(entry['Date'], DATE_FORMAT),
         transaction_type: entry['Transaction type'],
         details: entry['Category'],
