@@ -26,5 +26,28 @@ export default {
 
       commit('setMap', map);
     },
+
+    drawMarker({ getters: { map } }, point) {
+      new mapboxgl.Marker()
+        .setLngLat(point)
+        .addTo(map);
+    },
+
+    drawLocations({ getters: { map, locations }, dispatch }) {
+      if (!map) return;
+
+      locations.forEach(
+        (location) => dispatch('drawMarker', location.center),
+      );
+    },
+  },
+
+  getters: {
+    map: ({ map }) => map,
+    locations: (state, getters, rootState, rootGetters) => {
+      const payments = rootGetters['payments/payments'];
+      return payments.map((payment) => payment.location)
+        .filter((location) => !!location);
+    },
   },
 };

@@ -48,6 +48,7 @@ export default {
 
       commit('setPayments', items);
       dispatch('router/changeRoute', { query: filter }, { root: true });
+      dispatch('map/drawLocations', {}, { root: true });
     },
 
     async fetchPayment({ commit }, id) {

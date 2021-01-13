@@ -1,27 +1,32 @@
 <template>
   <v-card>
-    <v-img
-      class="teal lighten-4 white--text align-end"
-      height="200px"
-      :src="user.avatar"
+    <router-link
+      class="link"
+      :to="{ name: 'TheMap' }"
     >
-      <v-card-title>
-        {{ user.name }}
-        <v-spacer />
+      <v-img
+        class="teal lighten-4 white--text align-end"
+        height="200px"
+        :src="user.avatar"
+      >
+        <v-card-title>
+          {{ user.name }}
+          <v-spacer />
 
-        <router-link
-          class="link"
-          :to="{ name: 'ProfileUpdate' }"
-        >
-          <v-icon
-            class="ml-4"
-            color="white"
+          <router-link
+            class="link"
+            :to="{ name: 'ProfileUpdate' }"
           >
-            mdi-dots-horizontal
-          </v-icon>
-        </router-link>
-      </v-card-title>
-    </v-img>
+            <v-icon
+              class="ml-4"
+              color="white"
+            >
+              mdi-dots-horizontal
+            </v-icon>
+          </router-link>
+        </v-card-title>
+      </v-img>
+    </router-link>
   </v-card>
 </template>
 

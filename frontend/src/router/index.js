@@ -90,15 +90,14 @@ const routes = [
               next();
             },
           },
+          {
+            path: 'map',
+            name: 'TheMap',
+            component: TheMap,
+          },
         ],
       },
     ],
-  },
-
-  {
-    path: '/map',
-    name: 'TheMap',
-    component: TheMap,
   },
 
   {

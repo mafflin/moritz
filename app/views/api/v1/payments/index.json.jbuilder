@@ -13,4 +13,5 @@ json.items @payments do |payment|
 
   json.debit payment.debit.to_f
   json.credit payment.credit.to_f
+  json.location payment.location&.relevant
 end
