@@ -20,11 +20,13 @@ module Payments
     end
 
     def perform
-      Payment.create(
+      payment = Payment.new(
         **@attributes,
         user: @user,
         digest: digest
       )
+
+      GetPaymentLocationsJob.perform_later(payment) if payment.save
     end
 
     private

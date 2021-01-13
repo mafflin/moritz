@@ -1,13 +1,15 @@
 <template>
-  <v-row justify="center">
-    <v-expansion-panels popout>
-      <user-list-entry
-        v-for="user in users"
-        :key="user.id"
-        :user="user"
-      />
-    </v-expansion-panels>
-  </v-row>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-expansion-panels popout>
+        <user-list-entry
+          v-for="user in users"
+          :key="user.id"
+          :user="user"
+        />
+      </v-expansion-panels>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

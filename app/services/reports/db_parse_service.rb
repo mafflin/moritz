@@ -2,7 +2,7 @@ require 'csv'
 
 module Reports
   class DbParseService < ApplicationService
-    BANK = 'DB'
+    BANK = Payment::BANKS[:db]
     COL_SEP = ';'
     ENCODING = 'UTF-8'
     DATE_FORMAT = '%m/%d/%Y'

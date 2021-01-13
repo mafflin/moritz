@@ -2,7 +2,7 @@ require 'csv'
 
 module Reports
   class N26ParseService < ApplicationService
-    BANK = 'n26'
+    BANK = Payment::BANKS[:n26]
     COL_SEP = ','
     ENCODING = 'UTF-8'
     DATE_FORMAT = '%Y-%m-%d'

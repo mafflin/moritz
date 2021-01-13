@@ -7,6 +7,7 @@ import GroupShow from '../pages/user/pages/group/GroupShow.vue';
 import GroupDelete from '../pages/user/pages/group/GroupDelete.vue';
 import Notes from '../pages/user/pages/payments/Notes.vue';
 import NotFound from '../pages/NotFound.vue';
+import TheMap from '../pages/TheMap.vue';
 import Overview from '../pages/user/pages/overview';
 import ProfileUpdate from '../pages/user/pages/ProfileUpdate.vue';
 import Summaries from '../pages/user/pages/payments/Summaries';
@@ -93,6 +94,13 @@ const routes = [
       },
     ],
   },
+
+  {
+    path: '/map',
+    name: 'TheMap',
+    component: TheMap,
+  },
+
   {
     path: '*',
     name: 'NotFound',

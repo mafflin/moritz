@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_191352) do
+ActiveRecord::Schema.define(version: 2021_01_13_100115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,6 +54,16 @@ ActiveRecord::Schema.define(version: 2021_01_05_191352) do
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
+  create_table "locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "query"
+    t.jsonb "features"
+    t.jsonb "point"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_locations_on_user_id"
+  end
+
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "beneficiary"
     t.string "transaction_type"
@@ -73,7 +83,10 @@ ActiveRecord::Schema.define(version: 2021_01_05_191352) do
     t.string "digest"
     t.string "note"
     t.string "bank"
+    t.uuid "location_id"
+    t.boolean "geocoded", default: false
     t.index ["digest"], name: "index_payments_on_digest", unique: true
+    t.index ["location_id"], name: "index_payments_on_location_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 

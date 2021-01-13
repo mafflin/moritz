@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import client from './client';
 import groups from './groups';
+import map from './map';
 import payments from './payments';
 import reports from './reports';
 import router from './router';
@@ -17,6 +18,7 @@ export default new Vuex.Store({
   modules: {
     client,
     groups,
+    map,
     payments,
     reports,
     router,

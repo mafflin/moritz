@@ -1,10 +1,31 @@
 class Payment < ApplicationRecord
   belongs_to :user
+  belongs_to :location, optional: true
 
   scope :income, -> { where('credit > 0') }
   scope :expense, -> { where('debit < 0') }
 
   validates :digest, presence: true, uniqueness: true
+
+  # TODO: move to DB.
+  GEOTRACEABLE_TYPES = [
+    'Debit Card Payment',
+    'MasterCard Payment',
+  ]
+  # TODO: move to DB.
+  NON_GEOTRACEABLE_MATCH = [
+    'account statement',
+    'amzn',
+    'amazon',
+    'google',
+    'income',
+    'onlin',
+    'paypal',
+  ]
+  BANKS = {
+    db: 'DB',
+    n26: 'n26',
+  }
 
   class << self
     def by_year(date)
@@ -30,5 +51,24 @@ class Payment < ApplicationRecord
         user.rules.map(&:match_string)
       )
     end
+  end
+
+  def geo_traceable?
+    GEOTRACEABLE_TYPES.include?(transaction_type) && !NON_GEOTRACEABLE_MATCH.any? do |word|
+      [beneficiary, details].join.downcase.include?(word)
+    end
+  end
+
+  def geo_query
+    return unless geo_traceable?
+
+    @geo_query ||= case bank
+    when Payment::BANKS[:n26]
+      beneficiary
+    when Payment::BANKS[:db]
+      details
+    end
+
+    @geo_query&.split('//').first&.downcase.split(' ').join('+')
   end
 end
