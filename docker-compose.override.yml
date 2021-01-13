@@ -4,10 +4,7 @@ services:
   postgres:
     volumes:
       - ./tmp/postgres/dev:/var/lib/postgresql/data
-    environment: &postgres_env
-      POSTGRES_DB: moritz
-      POSTGRES_PASSWORD: moritz
-      POSTGRES_USER: moritz
+    env_file: .env
 
   backend:
     expose:
@@ -16,13 +13,12 @@ services:
       - .:/app
     tty: true
     stdin_open: true
-    environment: &backend_env
-      <<: *postgres_env
+    env_file: .env
+    environment:
       POSTGRES_HOST: postgres
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: enabled
       RUBYOPT: -W:no-deprecated
-      SECRET_KEY_BASE: 71111ea0be165cb505d97b496d3a0a012e1f6307a07c17993069206cece57526de5f852231bef8e48731567e6e6111a11a5ef52b6ca754d18743f1bd2a68cde5
       TERM: xterm-256color
 
   frontend:
@@ -30,4 +26,7 @@ services:
       - 8080:8080
     volumes:
       - ./frontend:/app
+    env_file: .env
+    environment:
+      TERM: xterm-256color
     command: /bin/sh -c 'npm i && npm run serve'
