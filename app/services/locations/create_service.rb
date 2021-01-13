@@ -4,14 +4,15 @@ module Locations
 
     def initialize(payment, attributes)
       @payment = payment
-      @query = attributes[:query].join('+').downcase
+      @query = attributes[:query].join(Payment::QUERY_SEPARATOR)
       @features = attributes[:features]
     end
 
     def perform
       location = Location.new(
-        query: query,
         features: features,
+        query: query,
+        original_query: payment.geo_query,
         user: payment.user,
       )
 

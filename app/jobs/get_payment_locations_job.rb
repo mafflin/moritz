@@ -4,7 +4,7 @@ class GetPaymentLocationsJob < ApplicationJob
   def perform(payment)
     return if payment.geocoded
 
-    if existing = Location.find_by(query: payment.geo_query, user: payment.user)
+    if existing = Location.find_by(original_query: payment.geo_query, user: payment.user)
       payment.update(
         location: existing,
         geocoded: true,

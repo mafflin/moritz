@@ -26,6 +26,7 @@ class Payment < ApplicationRecord
     db: 'DB',
     n26: 'n26',
   }
+  QUERY_SEPARATOR = '+'
 
   class << self
     def by_year(date)
@@ -69,6 +70,9 @@ class Payment < ApplicationRecord
       details
     end
 
-    @geo_query&.split('//').first&.downcase.split(' ').join('+')
+    @geo_query&.downcase
+      .gsub(/[^A-Za-z]/, ' ')
+      .split(' ')
+      .join(QUERY_SEPARATOR)
   end
 end
