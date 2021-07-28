@@ -13,6 +13,7 @@ import ProfileUpdate from '../pages/user/pages/ProfileUpdate.vue';
 import Summaries from '../pages/user/pages/payments/Summaries';
 import User from '../pages/user';
 import Users from '../pages/users';
+import Withdrawals from '../pages/user/pages/payments/Withdrawals.vue';
 
 import { parseUrlQueryParams } from '../utils';
 
@@ -65,6 +66,15 @@ const routes = [
             path: 'payments/:paymentId/notes',
             name: 'Notes',
             component: Notes,
+            beforeEnter: async ({ params: { paymentId } }, from, next) => {
+              await store.dispatch('payments/fetchPayment', paymentId);
+              next();
+            },
+          },
+          {
+            path: 'payments/:paymentId/withdrawals',
+            name: 'Withdrawals',
+            component: Withdrawals,
             beforeEnter: async ({ params: { paymentId } }, from, next) => {
               await store.dispatch('payments/fetchPayment', paymentId);
               next();

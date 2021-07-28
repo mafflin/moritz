@@ -6,6 +6,7 @@ class Payment < ApplicationRecord
   scope :expense, -> { where('debit < 0') }
 
   validates :digest, presence: true, uniqueness: true
+  validates :withdrawal, numericality: true
 
   # TODO: move to DB.
   GEOTRACEABLE_TYPES = [

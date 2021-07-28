@@ -25,7 +25,7 @@ module Api::V1
     private
 
     def payment_params
-      params.require(:payment).permit(:id, :note)
+      params.require(:payment).permit(:id, :note, :withdrawal)
     end
   end
 end

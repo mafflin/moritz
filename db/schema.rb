@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_190031) do
+ActiveRecord::Schema.define(version: 2021_07_28_210446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2021_01_13_190031) do
     t.string "bank"
     t.uuid "location_id"
     t.boolean "geocoded", default: false
+    t.decimal "withdrawal", default: "0.0"
     t.index ["digest"], name: "index_payments_on_digest", unique: true
     t.index ["location_id"], name: "index_payments_on_location_id"
     t.index ["user_id"], name: "index_payments_on_user_id"

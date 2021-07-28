@@ -17,6 +17,17 @@
         </router-link>
       </span>
     </template>
+    <template #[`item.withdrawal`]="{ item }">
+      <span>
+        <span v-if="item.withdrawal">{{ item.withdrawal }}</span>
+        <router-link
+          class="link"
+          :to="{ name: 'Withdrawals', params: { paymentId: item.id } }"
+        >
+          <v-icon class="ml-1">mdi-cash</v-icon>
+        </router-link>
+      </span>
+    </template>
     <template #[`item.debit`]="{ item }">
       <v-chip color="teal lighten-4">
         {{ item.debit.toFixed(2) }}
@@ -51,6 +62,7 @@ export default {
         { text: 'Details', value: 'details' },
         { text: 'Beneficiary', value: 'beneficiary' },
         { text: 'Notes', value: 'note', width: '10%' },
+        { text: 'Cash', value: 'withdrawal', width: '10%' },
         { text: 'Debit', value: 'debit', width: '10%' },
         { text: 'Credit', value: 'credit', width: '10%' },
       ],
