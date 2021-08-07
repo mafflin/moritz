@@ -18,8 +18,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import DatePicker from './filters/DatePicker.vue';
-import GroupSelect from './filters/GroupSelect.vue';
+import DatePicker from './DatePicker.vue';
+import GroupSelect from './GroupSelect.vue';
 
 export default {
   name: 'FiltersPanel',

@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import SummariesTable from '../../components/summaries/SummariesTable.vue';
+import SummariesTable from '../../components/SummariesTable.vue';
 
 export default {
   name: 'Summaries',

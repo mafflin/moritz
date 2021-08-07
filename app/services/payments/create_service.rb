@@ -26,7 +26,7 @@ module Payments
         digest: digest
       )
 
-      GetPaymentLocationsJob.perform_later(payment) if payment.save
+      run_post_create_hooks if payment.save
     end
 
     private
@@ -36,6 +36,10 @@ module Payments
       secret = @user.id
 
       Base64.strict_encode64(OpenSSL::HMAC.digest(ALGORITHM, secret, value))
+    end
+
+    def run_post_create_hooks
+      GetPaymentLocationsJob.perform_later(payment) if geo_service_enabled
     end
   end
 end

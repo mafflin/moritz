@@ -48,6 +48,16 @@
             <strong>{{ credit.toFixed() }}</strong>
           </span>
         </v-chip>
+
+        <v-chip
+          color="pink lighten-4"
+          class="ma-2"
+        >
+          <span>
+            Withdrawal:
+            <strong>{{ withdrawal.toFixed() }}</strong>
+          </span>
+        </v-chip>
       </div>
     </v-expansion-panel-header>
 
@@ -74,7 +84,7 @@ export default {
   name: 'SummaryPanel',
 
   computed: {
-    ...mapGetters('payments', ['total', 'debit', 'credit', 'filter']),
+    ...mapGetters('payments', ['total', 'debit', 'credit', 'withdrawal', 'filter']),
   },
 };
 </script>

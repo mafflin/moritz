@@ -8,6 +8,7 @@ export default {
 
   state: {
     map: null,
+    enabled: false,
   },
 
   mutations: {

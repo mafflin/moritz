@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { UNMATCHED_GROUP_ID } from '../../../../utils';
+import { UNMATCHED_GROUP_ID } from '../../../utils';
 
 export default {
   name: 'GroupSelect',

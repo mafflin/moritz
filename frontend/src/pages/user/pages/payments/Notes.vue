@@ -25,7 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import NoteAdd from '../../components/notes/NoteAdd.vue';
+import NoteAdd from '../../components/NoteAdd.vue';
 
 export default {
   name: 'Group',

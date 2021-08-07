@@ -6,7 +6,7 @@ module Payments
     end
 
     def perform
-      @report.map do |entry|
+      @report.each do |entry|
         Payments::CreateService.new(@user, entry).perform
       end
     end

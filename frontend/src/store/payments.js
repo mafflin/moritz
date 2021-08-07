@@ -72,12 +72,23 @@ export default {
   },
 
   getters: {
-    payments: ({ ids, entities }) => ids.map((id) => entities[id]),
     selected: ({ selectedId, entities }) => entities[selectedId],
-    debit: ({ ids, entities }) => ids.map((id) => entities[id].debit).reduce((a, b) => a + b, 0),
-    credit: ({ ids, entities }) => ids.map((id) => entities[id].credit).reduce((a, b) => a + b, 0),
+
+    payments: ({ ids, entities }) => ids.map((id) => entities[id]),
+
+    debit: (state, { payments }) => payments
+      .map(({ debit }) => debit).reduce((a, b) => a + b, 0),
+
+    credit: (state, { payments }) => payments
+      .map(({ credit }) => credit).reduce((a, b) => a + b, 0),
+
+    withdrawal: (state, { payments }) => payments
+      .map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0),
+
     total: ({ ids }) => ids.length,
+
     filter: ({ filter }) => filter,
+
     formattedFilter: ({ filter }) => {
       const date = filter.date && `${filter.date}-01`;
       return { ...filter, date };

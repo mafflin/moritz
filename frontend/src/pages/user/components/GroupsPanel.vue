@@ -20,8 +20,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import GroupAdd from './groups/GroupAdd.vue';
-import GroupList from './groups/GroupList.vue';
+import GroupAdd from './GroupAdd.vue';
+import GroupList from './GroupList.vue';
 
 export default {
   name: 'GroupsPanel',
