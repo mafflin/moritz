@@ -14,8 +14,8 @@ module Users
     private
 
     def update_avatar
-      meta, *, image = @avatar_base64.split(';base64,')
-      type, * = meta.split('data:')
+      meta, image = @avatar_base64.split(';base64,')
+      *, type = meta.split('data:')
 
       return false unless image && type
 
