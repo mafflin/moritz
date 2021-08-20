@@ -104,6 +104,10 @@ const routes = [
             path: 'map',
             name: 'TheMap',
             component: TheMap,
+            beforeEnter: (to, from, next) => {
+              if (!store.getters['map/geoServiceEnabled']) return;
+              next();
+            },
           },
         ],
       },

@@ -1,6 +1,5 @@
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
-const TOKEN = process.env.VUE_APP_MAPBOX_TOKEN;
 const STYLE = 'mapbox://styles/mapbox/outdoors-v11';
 
 export default {
@@ -8,7 +7,8 @@ export default {
 
   state: {
     map: null,
-    enabled: false,
+    token: process.env.VUE_APP_MAPBOX_TOKEN,
+    enabled: process.env.VUE_APP_GEO_SERVICE === 'true',
   },
 
   mutations: {
@@ -18,8 +18,8 @@ export default {
   },
 
   actions: {
-    mountMap({ commit }, element) {
-      mapboxgl.accessToken = TOKEN;
+    mountMap({ commit, getters: { token } }, element) {
+      mapboxgl.accessToken = token;
       const map = new mapboxgl.Map({
         container: element,
         style: STYLE,
@@ -45,10 +45,17 @@ export default {
 
   getters: {
     map: ({ map }) => map,
+
+    token: ({ token }) => token,
+
     locations: (state, getters, rootState, rootGetters) => {
       const payments = rootGetters['payments/payments'];
       return payments.map((payment) => payment.location)
         .filter((location) => !!location);
+    },
+
+    geoServiceEnabled({ enabled, token }) {
+      return !!enabled && !!token;
     },
   },
 };

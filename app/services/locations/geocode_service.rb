@@ -5,13 +5,12 @@ module Locations
   class GeocodeService < ApplicationService
     attr_accessor :query
 
-    ACCESS_TOKEN = ENV['VUE_APP_MAPBOX_TOKEN']
-
     def initialize(payment)
       @query = payment.geo_query
     end
 
     def perform
+      return if !geo_service_enabled || !access_token.present?
       return if !query || !gecoding.present?
 
       ActiveSupport::HashWithIndifferentAccess.new(gecoding)
@@ -24,11 +23,19 @@ module Locations
     end
 
     def gecoding
-      @response ||= RestClient.get(url, { params: { access_token: ACCESS_TOKEN } })
+      @response ||= RestClient.get(url, { params: { access_token: access_token } })
 
       return unless @response.code == 200
 
       @gecoding ||= JSON.parse(@response.body)
+    end
+
+    def access_token
+      @access_token ||= ENV.fetch('VUE_APP_MAPBOX_TOKEN')
+    end
+
+    def geo_service_enabled
+      @geo_service_enabled ||= ENV.fetch('VUE_APP_GEO_SERVICE') === 'true'
     end
   end
 end

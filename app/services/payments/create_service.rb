@@ -14,6 +14,8 @@ module Payments
       :original_credit,
     ]
 
+    attr_accessor :payment
+
     def initialize(user, attributes)
       @user = user
       @attributes = attributes
@@ -39,7 +41,7 @@ module Payments
     end
 
     def run_post_create_hooks
-      GetPaymentLocationsJob.perform_later(payment) if geo_service_enabled
+      GetPaymentLocationsJob.perform_later(payment)
     end
   end
 end
