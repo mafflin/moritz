@@ -20,7 +20,6 @@ services:
       RAILS_LOG_TO_STDOUT: enabled
       RUBYOPT: -W:no-deprecated
       TERM: xterm-256color
-      MORITZ_GEO_SERVICE: 'false'
 
   frontend:
     ports:
