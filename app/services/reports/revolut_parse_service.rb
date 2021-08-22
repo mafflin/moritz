@@ -3,6 +3,7 @@ require 'csv'
 module Reports
   class RevolutParseService < ApplicationService
     BANK = Payment::BANKS[:revolut]
+    TRANSACTION_TYPE = 'Revolut payment'
     COL_SEP = ','
     ENCODING = 'UTF-8'
     DATE_FORMAT = '%d %b %Y'
@@ -33,6 +34,7 @@ module Reports
       {
         bank: BANK,
         booked_at: Date.strptime(entry['Completed Date'], DATE_FORMAT),
+        transaction_type: TRANSACTION_TYPE,
         details: entry['Description'],
         currency: CURRENCY,
         original_debit: is_debit && original_amount,

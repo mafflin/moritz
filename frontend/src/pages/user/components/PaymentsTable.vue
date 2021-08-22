@@ -56,6 +56,7 @@ export default {
         {
           text: 'Booked at', align: 'left', value: 'bookedAt', width: '15%',
         },
+        { text: 'Bank', value: 'bank' },
         { text: 'Type', value: 'transactionType' },
         { text: 'Details', value: 'details' },
         { text: 'Beneficiary', value: 'beneficiary' },

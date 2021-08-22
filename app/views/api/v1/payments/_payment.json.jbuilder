@@ -1,5 +1,6 @@
 json.extract! payment,
   :id,
+  :bank,
   :booked_at,
   :transaction_type,
   :details,
