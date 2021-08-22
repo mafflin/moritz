@@ -28,8 +28,6 @@
 import UserInfo from './UserInfo.vue';
 
 export default {
-  name: 'UserListEntry',
-
   components: {
     UserInfo,
   },

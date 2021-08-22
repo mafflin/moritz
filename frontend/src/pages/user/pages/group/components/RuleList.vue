@@ -18,8 +18,6 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'RuleList',
-
   computed: {
     ...mapGetters('rules', ['rules']),
   },

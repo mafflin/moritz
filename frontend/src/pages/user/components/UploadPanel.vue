@@ -46,8 +46,6 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
-  name: 'UploadPanel',
-
   computed: {
     ...mapGetters('reports', ['file']),
     ...mapGetters('client', ['loading']),

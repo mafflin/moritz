@@ -22,8 +22,6 @@ import DatePicker from './DatePicker.vue';
 import GroupSelect from './GroupSelect.vue';
 
 export default {
-  name: 'FiltersPanel',
-
   components: {
     DatePicker,
     GroupSelect,

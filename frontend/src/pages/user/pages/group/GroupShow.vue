@@ -33,8 +33,6 @@ import RuleAdd from './components/RuleAdd.vue';
 import RuleList from './components/RuleList.vue';
 
 export default {
-  name: 'Group',
-
   components: {
     RuleAdd,
     RuleList,

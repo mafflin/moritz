@@ -29,8 +29,6 @@ module Reports
         details: entry['Category'],
         beneficiary: entry['Payee'],
         customer_reference: entry['Payment reference'],
-        mandate_reference: nil,
-        external_creditor_id: nil,
         currency: entry['Type Foreign Currency'],
         original_debit: is_debit && original_amount,
         original_credit: !is_debit && original_amount,

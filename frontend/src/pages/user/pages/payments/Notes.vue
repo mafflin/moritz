@@ -28,8 +28,6 @@ import { mapActions, mapGetters } from 'vuex';
 import NoteAdd from '../../components/NoteAdd.vue';
 
 export default {
-  name: 'Group',
-
   components: {
     NoteAdd,
   },

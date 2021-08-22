@@ -54,8 +54,6 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: 'ProfileUpload',
-
   data() {
     return { file: null };
   },

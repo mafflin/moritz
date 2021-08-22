@@ -33,8 +33,6 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'RuleAdd',
-
   props: {
     groupId: {
       type: String,

@@ -1,5 +1,5 @@
 import { fetchEntities, fetchEntity, updateEntity } from '../api';
-import { convertArrayToObject, fileEncoder } from '../utils';
+import { convertArrayToObject, fileEncoder, parseUrlQueryParams } from '../utils';
 
 const ENTITY_TYPE = 'users';
 
@@ -49,6 +49,13 @@ export default {
       const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatarBase64 } });
       commit('setSelectedUser', item);
       dispatch('router/goToHomePage', {}, { root: true });
+    },
+
+    async loadUserPage({ dispatch }, { userId, query }) {
+      await dispatch('fetchUser', userId);
+      const filter = parseUrlQueryParams(query, ['date', 'groupId']);
+      dispatch('groups/fetchGroups', {}, { root: true });
+      dispatch('payments/updateFilter', filter, { root: true });
     },
   },
 

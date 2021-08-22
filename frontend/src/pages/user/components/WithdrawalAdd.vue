@@ -30,8 +30,6 @@
 
 <script>
 export default {
-  name: 'NoteAdd',
-
   props: {
     onSubmit: {
       type: Function,

@@ -13,8 +13,6 @@
 import { UNMATCHED_GROUP_ID } from '../../../utils';
 
 export default {
-  name: 'GroupSelect',
-
   props: {
     groups: {
       type: Array,

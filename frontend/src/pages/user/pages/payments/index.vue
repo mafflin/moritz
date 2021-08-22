@@ -11,8 +11,6 @@ import { mapGetters } from 'vuex';
 import PaymentsTable from '../../components/PaymentsTable.vue';
 
 export default {
-  name: 'Payments',
-
   components: {
     PaymentsTable,
   },

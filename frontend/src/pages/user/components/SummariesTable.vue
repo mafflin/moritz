@@ -11,8 +11,6 @@
 
 <script>
 export default {
-  name: 'SummariesTable',
-
   props: {
     summaries: {
       type: Array,

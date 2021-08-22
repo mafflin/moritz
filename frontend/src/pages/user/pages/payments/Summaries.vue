@@ -15,8 +15,6 @@ import { mapGetters, mapActions } from 'vuex';
 import SummariesTable from '../../components/SummariesTable.vue';
 
 export default {
-  name: 'Summaries',
-
   components: {
     SummariesTable,
   },

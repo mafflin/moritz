@@ -81,8 +81,6 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'SummaryPanel',
-
   computed: {
     ...mapGetters('payments', ['total', 'debit', 'credit', 'withdrawal', 'filter']),
   },

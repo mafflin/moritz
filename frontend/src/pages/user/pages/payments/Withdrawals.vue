@@ -28,8 +28,6 @@ import { mapActions, mapGetters } from 'vuex';
 import WithdrawalAdd from '../../components/WithdrawalAdd.vue';
 
 export default {
-  name: 'Group',
-
   components: {
     WithdrawalAdd,
   },

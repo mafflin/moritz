@@ -13,8 +13,6 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'Notifications',
-
   computed: {
     ...mapGetters('client', ['error']),
     ...mapGetters('ui', ['message']),

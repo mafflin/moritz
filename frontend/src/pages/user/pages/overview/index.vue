@@ -42,8 +42,6 @@ import UploadPanel from '../../components/UploadPanel.vue';
 import UserCard from '../../components/UserCard.vue';
 
 export default {
-  name: 'Overview',
-
   components: {
     FiltersPanel,
     GroupsPanel,

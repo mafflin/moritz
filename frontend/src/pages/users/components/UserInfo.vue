@@ -34,8 +34,6 @@
 
 <script>
 export default {
-  name: 'UserInfo',
-
   props: {
     name: {
       type: String,

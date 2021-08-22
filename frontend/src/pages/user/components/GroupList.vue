@@ -19,8 +19,6 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'GroupList',
-
   props: {
     groups: {
       type: Array,

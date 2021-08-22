@@ -24,8 +24,6 @@ import GroupAdd from './GroupAdd.vue';
 import GroupList from './GroupList.vue';
 
 export default {
-  name: 'GroupsPanel',
-
   components: {
     GroupAdd,
     GroupList,

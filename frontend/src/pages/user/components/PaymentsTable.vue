@@ -43,8 +43,6 @@
 
 <script>
 export default {
-  name: 'Payments',
-
   props: {
     payments: {
       type: Array,

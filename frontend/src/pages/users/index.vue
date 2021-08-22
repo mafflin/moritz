@@ -17,8 +17,6 @@ import { mapGetters } from 'vuex';
 import UserListEntry from './components/UserListEntry.vue';
 
 export default {
-  name: 'Users',
-
   components: {
     UserListEntry,
   },

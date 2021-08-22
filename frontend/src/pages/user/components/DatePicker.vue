@@ -26,8 +26,6 @@
 
 <script>
 export default {
-  name: 'DatePicker',
-
   props: {
     onChange: {
       type: Function,

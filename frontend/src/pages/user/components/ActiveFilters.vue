@@ -28,8 +28,6 @@
 
 <script>
 export default {
-  name: 'ActiveFilters',
-
   props: {
     filter: {
       type: Object,

@@ -33,11 +33,7 @@ module Reports
       {
         bank: BANK,
         booked_at: Date.strptime(entry['Completed Date'], DATE_FORMAT),
-        transaction_type: nil,
         details: entry['Description'],
-        beneficiary: nil,
-        mandate_reference: nil,
-        external_creditor_id: nil,
         currency: CURRENCY,
         original_debit: is_debit && original_amount,
         original_credit: !is_debit && original_amount,
