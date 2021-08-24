@@ -44,11 +44,15 @@ export default {
   },
 
   getters: {
-    map: ({ map }) => map,
+    map({ map }) {
+      return map;
+    },
 
-    token: ({ token }) => token,
+    token({ token }) {
+      return token;
+    },
 
-    locations: (state, getters, rootState, rootGetters) => {
+    locations(state, getters, rootState, rootGetters) {
       const payments = rootGetters['payments/payments'];
       return payments.map((payment) => payment.location)
         .filter((location) => !!location);

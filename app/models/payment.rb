@@ -7,9 +7,15 @@ class Payment < ApplicationRecord
   scope :income, -> { where('credit > 0') }
   scope :expense, -> { where('debit < 0') }
 
+  validates :credit, presence: true
+  validates :debit, presence: true
   validates :digest, presence: true, uniqueness: true
   validates :withdrawal, numericality: true
 
+  before_save :round_credit
+  before_save :round_debit
+
+  ROUND_TO = 2
   BANKS = {
     db: 'DB',
     n26: 'n26',
@@ -40,5 +46,15 @@ class Payment < ApplicationRecord
         user.rules.map(&:match_string)
       )
     end
+  end
+
+  private
+
+  def round_credit
+    self.credit = self.credit.round(ROUND_TO)
+  end
+
+  def round_debit
+    self.debit = self.debit.round(ROUND_TO)
   end
 end
