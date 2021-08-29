@@ -29,8 +29,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import RuleAdd from './components/RuleAdd.vue';
-import RuleList from './components/RuleList.vue';
+import RuleAdd from '../../components/RuleAdd.vue';
+import RuleList from '../../components/RuleList.vue';
 
 export default {
   components: {

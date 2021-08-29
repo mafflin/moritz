@@ -1,15 +1,13 @@
-require 'csv'
-
 module Reports
-  class DbParseService < ApplicationService
+  class DbParseService < BaseBankParseService
     BANK = Payment::BANKS[:db]
     COL_SEP = ';'
-    ENCODING = 'UTF-8'
+    ENCODING_IN = 'ISO-8859-1'
     DATE_FORMAT = '%m/%d/%Y'
     LINE_MATCH = /^((?!(\d\d\/\d\d\/\d\d\d\d;\d\d\/\d\d\/\d\d\d\d|Booking)).)*$/
 
     def initialize(report)
-      @report = report
+      @report = report.encode(ENCODING, ENCODING_IN)
     end
 
     def perform

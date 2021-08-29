@@ -1,15 +1,7 @@
-require 'csv'
-
 module Reports
-  class N26ParseService < ApplicationService
+  class N26ParseService < BaseBankParseService
     BANK = Payment::BANKS[:n26]
-    COL_SEP = ','
-    ENCODING = 'UTF-8'
     DATE_FORMAT = '%Y-%m-%d'
-
-    def initialize(report)
-      @report = report
-    end
 
     def perform
       CSV.parse(@report, **params).map { |line| parse(line.to_hash) }

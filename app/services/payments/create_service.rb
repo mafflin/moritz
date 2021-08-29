@@ -14,34 +14,32 @@ module Payments
       :original_credit,
     ]
 
-    attr_accessor :payment
-
     def initialize(user, attributes)
       @user = user
       @attributes = attributes
     end
 
     def perform
-      payment = Payment.new(
+      @payment = Payment.new(
         **@attributes,
         user: @user,
         digest: digest
       )
 
-      run_post_create_hooks if payment.save
+      run_post_create_hooks if @payment.save
     end
 
     private
 
     def digest
       value = @attributes.values_at(*DIGEST_PARAMS).join
-      secret = @user.id
+      salt = @user.id
 
-      Base64.strict_encode64(OpenSSL::HMAC.digest(ALGORITHM, secret, value))
+      Base64.strict_encode64(OpenSSL::HMAC.digest(ALGORITHM, salt, value))
     end
 
     def run_post_create_hooks
-      GetPaymentLocationsJob.perform_later(payment)
+      GetPaymentLocationsJob.perform_later(@payment)
     end
   end
 end

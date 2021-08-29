@@ -1,8 +1,7 @@
 module Api::V1
   class ReportsController < ApplicationController
     def create
-      decoded = Reports::DecodeService.new(report_params[:encoded]).perform
-      report = Reports::ParseService.new(decoded).perform
+      report = Reports::ParseService.new(report_params[:encoded]).perform
 
       if report.present?
         Payments::ImportService.new(current_user, report).perform

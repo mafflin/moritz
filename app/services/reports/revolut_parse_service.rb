@@ -1,18 +1,10 @@
-require 'csv'
-
 module Reports
-  class RevolutParseService < ApplicationService
+  class RevolutParseService < BaseBankParseService
     BANK = Payment::BANKS[:revolut]
     TRANSACTION_TYPE = 'Revolut payment'
-    COL_SEP = ','
-    ENCODING = 'UTF-8'
     DATE_FORMAT = '%d %b %Y'
     DEBIT_MATCH = 'Fee:'
     CURRENCY = 'EUR'
-
-    def initialize(report)
-      @report = report.gsub('"', '')
-    end
 
     def perform
       CSV.parse(@report, **params).map do |line|

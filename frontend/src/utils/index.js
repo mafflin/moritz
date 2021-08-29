@@ -2,9 +2,10 @@ export const convertArrayToObject = (array, key = 'id') => array
   .map((item) => ({ [item[key]]: item }))
   .reduce((acc, current) => ({ ...acc, ...current }), {});
 
-export const transformObject = (object = {}, fn, filterFn = () => true) => Object.keys(object)
+export const transformObject = (object = {}, transformFn, filterFn = () => true) => Object
+  .keys(object)
   .filter((field) => filterFn(object, field))
-  .map((field) => ({ [field]: fn(object[field]) }))
+  .map((field) => ({ [field]: transformFn(object[field]) }))
   .reduce((acc, current) => ({ ...acc, ...current }), {});
 
 export const fileEncoder = (file, readAsText = true) => new Promise((resolve) => {
