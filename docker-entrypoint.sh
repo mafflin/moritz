@@ -8,8 +8,8 @@ test_db_connection() {
     if [ $? -eq  0 ]; then
       return
     else
-      echo $i
-      sleep 1
+      echo "Waiting for db... $i."
+      sleep $i
     fi
   done
   exit 1
