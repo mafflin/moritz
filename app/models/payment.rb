@@ -7,10 +7,12 @@ class Payment < ApplicationRecord
   scope :income, -> { where('credit > 0') }
   scope :expense, -> { where('debit < 0') }
 
-  validates :credit, presence: true
-  validates :debit, presence: true
+  validates :credit, presence: true, numericality: true
+  validates :debit, presence: true, numericality: true
   validates :digest, presence: true, uniqueness: true
   validates :withdrawal, numericality: true
+
+  before_validation :generate_digest, on: :create
 
   before_save :round_credit
   before_save :round_debit
@@ -21,6 +23,19 @@ class Payment < ApplicationRecord
     n26: 'n26',
     revolut: 'revolut',
   }
+  DIGEST_ALGORITHM = 'sha256'
+  DIGEST_PARAMS = [
+    :booked_at,
+    :transaction_type,
+    :details,
+    :beneficiary,
+    :customer_reference,
+    :mandate_reference,
+    :external_creditor_id,
+    :currency,
+    :original_debit,
+    :original_credit,
+  ]
 
   class << self
     def by_year(date)
@@ -56,5 +71,15 @@ class Payment < ApplicationRecord
 
   def round_debit
     self.debit = self.debit.round(ROUND_TO)
+  end
+
+  def generate_digest
+    digest = OpenSSL::HMAC.digest(
+      DIGEST_ALGORITHM,
+      user_id,
+      values_at(*DIGEST_PARAMS).join
+    )
+
+    self.digest = Base64.strict_encode64(digest)
   end
 end
