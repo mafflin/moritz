@@ -1,7 +1,8 @@
 module Api::V1
   class ReportsController < ApplicationController
     def create
-      report = Reports::ParseService.new(report_params[:encoded]).perform
+      csv = Base64.decode64(report_params[:encoded])
+      report = Reports::ParseService.new(csv).perform
 
       if report.present?
         Payments::ImportService.new(current_user, report).perform

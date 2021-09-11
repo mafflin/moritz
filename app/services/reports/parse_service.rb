@@ -1,5 +1,3 @@
-require 'csv'
-
 module Reports
   class ParseService < ApplicationService
     PARSERS = [
@@ -8,17 +6,17 @@ module Reports
       { service: RevolutParseService, match: 'Paid Out (EUR)' },
     ]
 
-    def initialize(encoded_csv)
-      report = Base64.decode64(encoded_csv).gsub('"', '')
+    def initialize(csv)
+      report = csv.gsub('"', '')
       parser = PARSERS.find { |entry| report.include?(entry[:match]) }
 
       raise StandardError.new('Unknown Bank or invalid file format!') if !parser
 
-      @service = parser[:service].new(report)
+      @bank_specific_service = parser[:service].new(report)
     end
 
     def perform
-      @service.perform
+      @bank_specific_service.perform
     end
   end
 end
