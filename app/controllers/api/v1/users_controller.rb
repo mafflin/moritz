@@ -29,6 +29,8 @@ module Api::V1
       else
         head :unprocessable_entity
       end
+    rescue Users::UpdateError => e
+      render json: { avatar: [e] }, status: :unprocessable_entity
     end
 
     private

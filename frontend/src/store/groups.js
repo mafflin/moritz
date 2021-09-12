@@ -67,7 +67,7 @@ export default {
 
         dispatch('ui/showMessage', 'Group created!', { root: true });
       } catch (error) {
-        dispatch('client/raiseError', 'Group exists!', { root: true });
+        // Handled by client!
       }
     },
 

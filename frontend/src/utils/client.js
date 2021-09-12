@@ -25,10 +25,15 @@ export default ({ dispatch, getters }, client = axios) => {
       return response;
     },
     (error) => {
-      dispatch('client/raiseError', error.message);
+      const { data, status } = error.response || {};
+      const message = data
+        ? Object.keys(data).map((key) => `${key}: ${data[key]}`).join('\n')
+        : error.message;
+
+      dispatch('client/raiseError', message);
       dispatch('client/finishFetching');
 
-      if (error.response.status === 404) {
+      if (status === 404) {
         dispatch('router/changeRoute', { name: 'NotFound' });
       }
 

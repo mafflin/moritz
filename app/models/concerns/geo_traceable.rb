@@ -25,7 +25,7 @@ module GeoTraceable
   end
 
   def geo_query
-    return unless geo_traceable?
+    return if !geo_traceable?
 
     @geo_query ||= case bank
     when Payment::BANKS[:n26]
@@ -35,9 +35,10 @@ module GeoTraceable
       details
     end
 
-    @geo_query&.downcase
-      .gsub(/[^A-Za-z]/, ' ')
-      .split(' ')
-      .join(QUERY_SEPARATOR)
+    @geo_query
+      &.downcase
+      &.gsub(/[^A-Za-z]/, ' ')
+      &.split(' ')
+      &.join(QUERY_SEPARATOR)
   end
 end

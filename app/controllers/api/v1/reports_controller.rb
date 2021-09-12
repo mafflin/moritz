@@ -11,6 +11,8 @@ module Api::V1
       else
         head :unprocessable_entity
       end
+    rescue Reports::ParseError => e
+      render json: { file: [e] }, status: :unprocessable_entity
     end
 
     private

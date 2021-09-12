@@ -10,7 +10,7 @@ module Reports
       report = csv.gsub('"', '')
       parser = PARSERS.find { |entry| report.include?(entry[:match]) }
 
-      raise StandardError.new('Unknown Bank or invalid file format!') if !parser
+      raise ParseError.new('Unknown Bank or invalid file format!') if !parser
 
       @bank_specific_service = parser[:service].new(report)
     end
@@ -18,5 +18,8 @@ module Reports
     def perform
       @bank_specific_service.perform
     end
+  end
+
+  class ParseError < StandardError
   end
 end

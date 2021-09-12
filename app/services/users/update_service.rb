@@ -12,7 +12,7 @@ module Users
     end
 
     def perform
-      return false unless @avatar_base64
+      return false if !@avatar_base64
 
       update_avatar
     end
@@ -24,9 +24,9 @@ module Users
       *, type = meta.split('data:')
       decoded = Base64.decode64(image)
 
-      raise StandardError.new('Unprocessable image!') unless image && type
-      raise StandardError.new('Unsupported image format!') unless IMAGE_TYPES.include?(type)
-      raise StandardError.new('File is too lagre!') if decoded.bytesize > IMAGE_SIZE_LIMIT
+      raise UpdateError.new('Unprocessable image!') if !image || !type
+      raise UpdateError.new('Unsupported image format!') if !IMAGE_TYPES.include?(type)
+      raise UpdateError.new('Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
 
       @user.avatar.purge
       @user.avatar.attach(
@@ -35,5 +35,8 @@ module Users
         content_type: type,
       )
     end
+  end
+
+  class UpdateError < StandardError
   end
 end
