@@ -1,5 +1,11 @@
 module Users
   class UpdateService < ApplicationService
+    IMAGE_SIZE_LIMIT = 2.megabytes
+    IMAGE_TYPES = [
+      'image/jpeg',
+      'image/png',
+    ]
+
     def initialize(user:, params:)
       @user = user
       @avatar_base64 = params[:avatar_base64]
@@ -16,12 +22,15 @@ module Users
     def update_avatar
       meta, image = @avatar_base64.split(';base64,')
       *, type = meta.split('data:')
+      decoded = Base64.decode64(image)
 
-      return false unless image && type
+      raise StandardError.new('Unprocessable image!') unless image && type
+      raise StandardError.new('Unsupported image format!') unless IMAGE_TYPES.include?(type)
+      raise StandardError.new('File is too lagre!') if decoded.bytesize > IMAGE_SIZE_LIMIT
 
       @user.avatar.purge
       @user.avatar.attach(
-        io: StringIO.new(Base64.decode64(image)),
+        io: StringIO.new(decoded),
         filename: SecureRandom.urlsafe_base64,
         content_type: type,
       )
