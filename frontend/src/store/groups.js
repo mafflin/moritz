@@ -58,33 +58,26 @@ export default {
     },
 
     async createGroup({ commit, dispatch, getters: { newGroup } }) {
-      try {
-        const { item } = await createEntity(ENTITY_TYPE, { group: newGroup });
-        if (!item) return;
+      const { item } = await createEntity(ENTITY_TYPE, { group: newGroup });
+      if (!item) return;
 
-        commit('createGroup', item);
-        commit('setNewGroup', null);
+      commit('createGroup', item);
+      commit('setNewGroup', null);
 
-        dispatch('ui/showMessage', 'Group created!', { root: true });
-      } catch (error) {
-        // Handled by client!
-      }
+      dispatch('ui/showMessage', 'Group created!', { root: true });
     },
 
-    deleteGroup({
+    async deleteGroup({
       commit, dispatch, rootGetters, getters: { selected },
     }) {
       const { id } = selected;
+      const { groupId } = rootGetters['payments/filter'];
+
+      await deleteEntity(ENTITY_TYPE, id);
+
+      commit('deleteGroup', id);
       dispatch('router/goToHomePage', {}, { root: true });
 
-      try {
-        deleteEntity(ENTITY_TYPE, id);
-        commit('deleteGroup', id);
-      } catch (error) {
-        dispatch('client/raiseError', 'Something went wrong!', { root: true });
-      }
-
-      const { groupId } = rootGetters['payments/filter'];
       if (id !== groupId) return;
 
       dispatch('payments/updateFilter', { groupId: null }, { root: true });

@@ -1,22 +1,23 @@
-// @flow
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import sync from '../utils/client';
 import store from '../store';
 
-const client = () => sync(store);
-
 const API_URL = '/api/v1';
 const API_FORMAT = 'json';
 
-function buildEndpoint(...params) {
-  const url = [API_URL, ...params].filter((e) => !!e).join('/');
-  return [url, API_FORMAT].join('.');
-}
+const client = () => sync(store);
 
-async function handleRequest(method, url, params) {
+const buildEndpoint = (...params) => {
+  const url = [API_URL, ...params]
+    .filter((e) => !!e)
+    .join('/');
+  return [url, API_FORMAT].join('.');
+};
+
+const handleRequest = async (method, url, params) => {
   const response = await method(url, decamelizeKeys(params));
   return camelizeKeys(response.data);
-}
+};
 
 export const fetchEntities = (type, params = {}) => handleRequest(
   client().get,
@@ -24,7 +25,10 @@ export const fetchEntities = (type, params = {}) => handleRequest(
   { params },
 );
 
-export const fetchEntity = (type, id) => handleRequest(client().get, buildEndpoint(type, id));
+export const fetchEntity = (type, id) => handleRequest(
+  client().get,
+  buildEndpoint(type, id),
+);
 
 export const createEntity = (type, params = {}) => handleRequest(
   client().post,
@@ -38,4 +42,7 @@ export const updateEntity = (type, id, params = {}) => handleRequest(
   params,
 );
 
-export const deleteEntity = (type, id) => handleRequest(client().delete, buildEndpoint(type, id));
+export const deleteEntity = (type, id) => handleRequest(
+  client().delete,
+  buildEndpoint(type, id),
+);

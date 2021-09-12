@@ -36,22 +36,18 @@ export default {
     },
 
     async createRule({ commit, dispatch }, rule) {
-      try {
-        const { item } = await createEntity(ENTITY_TYPE, { rule });
-        if (!item) return;
+      const { item } = await createEntity(ENTITY_TYPE, { rule });
+      if (!item) return;
 
-        commit('createRule', item);
-        dispatch('ui/showMessage', 'Rule created!', { root: true });
-        dispatch('payments/fetchPayments', {}, { root: true });
-      } catch (error) {
-        dispatch('client/raiseError', 'Rule exists!', { root: true });
-      }
+      commit('createRule', item);
+      dispatch('ui/showMessage', 'Rule created!', { root: true });
+      dispatch('payments/fetchPayments', {}, { root: true });
     },
 
-    deleteRule({ commit, dispatch }, id) {
+    async deleteRule({ commit, dispatch }, id) {
       commit('deleteRule', id);
 
-      deleteEntity(ENTITY_TYPE, id);
+      await deleteEntity(ENTITY_TYPE, id);
 
       dispatch('payments/fetchPayments', {}, { root: true });
     },
