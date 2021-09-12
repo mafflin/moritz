@@ -1,9 +1,9 @@
 module Reports
   class ParseService < ApplicationService
     PARSERS = [
-      { service: DbParseService, match: 'Customer number:' },
-      { service: N26ParseService, match: 'Amount (Foreign Currency)' },
-      { service: RevolutParseService, match: 'Paid Out (EUR)' },
+      { service: Parsers::DbParseService, match: 'Customer number:' },
+      { service: Parsers::N26ParseService, match: 'Amount (Foreign Currency)' },
+      { service: Parsers::RevolutParseService, match: 'Paid Out (EUR)' },
     ]
 
     def initialize(csv)

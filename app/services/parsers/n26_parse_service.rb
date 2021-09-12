@@ -1,5 +1,5 @@
-module Reports
-  class N26ParseService < BaseBankParseService
+module Parsers
+  class N26ParseService < BaseParseService
     BANK = Payment::BANKS[:n26]
     DATE_FORMAT = '%Y-%m-%d'
 

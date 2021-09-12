@@ -1,5 +1,5 @@
-module Reports
-  class DbParseService < BaseBankParseService
+module Parsers
+  class DbParseService < BaseParseService
     BANK = Payment::BANKS[:db]
     COL_SEP = ';'
     ENCODING_IN = 'ISO-8859-1'

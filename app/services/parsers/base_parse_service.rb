@@ -1,7 +1,7 @@
 require 'csv'
 
-module Reports
-  class BaseBankParseService < ApplicationService
+module Parsers
+  class BaseParseService < ApplicationService
     COL_SEP = ','
     ENCODING = 'UTF-8'
 

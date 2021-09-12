@@ -1,5 +1,5 @@
-module Reports
-  class RevolutParseService < BaseBankParseService
+module Parsers
+  class RevolutParseService < BaseParseService
     BANK = Payment::BANKS[:revolut]
     TRANSACTION_TYPE = 'Revolut payment'
     DATE_FORMAT = '%d %b %Y'
