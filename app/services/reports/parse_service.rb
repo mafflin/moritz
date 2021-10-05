@@ -7,12 +7,11 @@ module Reports
     ]
 
     def initialize(csv)
-      report = csv.gsub('"', '')
-      parser = PARSERS.find { |entry| report.include?(entry[:match]) }
+      parser = PARSERS.find { |entry| csv.include?(entry[:match]) }
 
       raise ParseError.new('Unknown Bank or invalid file format!') if !parser
 
-      @bank_specific_service = parser[:service].new(report)
+      @bank_specific_service = parser[:service].new(csv)
     end
 
     def perform

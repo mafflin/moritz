@@ -3,10 +3,6 @@ module Parsers
     BANK = Payment::BANKS[:n26]
     DATE_FORMAT = '%Y-%m-%d'
 
-    def perform
-      CSV.parse(@report, **params).map { |line| parse(line.to_hash) }
-    end
-
     private
 
     def parse(entry)
@@ -26,14 +22,6 @@ module Parsers
         original_credit: !is_debit && original_amount,
         debit: is_debit ? amount : 0,
         credit: !is_debit ? amount : 0,
-      }
-    end
-
-    def params
-      @params ||= {
-        headers: true,
-        encoding: ENCODING,
-        col_sep: COL_SEP,
       }
     end
 

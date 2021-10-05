@@ -10,10 +10,6 @@ module Parsers
       @report = report.encode(ENCODING, ENCODING_IN)
     end
 
-    def perform
-      CSV.parse(@report, **params).map { |line| parse(line.to_hash) }
-    end
-
     private
 
     def parse(entry)

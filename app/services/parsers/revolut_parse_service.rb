@@ -6,14 +6,14 @@ module Parsers
     DEBIT_MATCH = 'Fee:'
     CURRENCY = 'EUR'
 
-    def perform
-      CSV.parse(@report, **params).map do |line|
-        formatted = line.to_h
-          .map { |key, value| [key&.strip, value&.strip] }
-          .to_h
-
-        parse(formatted)
-      end
+    def initialize(report)
+      # Revolut CSV is crap!
+      @report = report
+        .gsub(/ *+?, *+?/, ',') # Remove whitespaces around commas.
+        .gsub(/(""[^",]+),([^"]+"")/, '\1 \2') # Remove commas from double-quoted strings.
+        .gsub(/("[^",]+),([^"]+")/, '\1.\2') # Replace commas by dots in quoted currency-strings.
+        .gsub("'", ' ') # Replace single quotes with spaces.
+        .gsub('"', '') # Remove all the quotes.
     end
 
     private
@@ -25,7 +25,7 @@ module Parsers
 
       {
         bank: BANK,
-        booked_at: Date.strptime(entry['Completed Date'], DATE_FORMAT),
+        booked_at: parse_booked_at_date(entry),
         transaction_type: TRANSACTION_TYPE,
         details: entry['Description'],
         currency: CURRENCY,
@@ -59,6 +59,12 @@ module Parsers
 
     def is_debit?(value)
       value < 0
+    end
+
+    def parse_booked_at_date(entry)
+      booked_at = entry['Completed Date'].upcase.gsub('SEPT', 'SEP')
+
+      Date.strptime(booked_at, DATE_FORMAT)
     end
   end
 end
