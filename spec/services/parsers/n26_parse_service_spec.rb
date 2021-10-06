@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Parsers::N26ParseService do
-  dummy_path = Rails.root.join('test', 'dummies', 'reports', 'n26.csv')
-  report = File.read(dummy_path)
+  before(:all) do
+    @report = file_fixture('n26.csv').read
+  end
 
   describe '#perform' do
     before(:all) do
-      @parsed = Parsers::N26ParseService.new(report).perform
+      @parsed = Parsers::N26ParseService.new(@report).perform
       @third = @parsed[2]
       @seventh = @parsed[6]
     end

@@ -1,7 +1,7 @@
 module Reports
   class ParseService < ApplicationService
     PARSERS = [
-      { service: Parsers::DbParseService, match: 'Booking date;Value date;Transaction Type;' },
+      { service: Parsers::DbParseService, match: 'Booking date;Value date;Transaction Type' },
       { service: Parsers::N26ParseService, match: '"Date","Payee","Account number"' },
       { service: Parsers::RevolutParseService, match: 'Type,Product,Started Date' },
     ]

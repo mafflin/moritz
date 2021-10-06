@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Parsers::DbParseService do
-  dummy_path = Rails.root.join('test', 'dummies', 'reports', 'db.csv')
-  report = File.read(dummy_path)
+  before(:all) do
+    @report = file_fixture('db.csv').read
+  end
 
   describe '#initialize' do
     before(:all) do
-      @processed_report = Parsers::DbParseService.new(report).instance_variable_get(:@report)
+      @processed_report = Parsers::DbParseService.new(@report).instance_variable_get(:@report)
     end
 
     it 'pre-processes the csv-report' do
@@ -16,7 +17,7 @@ RSpec.describe Parsers::DbParseService do
 
   describe '#perform' do
     before(:all) do
-      @parsed = Parsers::DbParseService.new(report).perform
+      @parsed = Parsers::DbParseService.new(@report).perform
       @first, @second, @third = @parsed
     end
 

@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Parsers::RevolutParseService do
-  dummy_path = Rails.root.join('test', 'dummies', 'reports', 'revolut.csv')
-  report = File.read(dummy_path)
+  before(:all) do
+    @report = file_fixture('revolut.csv').read
+  end
 
   describe '#perform' do
     before(:all) do
-      @parsed = Parsers::RevolutParseService.new(report).perform
+      @parsed = Parsers::RevolutParseService.new(@report).perform
 
       @first, @second, @third, @fourth = @parsed
     end
