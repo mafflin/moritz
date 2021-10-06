@@ -4,7 +4,10 @@ module Parsers
     COL_SEP = ';'
     ENCODING_IN = 'ISO-8859-1'
     DATE_FORMAT = '%m/%d/%Y'
-    LINE_MATCH = /^((?!(\d\d\/\d\d\/\d\d\d\d;\d\d\/\d\d\/\d\d\d\d|Booking)).)*$/
+    # Skips additional non-csv lines an the start and the end of the file.
+    # Matches a double date 09/28/2021;09/27/2021 in the beginning of the line.
+    # Or "Booking" in the header.
+    LINE_MATCH = /^((?!([0-9]{2}\/[0-9]{2}\/[0-9]{4};[0-9]{2}\/[0-9]{2}\/[0-9]{4}|Booking)).)*$/
 
     def initialize(report)
       @report = report.encode(ENCODING, ENCODING_IN)

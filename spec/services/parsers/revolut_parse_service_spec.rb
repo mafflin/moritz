@@ -27,6 +27,7 @@ RSpec.describe Parsers::RevolutParseService do
     it 'replaces commas and single quotes with spaces' do
       expect(@parsed[3][:details]).to eq('Atlantic Ferries sa')
       expect(@parsed[6][:details]).to eq('Grão D Areia - Vestuário Lda.')
+      expect(@parsed[9][:details]).to eq('Leal Leal & Inês Lda')
     end
 
     it 'parses the debit field from an entry with a fee' do
@@ -43,6 +44,7 @@ RSpec.describe Parsers::RevolutParseService do
 
     it 'parses the credit field' do
       expect(@parsed[10][:credit]).to eq(200)
+      expect(@parsed[10][:original_credit]).to eq('200.00')
       expect(@parsed[10][:debit]).to eq(0)
     end
 

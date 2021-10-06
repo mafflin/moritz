@@ -8,12 +8,17 @@ module Parsers
 
     def initialize(report)
       # Revolut CSV is crap!
+      # Remove whitespaces around commas.
+      # Remove commas from double double-quoted strings.
+      # Replace commas by dots in double-quoted currency-strings.
+      # Replace single quotes with spaces.
+      # Remove all the quotes.
       @report = report
-        .gsub(/ *+?, *+?/, ',') # Remove whitespaces around commas.
-        .gsub(/(""[^",]+),([^"]+"")/, '\1 \2') # Remove commas from double-quoted strings.
-        .gsub(/("[^",]+),([^"]+")/, '\1.\2') # Replace commas by dots in quoted currency-strings.
-        .gsub("'", ' ') # Replace single quotes with spaces.
-        .gsub('"', '') # Remove all the quotes.
+        .gsub(/ *+?, *+?/, ',')
+        .gsub(/""(.*?)""/) { $1.split(',').map(&:strip).join(' ') }
+        .gsub(/"(.*?)"/) { $1.split(',').join('.') }
+        .gsub("'", ' ')
+        .gsub('"', '')
     end
 
     private

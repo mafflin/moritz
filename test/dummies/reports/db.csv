@@ -1,0 +1,15 @@
+Transactions pers�nliches Konto (00);;;Customer number: 321 1009876
+04/07/2021 - 10/01/2021
+Old balance:;;;;1,376.34;EUR
+Transactions pending are not included in this report.
+Booking date;Value date;Transaction Type;Beneficiary / Originator;Payment Details;IBAN;BIC;Customer Reference;Mandate Reference;Creditor ID;Compensation amount;Original Amount;Ultimate creditor;Number of transactions;Number of cheques;Debit;Credit;Currency
+04/07/2021;04/07/2021;"SEPA-Credit Transfer";Random Account;-;DE99000000000000000000;DEUTDEDBBER;;;;;;;;;;300.00;EUR
+04/07/2021;04/07/2021;"Debit Card Payment";;EDEKA MUC IMPLERSTR//MUENCHEN/DE 06-04-2021T15:54:48 Folgenr. 009 Verfalld. 1223;;;;;;;;;;;-89.66;;EUR
+04/08/2021;04/08/2021;"Debit Card Payment";;EDEKA MUC IMPLERSTR//MUENCHEN/DE 07-04-2021T16:46:15 Folgenr. 009 Verfalld. 1223;;;;;;;;;;;-66.85;;EUR
+04/16/2021;04/16/2021;"Cash Withdrawal";;.DEUTSCHE BANK SAE//TENERIFE/ES 15-04-2021T19:56:45 Folgenr. 009 Verfalld. 1299;;;;;;;;;;;-70.00;;EUR
+04/19/2021;04/17/2021;"SEPA-Instant Payment to";Some Guy;Transferred with Deutsche Bank Mobile;DE99000000000000000000;NTSBDEAA000;;;;;;;;;-300.00;;EUR
+05/04/2021;05/04/2021;"Debit Card Payment";;GUENEY CAVUSOGLU//MUENCHEN/DE 03-05-2021T17:53:21 Folgenr. 09 Verfalld. 1223;;;;;;;;;;;-35.41;;EUR
+09/27/2021;06/30/2021;;;Korrektur Rechnungsabschlus s Q2 gem. BGH Urteil 27.4.21. Erstattung Entgelte f. Kontofuehrung, April-Juni 2021 321/1009876/00;;;;;;;;;;;;11.73;EUR
+09/28/2021;09/27/2021;"SEPA-Instant Payment to";Some Other Guy;Transferred with Deutsche Bank Mobile;DE99000000000000000000;NTSBDEAA000;;;;;;;;;-250.00;;EUR
+09/30/2021;09/30/2021;;;Balance of settlement items QM - Support 01009 Leipzig Account statement 3. quarter 21 10,9 % Debit interest 0,33 best account;;;;;;;;;;;-53.43;;EUR
+Account balance;10/01/2021;;;577.15;1EUR
