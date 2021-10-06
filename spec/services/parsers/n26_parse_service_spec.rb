@@ -7,6 +7,8 @@ RSpec.describe Parsers::N26ParseService do
   describe '#perform' do
     before(:all) do
       @parsed = Parsers::N26ParseService.new(report).perform
+      @third = @parsed[2]
+      @seventh = @parsed[6]
     end
 
     it 'parses all the entries' do
@@ -14,25 +16,26 @@ RSpec.describe Parsers::N26ParseService do
     end
 
     it 'replaces the details and transaction_type' do
-      expect(@parsed[2][:transaction_type]).to eq('MasterCard Payment')
-      expect(@parsed[2][:details]).to eq('MVG HANDY TICKET')
+      expect(@third[:transaction_type]).to eq('MasterCard Payment')
+      expect(@third[:details]).to eq('MVG HANDY TICKET')
     end
 
     it 'parses the debit field' do
-      expect(@parsed[2][:debit]).to eq(-3.4)
-      expect(@parsed[2][:original_debit]).to eq('-3.4')
-      expect(@parsed[2][:credit]).to eq(0)
+      expect(@third[:debit]).to eq(-3.4)
+      expect(@third[:original_debit]).to eq('-3.4')
+      expect(@third[:credit]).to eq(0)
+      expect(@third[:original_credit]).to eq(nil)
     end
 
     it 'parses the credit field' do
-      expect(@parsed[6][:credit]).to eq(200)
-      expect(@parsed[6][:original_credit]).to eq('200.0')
-      expect(@parsed[6][:debit]).to eq(0)
+      expect(@seventh[:credit]).to eq(200)
+      expect(@seventh[:original_credit]).to eq('200.0')
+      expect(@seventh[:debit]).to eq(0)
+      expect(@seventh[:original_debit]).to eq(nil)
     end
 
     it 'parses the booked_at date' do
-      expect(@parsed[6][:booked_at]).to eq(Date.parse('17.09.2021'))
-      expect(@parsed[10][:booked_at]).to eq(Date.parse('04.10.2021'))
+      expect(@seventh[:booked_at]).to eq(Date.parse('17.09.2021'))
     end
   end
 end

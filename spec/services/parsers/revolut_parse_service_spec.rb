@@ -4,53 +4,46 @@ RSpec.describe Parsers::RevolutParseService do
   dummy_path = Rails.root.join('test', 'dummies', 'reports', 'revolut.csv')
   report = File.read(dummy_path)
 
-  describe '#initialize' do
-    before(:all) do
-      @processed_report = Parsers::RevolutParseService.new(report).instance_variable_get(:@report)
-    end
-
-    it 'pre-processes the csv-report' do
-      expect(@processed_report).not_to include(', ', ' ,', '"', "'")
-      expect(@processed_report).to include('HUF 2.300.00')
-    end
-  end
-
   describe '#perform' do
     before(:all) do
       @parsed = Parsers::RevolutParseService.new(report).perform
+
+      @first, @second, @third, @fourth = @parsed
     end
 
     it 'parses all the entries' do
-      expect(@parsed.length).to eq(19)
+      expect(@parsed.length).to eq(6)
     end
 
-    it 'replaces commas and single quotes with spaces' do
-      expect(@parsed[3][:details]).to eq('Atlantic Ferries sa')
-      expect(@parsed[6][:details]).to eq('Grão D Areia - Vestuário Lda.')
-      expect(@parsed[9][:details]).to eq('Leal Leal & Inês Lda')
+    it 'parses details' do
+      expect(@first[:details]).to eq('Google Pay Top-Up by *0000')
+      expect(@fourth[:details]).to eq('Atlantic Ferries,sa')
     end
 
-    it 'parses the debit field from an entry with a fee' do
-      expect(@parsed[17][:debit]).to eq(-6.61)
-      expect(@parsed[17][:original_debit]).to eq('-6.61')
-      expect(@parsed[17][:credit]).to eq(0)
+    it 'parses transaction_type' do
+      expect(@first[:transaction_type]).to eq('TOPUP')
+      expect(@fourth[:transaction_type]).to eq('CARD_PAYMENT')
     end
 
-    it 'parses the debit field from an entry without a fee' do
-      expect(@parsed[1][:debit]).to eq(-4.40)
-      expect(@parsed[1][:original_debit]).to eq('-4.40')
-      expect(@parsed[1][:credit]).to eq(0)
+    it 'parses the debit field' do
+      expect(@fourth[:debit]).to eq(-16.5)
+      expect(@fourth[:original_debit]).to eq('-16.50')
+      expect(@fourth[:credit]).to eq(0)
+      expect(@fourth[:original_credit]).to eq(nil)
     end
 
     it 'parses the credit field' do
-      expect(@parsed[10][:credit]).to eq(200)
-      expect(@parsed[10][:original_credit]).to eq('200.00')
-      expect(@parsed[10][:debit]).to eq(0)
+      expect(@second[:credit]).to eq(100)
+      expect(@second[:original_credit]).to eq('100.00')
+      expect(@second[:debit]).to eq(0)
+      expect(@second[:original_debit]).to eq(nil)
     end
 
     it 'parses the booked_at date' do
-      expect(@parsed[0][:booked_at]).to eq(Date.parse('04.10.2021'))
-      expect(@parsed[12][:booked_at]).to eq(Date.parse('20.09.2021'))
+      expect(@first[:booked_at]).to eq(Date.parse('13.07.2021'))
+      expect(@second[:booked_at]).to eq(Date.parse('24.07.2021'))
+      expect(@third[:booked_at]).to eq(Date.parse('23.07.2021'))
+      expect(@fourth[:booked_at]).to eq(Date.parse('02.10.2021'))
     end
   end
 end

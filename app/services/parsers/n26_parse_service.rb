@@ -17,8 +17,8 @@ module Parsers
         details: entry['Payee'],
         customer_reference: entry['Payment reference'],
         currency: entry['Type Foreign Currency'],
-        original_debit: is_debit && original_amount,
-        original_credit: !is_debit && original_amount,
+        original_debit: is_debit ? original_amount : nil,
+        original_credit: !is_debit ? original_amount : nil,
         debit: is_debit ? amount : 0,
         credit: !is_debit ? amount : 0,
       }
