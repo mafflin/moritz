@@ -57,9 +57,9 @@ export default {
 
   methods: {
     handleSubmit() {
-      const { note, payment, onSubmit } = this;
+      const { note, payment: { id }, onSubmit } = this;
 
-      onSubmit({ id: payment.id, note });
+      onSubmit({ id, note });
     },
   },
 };

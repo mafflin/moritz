@@ -1,5 +1,7 @@
 module Payments
   class SearchService < ApplicationService
+    DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'
+
     def initialize(user:, date: nil, group_id: nil)
       @user = user
       @group_id = group_id
@@ -9,13 +11,13 @@ module Payments
     def perform
       relation = @user.payments.includes(:location).by_month(@date)
 
-      if @group_id == "unmatched"
+      if @group_id == Group::UNMATCHED_ID
         relation = relation.unmatched(@user)
       elsif group.present?
         relation = relation.by_group(group)
       end
 
-      relation
+      relation.order(DEFAULT_ORDER)
     end
 
     private

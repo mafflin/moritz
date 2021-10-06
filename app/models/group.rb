@@ -6,6 +6,8 @@ class Group < ApplicationRecord
     scope: [:user_id]
   }
 
+  UNMATCHED_ID = 'unmatched'
+
   def matches
     rules.map(&:match_string)
   end
