@@ -8,6 +8,13 @@ services:
     networks:
       - net
 
+  redis:
+    image: redis:6-alpine
+    expose:
+      - 6379
+    networks:
+      - net
+
   backend:
     build:
       context: .
