@@ -1,14 +1,7 @@
 import axios from 'axios';
 
-export default ({ dispatch, getters }, client = axios) => {
-  const userId = getters['users/selectedId'];
-  const instance = client.create({
-    headers: {
-      currentUserId: userId,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
+export default ({ dispatch }, client = axios) => {
+  const instance = client.create();
 
   instance.interceptors.request.use(
     (config) => {
@@ -30,11 +23,18 @@ export default ({ dispatch, getters }, client = axios) => {
         ? Object.keys(data).map((key) => `${key}: ${data[key]}`).join('\n')
         : error.message;
 
-      dispatch('client/raiseError', message);
       dispatch('client/finishFetching');
 
-      if (status === 404) {
-        dispatch('router/changeRoute', { name: 'NotFound' });
+      switch (status) {
+        case 401:
+          window.location.assign('/');
+          break;
+        case 404:
+          window.location.assign('/404');
+          break;
+        default:
+          dispatch('client/raiseError', message);
+          break;
       }
 
       return Promise.reject(error);

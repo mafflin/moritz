@@ -2,16 +2,13 @@ module Api::V1
   class GroupsController < ApplicationController
     before_action :set_group, only: [:show, :update, :destroy]
 
-    # GET /groups
     def index
       @groups = current_user.groups
     end
 
-    # GET /users/1
     def show
     end
 
-    # POST /groups
     def create
       @group = Group.new(group_params)
 
@@ -22,7 +19,6 @@ module Api::V1
       end
     end
 
-    # PATCH/PUT /groups/1
     def update
       if @group.update(group_params)
         render :show
@@ -31,7 +27,6 @@ module Api::V1
       end
     end
 
-    # DELETE /groups/1
     def destroy
       @group.destroy
     end

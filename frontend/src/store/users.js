@@ -39,6 +39,7 @@ export default {
 
     async fetchUser({ commit }, id) {
       const { item } = await fetchEntity(ENTITY_TYPE, id);
+
       commit('setSelectedUser', item);
     },
 
@@ -47,13 +48,17 @@ export default {
         target: { result: avatarBase64 },
       } = await fileEncoder(file, false);
       const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatarBase64 } });
+
       commit('setSelectedUser', item);
       dispatch('router/goToHomePage', {}, { root: true });
     },
 
     async loadUserPage({ dispatch }, { userId, query }) {
+      await dispatch('sessions/createSession', userId, { root: true });
       await dispatch('fetchUser', userId);
+
       const filter = parseUrlQueryParams(query, ['date', 'groupId']);
+
       dispatch('groups/fetchGroups', {}, { root: true });
       dispatch('payments/updateFilter', filter, { root: true });
     },

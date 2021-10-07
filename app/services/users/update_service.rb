@@ -15,6 +15,8 @@ module Users
       return false if !@avatar_base64
 
       update_avatar
+
+      ActionCable.server.broadcast(@user.id, 'Avatar updated')
     end
 
     private

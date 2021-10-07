@@ -25,7 +25,8 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: Users,
-    beforeEnter: (to, from, next) => {
+    beforeEnter: async (to, from, next) => {
+      await store.dispatch('sessions/deleteSession');
       store.dispatch('users/fetchUsers');
       next();
     },

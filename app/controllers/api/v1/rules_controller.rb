@@ -2,16 +2,13 @@ module Api::V1
   class RulesController < ApplicationController
     before_action :set_rule, only: [:show, :update, :destroy]
 
-    # GET /rules
     def index
       @rules = current_user.rules.where(group_id: params[:group_id])
     end
 
-    # GET /users/1
     def show
     end
 
-    # POST /rules
     def create
       @rule = Rule.new(rule_params)
 
@@ -22,7 +19,6 @@ module Api::V1
       end
     end
 
-    # PATCH/PUT /rules/1
     def update
       if @rule.update(rule_params)
         render :show
@@ -31,7 +27,6 @@ module Api::V1
       end
     end
 
-    # DELETE /rules/1
     def destroy
       @rule.destroy
     end

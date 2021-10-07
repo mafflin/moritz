@@ -9,6 +9,7 @@ import reports from './reports';
 import router from './router';
 import rules from './rules';
 import summaries from './summaries';
+import sessions from './sessions';
 import ui from './ui';
 import users from './users';
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     reports,
     router,
     rules,
+    sessions,
     summaries,
     ui,
     users,
