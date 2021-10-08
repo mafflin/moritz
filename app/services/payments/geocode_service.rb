@@ -30,16 +30,6 @@ module Payments
           geocoded: true,
         )
       end
-
-      broadcast_user_notification
-    end
-
-    private
-
-    def broadcast_user_notification
-      message = "Location found for payments: #{@payment.details}"
-
-      ActionCable.server.broadcast(@payment.user.id,message)
     end
   end
 end

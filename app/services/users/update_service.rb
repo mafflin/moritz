@@ -38,7 +38,7 @@ module Users
     end
 
     def broadcast_user_notification
-      ActionCable.server.broadcast(@user.id, 'User updated')
+      UserUpdatesChannel.broadcast_to(@user, 'User updated!')
     end
   end
 

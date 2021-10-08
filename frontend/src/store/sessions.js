@@ -9,7 +9,7 @@ export default {
 
   state: {
     session: false,
-    cable: null,
+    cableRef: null,
   },
 
   mutations: {
@@ -17,8 +17,8 @@ export default {
       state.session = session;
     },
 
-    setCable(state, cable) {
-      state.cable = cable;
+    setCableRef(state, cableRef) {
+      state.cableRef = cableRef;
     },
   },
 
@@ -42,18 +42,21 @@ export default {
       cable?.subscriptions?.consumer?.disconnect();
 
       commit('setSession', false);
-      commit('setCable', null);
+      commit('setCableRef', null);
     },
 
     createWebsocketConnection({ commit }) {
+      const cableRef = `cable-${Date.now()}`;
       const cable = ActionCable.createConsumer(VUE_APP_ACTION_CABLE_URL);
 
-      commit('setCable', cable);
+      window[cableRef] = cable;
+
+      commit('setCableRef', cableRef);
     },
 
     subscribeToUserChannel({ getters: { cable }, dispatch }) {
       cable.subscriptions.create(
-        { channel: 'UserChannel' },
+        { channel: 'UserUpdatesChannel' },
         { received: (message) => dispatch('ui/showMessage', message, { root: true }) },
       );
     },
@@ -61,6 +64,6 @@ export default {
 
   getters: {
     session: ({ session }) => session,
-    cable: ({ cable }) => cable,
+    cable: ({ cableRef }) => window[cableRef],
   },
 };
