@@ -23,7 +23,23 @@ module Payments
         return
       end
 
-      Locations::CreateService.new(@payment, geocoding).perform
+      ActiveRecord::Base.transaction do
+        location = Locations::CreateService.new(@payment, geocoding).perform
+        @payment.update(
+          location: location,
+          geocoded: true,
+        )
+      end
+
+      broadcast_user_notification
+    end
+
+    private
+
+    def broadcast_user_notification
+      message = "Location found for payments: #{@payment.details}"
+
+      ActionCable.server.broadcast(@payment.user.id,message)
     end
   end
 end

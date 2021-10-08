@@ -15,8 +15,7 @@ module Users
       return false if !@avatar_base64
 
       update_avatar
-
-      ActionCable.server.broadcast(@user.id, 'Avatar updated')
+      broadcast_user_notification
     end
 
     private
@@ -36,6 +35,10 @@ module Users
         filename: SecureRandom.urlsafe_base64,
         content_type: type,
       )
+    end
+
+    def broadcast_user_notification
+      ActionCable.server.broadcast(@user.id, 'User updated')
     end
   end
 

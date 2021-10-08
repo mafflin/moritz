@@ -9,14 +9,12 @@ module Locations
     end
 
     def perform
-      location = Location.new(
+      Location.create!(
         features: features,
         query: query,
         original_query: payment.geo_query,
         user: payment.user,
       )
-
-      payment.update(location: location, geocoded: true) if location.save
     end
   end
 end

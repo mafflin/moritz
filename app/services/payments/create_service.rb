@@ -11,12 +11,12 @@ module Payments
         user: @user
       )
 
-      run_post_create_hooks if @payment.save
+      run_post_create_jobs if @payment.save
     end
 
     private
 
-    def run_post_create_hooks
+    def run_post_create_jobs
       GetPaymentLocationsJob.perform_later(@payment)
     end
   end

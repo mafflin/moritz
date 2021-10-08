@@ -16,12 +16,15 @@ module Locations
 
     private
 
-    def url
-      @url ||= "https://api.mapbox.com/geocoding/v5/mapbox.places/#{CGI.escape(@query)}.json"
+    def endpoint
+      @endpoint ||= "#{geo_service_url}#{CGI.escape(@query)}.json"
     end
 
     def gecoding
-      @response ||= RestClient.get(url, { params: { access_token: geo_service_access_token } })
+      @response ||= RestClient.get(
+        endpoint,
+        { params: { access_token: geo_service_access_token } },
+      )
 
       return if !@response.code == 200
 
