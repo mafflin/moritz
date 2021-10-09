@@ -30,7 +30,8 @@ export default {
         commit('setSession', true);
 
         dispatch('createWebsocketConnection');
-        dispatch('subscribeToUserChannel');
+        dispatch('subscribeToUserUpdates');
+        dispatch('subscribeToPaymentsUpdates');
       } catch (error) {
         commit('setSession', false);
       }
@@ -54,10 +55,17 @@ export default {
       commit('setCableRef', cableRef);
     },
 
-    subscribeToUserChannel({ getters: { cable }, dispatch }) {
+    subscribeToUserUpdates({ dispatch, getters: { cable } }) {
       cable.subscriptions.create(
         { channel: 'UserUpdatesChannel' },
         { received: (message) => dispatch('ui/showMessage', message, { root: true }) },
+      );
+    },
+
+    subscribeToPaymentsUpdates({ getters: { cable } }) {
+      cable.subscriptions.create(
+        { channel: 'PaymentsChannel' },
+        { received: (message) => console.log(message) },
       );
     },
   },

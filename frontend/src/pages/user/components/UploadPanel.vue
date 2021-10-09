@@ -2,7 +2,7 @@
   <v-expansion-panel>
     <v-expansion-panel-header class="text-left">
       <span>
-        <v-icon left>mdi-file-document-box-multiple-outline</v-icon>
+        <v-icon left>mdi-file-upload-outline</v-icon>
         <span>Upload CSV</span>
       </span>
     </v-expansion-panel-header>
@@ -57,6 +57,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>
