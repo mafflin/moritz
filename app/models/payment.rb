@@ -17,6 +17,8 @@ class Payment < ApplicationRecord
   before_save :round_credit
   before_save :round_debit
 
+  after_save :notify_subscribers
+
   ROUND_TO = 2
   BANKS = {
     db: 'DB',
@@ -61,6 +63,16 @@ class Payment < ApplicationRecord
         user.rules.map(&:match_string)
       )
     end
+  end
+
+  def notify_subscribers
+    PaymentsChannel.broadcast_to(
+      self.user,
+      ApplicationController.render(
+        partial: 'api/v1/payments/payment',
+        locals: { payment: self }
+      )
+    )
   end
 
   private

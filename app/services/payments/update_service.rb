@@ -8,7 +8,6 @@ module Payments
 
     def perform
       @payment.update(**@attributes)
-      @payment
     end
   end
 end

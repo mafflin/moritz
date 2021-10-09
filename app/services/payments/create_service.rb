@@ -18,10 +18,6 @@ module Payments
 
     def run_post_create_hooks
       GetPaymentLocationsJob.perform_later(@payment)
-      PaymentsChannel.broadcast_to(
-        @payment.user,
-        "Created: #{@payment.booked_at} - #{@payment.details}",
-      )
     end
   end
 end

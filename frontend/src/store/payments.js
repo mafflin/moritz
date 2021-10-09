@@ -58,12 +58,19 @@ export default {
       commit('setPayment', item);
     },
 
-    async updatePayment({ commit, dispatch }, payment) {
-      const { item } = await updateEntity(ENTITY_TYPE, payment.id, payment);
+    async updatePayment({ dispatch }, payment) {
+      await updateEntity(ENTITY_TYPE, payment.id, payment);
 
-      commit('setPayment', item);
-      dispatch('fetchPayments');
+      dispatch('fetchPayments'); // TODO: Use websockets.
       dispatch('router/goToHomePage', {}, { root: true });
+    },
+
+    subscribeToUpdates({ commit, rootGetters }) {
+      const cable = rootGetters['sessions/cable'];
+      cable.subscriptions.create(
+        { channel: 'PaymentsChannel' },
+        { received: (payment) => commit('setPayment', JSON.parse(payment)) },
+      );
     },
 
     resetFilter({ commit }) {

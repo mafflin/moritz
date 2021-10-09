@@ -31,7 +31,7 @@ export default {
 
         dispatch('createWebsocketConnection');
         dispatch('subscribeToUserUpdates');
-        dispatch('subscribeToPaymentsUpdates');
+        dispatch('payments/subscribeToUpdates', {}, { root: true });
       } catch (error) {
         commit('setSession', false);
       }
@@ -59,13 +59,6 @@ export default {
       cable.subscriptions.create(
         { channel: 'UserUpdatesChannel' },
         { received: (message) => dispatch('ui/showMessage', message, { root: true }) },
-      );
-    },
-
-    subscribeToPaymentsUpdates({ getters: { cable } }) {
-      cable.subscriptions.create(
-        { channel: 'PaymentsChannel' },
-        { received: (message) => console.log(message) },
       );
     },
   },

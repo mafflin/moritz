@@ -14,12 +14,14 @@ module Api::V1
 
 
     def update
-      @payment = Payments::UpdateService.new(
+      if Payments::UpdateService.new(
         user: current_user,
         attributes: payment_params,
       ).perform
-
-      render :show
+        head :no_content
+      else
+        head :unprocessable_entity
+      end
     end
 
     private
