@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :require_login
+  before_action :underscore_params!, :require_login
   helper_method :current_user
 
   protected
@@ -17,5 +17,11 @@ class ApplicationController < ActionController::API
 
     session[:current_user_id] = nil
     head :unauthorized
+  end
+
+  private
+
+  def underscore_params!
+    params.deep_transform_keys!(&:underscore)
   end
 end

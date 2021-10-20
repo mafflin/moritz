@@ -12,5 +12,17 @@ Rails.application.routes.draw do
         delete :destroy, on: :collection
       end
     end
+
+    namespace :v2, defaults: { format: :json } do
+      resource :users, only: [] do
+        post :list
+        post :show_current
+      end
+
+      resource :sessions, only: [] do
+        post :start
+        post :delete
+      end
+    end
   end
 end

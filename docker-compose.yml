@@ -35,6 +35,14 @@ services:
       - net
     working_dir: /app
 
+  frontend_v2:
+    build:
+      context: ./frontend_v2
+    image: moritz_frontend_v2
+    networks:
+      - net
+    working_dir: /app
+
 networks:
   net:
     ipam:

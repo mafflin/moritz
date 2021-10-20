@@ -31,3 +31,13 @@ services:
     environment:
       TERM: xterm-256color
     command: /bin/sh -c 'npm i && npm run serve'
+
+  frontend_v2:
+    ports:
+      - 8088:8088
+    volumes:
+      - ./frontend_v2:/app
+    env_file: .env
+    environment:
+      TERM: xterm-256color
+    command: /bin/sh -c 'npm i && npm run serve'
