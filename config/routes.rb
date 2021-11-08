@@ -23,6 +23,20 @@ Rails.application.routes.draw do
         post :start
         post :delete
       end
+
+      resource :payments, only: [] do
+        post :list
+        post :show_single
+        post :update_single
+      end
+
+      resource :groups, only: [] do
+        post :list
+      end
+
+      resource :rules, only: [] do
+        post :list
+      end
     end
   end
 end

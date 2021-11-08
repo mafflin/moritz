@@ -1,23 +1,15 @@
 <template>
-  <div>
-    <user-navigation />
-
-    <router-view />
-  </div>
+  <router-view />
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { defineComponent } from 'vue';
-import UserNavigation from './components/UserNavigation.vue';
 
-export default defineComponent({
-  components: {
-    UserNavigation,
-  },
+export default {
+  components: {},
 
   computed: {
-    ...mapGetters('users', ['current', 'loading']),
+    ...mapGetters('users', ['loading']),
   },
-});
+};
 </script>

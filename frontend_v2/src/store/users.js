@@ -1,4 +1,5 @@
 import axios from 'axios';
+import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
@@ -13,10 +14,10 @@ export default {
   /* eslint-disable no-param-reassign */
   mutations: {
     setList(state, items) {
-      state.ids = items.map((item) => item.id);
-      state.entities = items
-        .map((item) => ({ [item.id]: item }))
-        .reduce((acc, current) => ({ ...acc, ...current }), {});
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
     },
 
     setCurrent(state, user) {
@@ -38,6 +39,9 @@ export default {
     async initShowPage({ dispatch }, id) {
       await dispatch('sessions/start', id, { root: true });
       await dispatch('fetchCurrent');
+
+      dispatch('payments/fetchList', {}, { root: true });
+      dispatch('groups/fetchList', {}, { root: true });
     },
 
     async fetchList({ commit }) {
@@ -75,9 +79,7 @@ export default {
 
   getters: {
     list: ({ ids, entities }) => ids.map((id) => entities[id]),
-
     current: ({ current }) => current,
-
     loading: ({ loading }) => loading,
   },
 };

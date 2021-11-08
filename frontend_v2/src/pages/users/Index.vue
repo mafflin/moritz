@@ -1,35 +1,27 @@
 <template>
-  <n-grid
-    x-gap="12"
-    :cols="list.length"
-  >
-    <n-gi
-      v-for="user in list"
-      :key="user.id"
-    >
-      <user-card
-        :user="user"
-      />
-    </n-gi>
-  </n-grid>
+  <div class="mdl-grid">
+    <user-card
+      v-for="(user, index) in list"
+      :key="index"
+      :user="user"
+    />
+  </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-
-import { NGrid, NGi } from 'naive-ui';
 import UserCard from './components/UserCard.vue';
 
-export default defineComponent({
+export default {
   components: {
-    NGi,
-    NGrid,
     UserCard,
   },
 
   computed: {
     ...mapGetters('users', ['list', 'isLoading']),
   },
-});
+};
 </script>
+
+<style scoped>
+</style>

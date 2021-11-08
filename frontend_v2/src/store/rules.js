@@ -1,14 +1,24 @@
 import axios from 'axios';
+import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
 
   state: {
+    ids: [],
+    entities: {},
     loading: false,
   },
 
   /* eslint-disable no-param-reassign */
   mutations: {
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
+    },
+
     setLoading(state, value) {
       state.loading = value;
     },
@@ -16,26 +26,16 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async start({ commit }, userId) {
+    async fetchList({ commit }) {
       commit('setLoading', true);
 
       try {
-        await axios.post('/api/v2/sessions/start', { userId });
+        const { data } = await axios.post('/api/v2/rules/list');
+
+        commit('setList', data);
       } catch (error) {
-        console.log(error.message);
-      } finally {
-        commit('setLoading', false);
-      }
-    },
+        commit('setList', []);
 
-    async delete({ commit }) {
-      commit('setLoading', true);
-
-      try {
-        await axios.post('/api/v2/sessions/delete');
-
-        commit('users/setCurrent', null, { root: true });
-      } catch (error) {
         console.log(error.message);
       } finally {
         commit('setLoading', false);
@@ -44,6 +44,7 @@ export default {
   },
 
   getters: {
+    list: ({ ids, entities }) => ids.map((id) => entities[id]),
     loading: ({ loading }) => loading,
   },
 };

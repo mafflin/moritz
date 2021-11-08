@@ -1,6 +1,6 @@
-module Api::V1
+module Api::V2
   class PaymentsController < ApplicationController
-    def index
+    def list
       @payments = Payments::SearchService.new(
         user: current_user,
         date: params[:date],
@@ -8,11 +8,11 @@ module Api::V1
       ).perform
     end
 
-    def show
+    def show_single
       @payment = current_user.payments.find(params[:id])
     end
 
-    def update
+    def update_single
       if Payments::UpdateService.new(
         user: current_user,
         attributes: payment_params,
@@ -27,6 +27,12 @@ module Api::V1
 
     def payment_params
       params.require(:payment).permit(:id, :note, :withdrawal)
+    end
+
+    private
+
+    def set_user
+      @user = current_user
     end
   end
 end

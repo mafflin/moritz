@@ -1,18 +1,23 @@
 <template>
-  <div>
+  <div class="mdl-layout mdl-layout">
     <app-header />
 
-    <router-view />
+    <main class="mdl-layout__content">
+      <loading />
+
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
 import AppHeader from './containers/Header.vue';
+import Loading from './containers/Loading.vue';
 
-export default defineComponent({
+export default {
   components: {
     AppHeader,
+    Loading,
   },
-});
+};
 </script>

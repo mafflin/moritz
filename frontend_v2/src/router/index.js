@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserIndex from '../pages/users/Index.vue';
 import UserShow from '../pages/users/Show.vue';
 
-import PaymentsTable from '../pages/users/containers/PaymentsTable.vue';
+import PaymentsList from '../pages/users/containers/PaymentsList.vue';
 import UserOverview from '../pages/users/containers/UserOverview.vue';
 
 import store from '../store';
@@ -31,7 +31,7 @@ const routes = [
         path: 'payments',
         name: 'payments',
         meta: { text: 'Payments' },
-        component: PaymentsTable,
+        component: PaymentsList,
       },
     ],
   },
