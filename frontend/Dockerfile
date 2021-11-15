@@ -1,6 +1,6 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
-ARG RAILS_ENV=development
+RUN apk --no-cache add python3 make g++
 
 COPY package.json /
 COPY package-lock.json /
