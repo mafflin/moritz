@@ -14,28 +14,36 @@ Rails.application.routes.draw do
     end
 
     namespace :v2, defaults: { format: :json } do
-      resource :users, only: [] do
-        post :list
-        post :show_current
-      end
-
-      resource :sessions, only: [] do
-        post :start
-        post :delete
+      resource :groups, only: [] do
+        post :fetch_list
+        post :fetch_single
+        post :create_single
+        post :update_single
+        post :delete_single
       end
 
       resource :payments, only: [] do
-        post :list
-        post :show_single
+        post :fetch_list
+        post :fetch_single
         post :update_single
       end
 
-      resource :groups, only: [] do
-        post :list
+      resource :rules, only: [] do
+        post :fetch_list
       end
 
-      resource :rules, only: [] do
-        post :list
+      resource :sessions, only: [] do
+        post :create_current
+        post :delete_current
+      end
+
+      resource :settings, only: [] do
+        post :fetch_current
+      end
+
+      resource :users, only: [] do
+        post :fetch_list
+        post :fetch_current
       end
     end
   end

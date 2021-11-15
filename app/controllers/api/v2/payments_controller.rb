@@ -1,6 +1,6 @@
 module Api::V2
   class PaymentsController < ApplicationController
-    def list
+    def fetch_list
       @payments = Payments::SearchService.new(
         user: current_user,
         date: params[:date],
@@ -8,7 +8,7 @@ module Api::V2
       ).perform
     end
 
-    def show_single
+    def fetch_single
       @payment = current_user.payments.find(params[:id])
     end
 

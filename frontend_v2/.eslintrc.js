@@ -17,6 +17,7 @@ module.exports = {
   ],
 
   rules: {
+    'import/no-cycle': 0,
     'no-console': 0,
     'no-debugger': 0,
     'vue/no-deprecated-slot-attribute': 0,

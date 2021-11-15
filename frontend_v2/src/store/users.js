@@ -33,13 +33,14 @@ export default {
   actions: {
     initIndexPage({ dispatch }) {
       dispatch('fetchList');
-      dispatch('sessions/delete', {}, { root: true });
+      dispatch('sessions/deleteCurrent', {}, { root: true });
     },
 
     async initShowPage({ dispatch }, id) {
-      await dispatch('sessions/start', id, { root: true });
+      await dispatch('sessions/createCurrent', id, { root: true });
       await dispatch('fetchCurrent');
 
+      dispatch('settings/fetchCurrent', {}, { root: true });
       dispatch('payments/fetchList', {}, { root: true });
       dispatch('groups/fetchList', {}, { root: true });
     },
@@ -48,7 +49,7 @@ export default {
       commit('setLoading', true);
 
       try {
-        const { data } = await axios.post('/api/v2/users/list');
+        const { data } = await axios.post('/api/v2/users/fetch_list');
 
         commit('setList', data);
       } catch (error) {
@@ -64,7 +65,7 @@ export default {
       commit('setLoading', true);
 
       try {
-        const { data } = await axios.post('/api/v2/users/show_current');
+        const { data } = await axios.post('/api/v2/users/fetch_current');
 
         commit('setCurrent', data);
       } catch (error) {

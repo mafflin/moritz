@@ -2,11 +2,36 @@ class Group < ApplicationRecord
   belongs_to :user
   has_many :rules, dependent: :destroy
 
+  UNMATCHED_ID = 'unmatched'
+  COLORS = [
+    'cyan',
+    'teal',
+    'green',
+    'light-green',
+    'lime',
+    'yellow',
+    'amber',
+    'orange',
+    'brown',
+    'blue-grey',
+    'grey',
+    'deep-orange',
+    'red',
+    'purple',
+    'deep-purple',
+    'blue',
+    'light-blue',
+    'indigo',
+    'pink',
+  ]
+
   validates :name, presence: true, uniqueness: {
     scope: [:user_id]
   }
-
-  UNMATCHED_ID = 'unmatched'
+  validates :color, inclusion: {
+    in: COLORS,
+    allow_blank: true,
+  }
 
   def matches
     rules.map(&:match_string)

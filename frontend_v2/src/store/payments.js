@@ -34,7 +34,7 @@ export default {
       commit('setLoading', true);
 
       try {
-        const { data } = await axios.post('/api/v2/payments/list', query);
+        const { data } = await axios.post('/api/v2/payments/fetch_list', query);
 
         commit('setList', data);
       } catch (error) {

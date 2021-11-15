@@ -5,6 +5,7 @@ import groups from './groups';
 import payments from './payments';
 import rules from './rules';
 import sessions from './sessions';
+import settings from './settings';
 import users from './users';
 
 export default createStore({
@@ -13,6 +14,7 @@ export default createStore({
     payments,
     rules,
     sessions,
+    settings,
     users,
   },
 });

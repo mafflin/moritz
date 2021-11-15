@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n/index';
+import { sync } from 'vuex-router-sync';
 
 import App from './App.vue';
 import messages from './i18n';
@@ -22,5 +23,7 @@ app.mixin(upgradeElement);
 app.use(i18n);
 app.use(router);
 app.use(store);
+
+sync(store, router);
 
 app.mount('#app');

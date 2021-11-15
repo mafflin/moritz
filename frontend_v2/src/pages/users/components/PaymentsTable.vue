@@ -1,10 +1,12 @@
 <template>
-  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <table class="payments-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <thead>
       <tr>
         <th
-          v-for="({ value }, index) in headers"
+          v-for="({ value, width }, index) in headers"
           :key="index"
+          :width="width"
+          class="mdl-data-table__cell--non-numeric"
         >
           {{ $t(`payments.${value}`) }}
         </th>
@@ -18,6 +20,7 @@
         <td
           v-for="({ value }, index) in headers"
           :key="index"
+          class="mdl-data-table__cell--non-numeric"
         >
           {{ payment[value] }}
         </td>
@@ -28,15 +31,15 @@
 
 <script>
 const HEADERS = [
-  { value: 'bookedAt', style: { 'text-align': 'left' } },
-  { value: 'bank' },
-  { value: 'transactionType' },
-  { value: 'details', style: { 'text-align': 'left' } },
-  { value: 'beneficiary' },
-  { value: 'note', style: { width: '10%' } },
-  { value: 'withdrawal', style: { width: '10%' } },
-  { value: 'debit', style: { width: '10%' } },
-  { value: 'credit', style: { width: '10%' } },
+  { value: 'bookedAt', width: '8%' },
+  { value: 'bank', width: '7%' },
+  { value: 'transactionType', width: '11%' },
+  { value: 'details' },
+  { value: 'beneficiary', width: '15%' },
+  { value: 'note', width: '10%' },
+  { value: 'withdrawal', width: '10%' },
+  { value: 'debit', width: '7%' },
+  { value: 'credit', width: '7%' },
 ];
 
 export default {
@@ -57,17 +60,15 @@ export default {
 
 <style lang="scss" scoped>
 .mdl-data-table {
-  width: 100%
-}
+  width: 100%;
+  table-layout: fixed;
 
-.mdl-data-table {
   th, td {
-    text-align: left;
+    white-space: normal;
 
     &:last-child {
       text-align: right;
     }
-  }
-
+  };
 }
 </style>

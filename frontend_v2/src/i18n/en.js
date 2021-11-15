@@ -1,21 +1,34 @@
 const globals = {
+  add: 'Add',
   appSubitle: 'The Calculator',
+  cancel: 'Cancel',
+  create: 'Create',
   date: 'Date',
+  delete: 'Delete',
+  edit: 'Edit',
   explore: 'Explore',
   logout: 'Logout',
+  submit: 'Submit',
   total: 'Total',
   upload: 'Upload',
+};
+
+const groups = {
+  addNew: 'New Group',
+  deleteHint: 'Delete?',
+  edit: 'Edit Group',
+  enterName: 'Name',
 };
 
 const payments = {
   bank: 'Bank',
   beneficiary: 'Beneficiary',
-  bookedAt: 'Booked At',
+  bookedAt: 'Date',
   credit: 'Credit',
   debit: 'Debit',
   details: 'Details',
   note: 'Note',
-  transactionType: 'Transaction Type',
+  transactionType: 'Type',
   withdrawal: 'Withdrawal',
 };
 
@@ -31,6 +44,7 @@ const titles = {
 export default {
   ...globals,
 
+  groups,
   payments,
   titles,
 };

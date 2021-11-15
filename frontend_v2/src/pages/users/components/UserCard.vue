@@ -6,7 +6,7 @@
     <div class="mdl-card__title mdl-card--expand" />
     <div class="mdl-card__actions">
       <router-link
-        :to="{ name: 'user', params: { id: user.id } }"
+        :to="{ name: 'User', params: { id: user.id } }"
         class="user-card-image__name"
       >
         {{ user.name }}

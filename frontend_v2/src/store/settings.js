@@ -1,22 +1,17 @@
 import axios from 'axios';
-import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
 
   state: {
-    ids: [],
-    entities: {},
+    current: {},
     loading: false,
   },
 
   /* eslint-disable no-param-reassign */
   mutations: {
-    setList(state, items) {
-      const { ids, entities } = normalize(items);
-
-      state.ids = ids;
-      state.entities = entities;
+    setCurrent(state, settings) {
+      state.current = settings;
     },
 
     setLoading(state, value) {
@@ -26,15 +21,15 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchList({ commit }) {
+    async fetchCurrent({ commit }) {
       commit('setLoading', true);
 
       try {
-        const { data } = await axios.post('/api/v2/rules/fetch_list');
+        const { data } = await axios.post('/api/v2/settings/fetch_current');
 
-        commit('setList', data);
+        commit('setCurrent', data);
       } catch (error) {
-        commit('setList', []);
+        commit('setCurrent', {});
 
         console.log(error.message);
       } finally {
@@ -44,7 +39,7 @@ export default {
   },
 
   getters: {
-    list: ({ ids, entities }) => ids.map((id) => entities[id]),
+    groupColors: ({ current }) => current.groupColors || [],
     loading: ({ loading }) => loading,
   },
 };

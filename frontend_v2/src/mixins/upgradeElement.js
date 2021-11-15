@@ -3,9 +3,11 @@
 export default {
   updated() {
     const { $el, upgradeElement } = this;
-    const mdlJsElements = $el.querySelectorAll("[class*='mdl-js']");
 
-    mdlJsElements.forEach((element) => upgradeElement(element));
+    if (!$el.querySelectorAll) return;
+
+    $el.querySelectorAll("[class*='mdl-js']")
+      .forEach((element) => upgradeElement(element));
   },
 
   methods: {

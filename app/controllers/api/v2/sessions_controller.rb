@@ -2,7 +2,7 @@ module Api::V2
   class SessionsController < ApplicationController
     skip_before_action :require_login
 
-    def start
+    def create_current
       user_id = params[:user_id]
 
       if User.find(user_id)
@@ -13,7 +13,7 @@ module Api::V2
       end
     end
 
-    def delete
+    def delete_current
       session[:current_user_id] = nil
     end
   end

@@ -16,11 +16,11 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async start({ commit }, userId) {
+    async createCurrent({ commit }, userId) {
       commit('setLoading', true);
 
       try {
-        await axios.post('/api/v2/sessions/start', { userId });
+        await axios.post('/api/v2/sessions/create_current', { userId });
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -28,11 +28,11 @@ export default {
       }
     },
 
-    async delete({ commit }) {
+    async deleteCurrent({ commit }) {
       commit('setLoading', true);
 
       try {
-        await axios.post('/api/v2/sessions/delete');
+        await axios.post('/api/v2/sessions/delete_current');
 
         commit('users/setCurrent', null, { root: true });
       } catch (error) {

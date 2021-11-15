@@ -1,5 +1,5 @@
 <template>
-  <div class="mdl-layout mdl-layout">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <app-header />
 
     <main class="mdl-layout__content">

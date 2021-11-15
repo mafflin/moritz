@@ -11,7 +11,7 @@
       {{ $t('total') }}: {{ payments.length }}
     </div>
     <router-link
-      :to="{ name: 'payments' }"
+      :to="{ name: 'Payments' }"
       class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
     >
       <span>{{ $t('explore') }}</span>
