@@ -8,8 +8,6 @@ import router from './router';
 import store from './store';
 import upgradeElement from './mixins/upgradeElement';
 
-require('./assets/main.scss');
-
 const i18n = createI18n({
   locale: 'en',
   fallbackLocale: 'en',

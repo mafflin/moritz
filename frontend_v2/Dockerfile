@@ -7,8 +7,8 @@ RUN apk --no-cache add python2 python3 make g++
 COPY package.json /
 COPY package-lock.json /
 
-RUN npm i -g @vue/cli \
-	&& npm i
+RUN npm i -g pnpm @vue/cli \
+	&& pnpm i
 
 ADD . /app
 WORKDIR /app

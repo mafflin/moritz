@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .mdl-card__actions {
   background: rgba(0, 0, 0, 0.5);
 }

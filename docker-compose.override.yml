@@ -40,4 +40,4 @@ services:
     env_file: .env
     environment:
       TERM: xterm-256color
-    command: /bin/sh -c 'npm i && npm run serve'
+    command: /bin/sh -c 'pnpm i && pnpm run serve'

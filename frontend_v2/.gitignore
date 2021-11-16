@@ -1,7 +1,7 @@
 .DS_Store
+.pnpm-store
 node_modules
 /dist
-
 
 # local env files
 .env.local

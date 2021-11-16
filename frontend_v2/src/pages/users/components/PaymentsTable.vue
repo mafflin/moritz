@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .mdl-data-table {
   width: 100%;
   table-layout: fixed;

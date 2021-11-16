@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .mdl-layout-icon {
   font-size: 30px;
 }
