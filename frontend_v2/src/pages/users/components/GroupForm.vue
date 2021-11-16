@@ -21,16 +21,16 @@
       </span>
     </div>
 
-    <div class="color-picker">
+    <div class="p-2">
       <span
         v-for="color in colors"
         :key="color"
-        :class="`mdl-chip__contact mdl-color--${color} mdl-color-text--white`"
+        :class="`mdl-chip__contact mdl-color--${color} mdl-color-text--white clickable m-1`"
         @click="$emit('change', { color })"
       >
         <i
           v-if="color === group.color"
-          class="material-icons"
+          class="material-icons mdl-chip__contact"
         >
           blur_circular
         </i>
@@ -101,18 +101,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css" scoped>
-.material-icons {
-  font-size: 32px;
-}
-
-.mdl-chip__contact {
-  cursor: pointer;
-  margin: 5px;
-}
-
-.color-picker {
-  padding: 10px;
-}
-</style>

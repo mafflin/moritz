@@ -24,7 +24,7 @@
           :to="{ name: 'User', params: { id: current.id } }"
         >
           <img
-            class="mdl-chip__contact"
+            class="mdl-chip__contact ml-2"
             :src="current.avatar"
           >
         </router-link>
@@ -45,10 +45,6 @@ export default {
 
 <style lang="css" scoped>
 .mdl-layout-icon {
-  font-size: 30px;
-}
-
-.mdl-chip__contact {
-  margin-left: 10px;
+  font-size: 32px;
 }
 </style>

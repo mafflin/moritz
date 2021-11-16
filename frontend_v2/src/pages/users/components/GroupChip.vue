@@ -2,7 +2,20 @@
   <span
     :class="chipClassName"
   >
-    <span class="mdl-chip__text">{{ group.name }}</span>
+    <router-link
+      v-if="editable"
+      :to="{ name: 'EditRules', params: { groupId: group.id } }"
+      class="mdl-chip__text mdl-color-text--white clickable"
+    >
+      {{ group.name }}
+    </router-link>
+
+    <span
+      v-else
+      class="mdl-chip__text"
+    >
+      {{ group.name }}
+    </span>
 
     <router-link
       v-if="editable"
@@ -43,6 +56,7 @@ export default {
       const colored = color && `mdl-color--${color} mdl-color-text--white`;
       return [
         'mdl-chip',
+        'mr-1',
         deletable,
         colored,
       ].filter((item) => !!item);
@@ -50,9 +64,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css" scoped>
-.mdl-chip {
-  margin-right: 4px;
-}
-</style>

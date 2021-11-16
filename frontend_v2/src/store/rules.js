@@ -1,5 +1,6 @@
 import axios from 'axios';
 import normalize from '../utils/normalize';
+import formatErrors from '../utils/formatErrors';
 
 export default {
   namespaced: true,
@@ -7,6 +8,7 @@ export default {
   state: {
     ids: [],
     entities: {},
+    errors: {},
     loading: false,
   },
 
@@ -19,6 +21,16 @@ export default {
       state.entities = entities;
     },
 
+    setSingle(state, item) {
+      state.entities = { ...state.entities, [item.id]: item };
+    },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
+    },
+
     setLoading(state, value) {
       state.loading = value;
     },
@@ -26,11 +38,17 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchList({ commit }) {
+    async initModal({ commit, dispatch }, groupId) {
+      commit('setErrors');
+
+      await dispatch('fetchList', groupId);
+    },
+
+    async fetchList({ commit }, groupId) {
       commit('setLoading', true);
 
       try {
-        const { data } = await axios.post('/api/v2/rules/fetch_list');
+        const { data } = await axios.post('/api/v2/rules/fetch_list', { groupId });
 
         commit('setList', data);
       } catch (error) {
@@ -41,10 +59,57 @@ export default {
         commit('setLoading', false);
       }
     },
+
+    async createSingle({
+      commit, dispatch, getters: { list }, rootGetters,
+    }, match) {
+      commit('setLoading', true);
+      commit('setErrors', {});
+
+      try {
+        const { id: groupId } = rootGetters['groups/selected'];
+        const rule = { match, groupId };
+        const { data } = await axios.post('/api/v2/rules/create_single', { rule });
+
+        commit('setList', [...list, data]);
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async deleteSingle({ commit, dispatch, rootGetters }, id) {
+      commit('setLoading', true);
+
+      try {
+        const { id: groupId } = rootGetters['groups/selected'];
+        await axios.post('/api/v2/rules/delete_single', { id });
+
+        dispatch('fetchList', groupId);
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          console.log(message);
+          break;
+      }
+    },
   },
 
   getters: {
     list: ({ ids, entities }) => ids.map((id) => entities[id]),
     loading: ({ loading }) => loading,
+    errors: ({ errors }) => errors,
   },
 };

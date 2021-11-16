@@ -2,6 +2,7 @@ const globals = {
   add: 'Add',
   appSubitle: 'The Calculator',
   cancel: 'Cancel',
+  close: 'Close',
   create: 'Create',
   date: 'Date',
   delete: 'Delete',
@@ -32,6 +33,11 @@ const payments = {
   withdrawal: 'Withdrawal',
 };
 
+const rules = {
+  manage: 'Manage Rules',
+  match: 'Match',
+};
+
 const titles = {
   app: 'Moritz',
   groups: 'Groups',
@@ -46,5 +52,6 @@ export default {
 
   groups,
   payments,
+  rules,
   titles,
 };

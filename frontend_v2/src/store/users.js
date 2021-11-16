@@ -39,10 +39,10 @@ export default {
     async initShowPage({ dispatch }, id) {
       await dispatch('sessions/createCurrent', id, { root: true });
       await dispatch('fetchCurrent');
+      await dispatch('groups/fetchList', {}, { root: true });
 
       dispatch('settings/fetchCurrent', {}, { root: true });
       dispatch('payments/fetchList', {}, { root: true });
-      dispatch('groups/fetchList', {}, { root: true });
     },
 
     async fetchList({ commit }) {

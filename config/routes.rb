@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
       resource :rules, only: [] do
         post :fetch_list
+        post :create_single
+        post :delete_single
       end
 
       resource :sessions, only: [] do

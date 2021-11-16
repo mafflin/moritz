@@ -62,13 +62,13 @@ export default {
 .mdl-data-table {
   width: 100%;
   table-layout: fixed;
+}
 
-  th, td {
-    white-space: normal;
+th, td {
+  white-space: normal;
+}
 
-    &:last-child {
-      text-align: right;
-    }
-  };
+th:last-child, td:last-child {
+  text-align: right;
 }
 </style>

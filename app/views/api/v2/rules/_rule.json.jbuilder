@@ -1,1 +1,1 @@
-json.extract! rule, :id, :name
+json.extract! rule, :id, :match

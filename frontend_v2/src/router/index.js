@@ -7,6 +7,7 @@ import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
 import PaymentsList from '../pages/users/containers/PaymentsList.vue';
+import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
 import UserOverview from '../pages/users/containers/UserOverview.vue';
 
 import store from '../store';
@@ -36,6 +37,7 @@ const routes = [
           default: UserOverview,
           modals: GroupAddDialog,
         },
+        beforeEnter: () => store.commit('groups/setErrors'),
       },
       {
         path: 'edit_group/:groupId',
@@ -44,8 +46,7 @@ const routes = [
           default: UserOverview,
           modals: GroupEditDialog,
         },
-        beforeEnter: async ({ params: { groupId } }) => store
-          .dispatch('groups/fetchSingle', groupId),
+        beforeEnter: () => store.commit('groups/setErrors'),
       },
       {
         path: 'delete_group/:groupId',
@@ -54,8 +55,15 @@ const routes = [
           default: UserOverview,
           modals: GroupDeleteDialog,
         },
-        beforeEnter: async ({ params: { groupId } }) => store
-          .dispatch('groups/fetchSingle', groupId),
+      },
+      {
+        path: 'edit_rules/:groupId',
+        name: 'EditRules',
+        components: {
+          default: UserOverview,
+          modals: RulesEditDialog,
+        },
+        beforeEnter: ({ params: { groupId } }) => store.dispatch('rules/initModal', groupId),
       },
       {
         path: 'payments',

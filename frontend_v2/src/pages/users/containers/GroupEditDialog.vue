@@ -81,9 +81,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css" scoped>
-.mdl-dialog {
-  z-index: 100
-}
-</style>
