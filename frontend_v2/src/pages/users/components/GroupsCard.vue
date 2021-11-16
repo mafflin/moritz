@@ -42,9 +42,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css" scoped>
-.mdl-card__actions {
-  text-align: end;
-}
-</style>

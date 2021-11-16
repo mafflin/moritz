@@ -5,17 +5,21 @@
         {{ $t('titles.payments') }}
       </h2>
     </div>
+
     <div class="mdl-card__supporting-text">
       {{ $t('date') }}: {{ filter.date }}
       <br>
       {{ $t('total') }}: {{ payments.length }}
     </div>
-    <router-link
-      :to="{ name: 'Payments' }"
-      class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-    >
-      <span>{{ $t('explore') }}</span>
-    </router-link>
+
+    <div class="mdl-card__actions">
+      <router-link
+        :to="{ name: 'Payments' }"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
+      >
+        <i class="material-icons">payments</i>
+      </router-link>
+    </div>
   </div>
 </template>
 

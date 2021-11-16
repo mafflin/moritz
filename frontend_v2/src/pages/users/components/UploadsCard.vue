@@ -5,16 +5,21 @@
         {{ $t('titles.uploads') }}
       </h2>
     </div>
+
     <div class="mdl-card__supporting-text">
       TDB!
       <br>
       ?
     </div>
-    <button
-      class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-    >
-      {{ $t('upload') }}
-    </button>
+
+    <div class="mdl-card__actions">
+      <router-link
+        to="#"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
+      >
+        <i class="material-icons">assessment</i>
+      </router-link>
+    </div>
   </div>
 </template>
 
