@@ -28,6 +28,7 @@ const payments = {
   credit: 'Credit',
   debit: 'Debit',
   details: 'Details',
+  noPayments: 'No payments this month!',
   note: 'Note',
   transactionType: 'Type',
   withdrawal: 'Withdrawal',
@@ -40,6 +41,7 @@ const rules = {
 
 const titles = {
   app: 'Moritz',
+  filter: 'Filter',
   groups: 'Groups',
   payments: 'Payments',
   rules: 'Rules',

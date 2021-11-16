@@ -7,18 +7,24 @@
     </div>
 
     <div class="mdl-card__supporting-text">
-      {{ $t('date') }}: {{ filter.date }}
+      <input
+        id="date"
+        v-model="date"
+        type="date"
+        name="date"
+        :max="today"
+      >
       <br>
       {{ $t('total') }}: {{ payments.length }}
     </div>
 
     <div class="mdl-card__actions">
-      <router-link
-        :to="{ name: 'Payments' }"
+      <button
         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
+        @click="handleSubmit"
       >
-        <i class="material-icons">payments</i>
-      </router-link>
+        <i class="material-icons">chevron_right</i>
+      </button>
     </div>
   </div>
 </template>
@@ -33,6 +39,33 @@ export default {
     filter: {
       type: Object,
       default: () => ({}),
+    },
+  },
+
+  emits: [
+    'submit',
+  ],
+
+  data() {
+    return { date: null };
+  },
+
+  computed: {
+    today() {
+      const [today] = new Date().toISOString().split('T');
+      return today;
+    },
+  },
+
+  mounted() {
+    this.date = this.filter.date || this.today;
+  },
+
+  methods: {
+    handleSubmit() {
+      const { date, $emit } = this;
+
+      $emit('submit', { date });
     },
   },
 };

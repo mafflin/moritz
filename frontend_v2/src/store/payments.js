@@ -10,7 +10,7 @@ export default {
     loading: false,
     filter: {
       q: null,
-      date: '2021-09-01',
+      date: null,
     },
   },
 
@@ -26,10 +26,20 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
+
+    setFilter(state, filter) {
+      state.filter = { ...state.filter, ...filter };
+    },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
+    async filterList({ commit, dispatch }, filter) {
+      commit('setFilter', filter);
+
+      await dispatch('fetchList');
+    },
+
     async fetchList({ commit, getters: { query } }) {
       commit('setLoading', true);
 

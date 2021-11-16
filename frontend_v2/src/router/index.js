@@ -6,9 +6,7 @@ import UserShow from '../pages/users/Show.vue';
 import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
-import PaymentsList from '../pages/users/containers/PaymentsList.vue';
 import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
-import UserOverview from '../pages/users/containers/UserOverview.vue';
 
 import store from '../store';
 
@@ -23,52 +21,31 @@ const routes = [
   {
     path: '/users/:id',
     component: UserShow,
+    name: 'User',
     beforeEnter: ({ params: { id } }) => store.dispatch('users/initShowPage', id),
     children: [
       {
-        path: '',
-        name: 'User',
-        component: UserOverview,
-      },
-      {
         path: 'add_group',
         name: 'AddGroup',
-        components: {
-          default: UserOverview,
-          modals: GroupAddDialog,
-        },
+        component: GroupAddDialog,
         beforeEnter: () => store.commit('groups/setErrors'),
       },
       {
         path: 'edit_group/:groupId',
         name: 'EditGroup',
-        components: {
-          default: UserOverview,
-          modals: GroupEditDialog,
-        },
+        component: GroupEditDialog,
         beforeEnter: () => store.commit('groups/setErrors'),
       },
       {
         path: 'delete_group/:groupId',
         name: 'DeleteGroup',
-        components: {
-          default: UserOverview,
-          modals: GroupDeleteDialog,
-        },
+        component: GroupDeleteDialog,
       },
       {
         path: 'edit_rules/:groupId',
         name: 'EditRules',
-        components: {
-          default: UserOverview,
-          modals: RulesEditDialog,
-        },
+        components: RulesEditDialog,
         beforeEnter: ({ params: { groupId } }) => store.dispatch('rules/initModal', groupId),
-      },
-      {
-        path: 'payments',
-        name: 'Payments',
-        component: PaymentsList,
       },
     ],
   },
