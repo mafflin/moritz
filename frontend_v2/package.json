@@ -11,6 +11,7 @@
     "actioncable": "^5.2.6",
     "axios": "^0.24.0",
     "core-js": "^3.19.1",
+    "moment": "^2.29.1",
     "regenerator-runtime": "^0.13.9",
     "vue": "^3.2.21",
     "vue-i18n": "^9.2.0-beta.18",

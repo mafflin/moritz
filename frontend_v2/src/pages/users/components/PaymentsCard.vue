@@ -1,30 +1,41 @@
 <template>
   <div class="mdl-card mdl-cell mdl-shadow--2dp">
-    <div class="mdl-card__title mdl-card--expand">
+    <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">
         {{ $t('titles.payments') }}
       </h2>
+      <span
+        class="mdl-badge"
+        :data-badge="total"
+      />
     </div>
 
-    <div class="mdl-card__supporting-text">
-      <input
-        id="date"
-        v-model="date"
-        type="date"
-        name="date"
-        :max="today"
-      >
-      <br>
-      {{ $t('total') }}: {{ payments.length }}
+    <div class="mdl-card__supporting-text mdl-card--expand">
+      <h6 class="m-0">
+        {{ $t('payments.debit') }}:
+        <span class="mdl-color-text--deep-orange">{{ debit }}</span>
+      </h6>
+      <h6 class="m-0">
+        {{ $t('payments.credit') }}:
+        <span class="mdl-color-text--indigo">{{ credit }}</span>
+      </h6>
+      <h6 class="m-0">
+        {{ $t('payments.delta') }}:
+        <span class="mdl-color-text--deep-purple">{{ delta }}</span>
+      </h6>
+      <h6 class="m-0">
+        {{ $t('payments.withdrawal') }}:
+        <span class="mdl-color-text--pink">{{ withdrawal }}</span>
+      </h6>
     </div>
 
     <div class="mdl-card__actions">
-      <button
+      <router-link
+        to="#"
         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
-        @click="handleSubmit"
       >
-        <i class="material-icons">chevron_right</i>
-      </button>
+        <i class="material-icons">file_upload</i>
+      </router-link>
     </div>
   </div>
 </template>
@@ -32,40 +43,25 @@
 <script>
 export default {
   props: {
-    payments: {
-      type: Array,
-      default: () => [],
+    total: {
+      type: Number,
+      default: 0,
     },
-    filter: {
-      type: Object,
-      default: () => ({}),
+    debit: {
+      type: Number,
+      default: 0,
     },
-  },
-
-  emits: [
-    'submit',
-  ],
-
-  data() {
-    return { date: null };
-  },
-
-  computed: {
-    today() {
-      const [today] = new Date().toISOString().split('T');
-      return today;
+    credit: {
+      type: Number,
+      default: 0,
     },
-  },
-
-  mounted() {
-    this.date = this.filter.date || this.today;
-  },
-
-  methods: {
-    handleSubmit() {
-      const { date, $emit } = this;
-
-      $emit('submit', { date });
+    delta: {
+      type: Number,
+      default: 0,
+    },
+    withdrawal: {
+      type: Number,
+      default: 0,
     },
   },
 };

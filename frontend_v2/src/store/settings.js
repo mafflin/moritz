@@ -39,7 +39,16 @@ export default {
   },
 
   getters: {
-    groupColors: ({ current }) => current.groupColors || [],
-    loading: ({ loading }) => loading,
+    groupColors({ current }) {
+      return current.groupColors || [];
+    },
+
+    unmatchedGroupId({ current }) {
+      return current.unmatchedId;
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
   },
 };

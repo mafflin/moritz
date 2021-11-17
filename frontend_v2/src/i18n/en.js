@@ -19,6 +19,7 @@ const groups = {
   deleteHint: 'Delete?',
   edit: 'Edit Group',
   enterName: 'Name',
+  unmatched: 'Unmatched',
 };
 
 const payments = {
@@ -27,8 +28,9 @@ const payments = {
   bookedAt: 'Date',
   credit: 'Credit',
   debit: 'Debit',
+  delta: 'Delta',
   details: 'Details',
-  noPayments: 'No payments this month!',
+  noPayments: 'No payments found! :(',
   note: 'Note',
   transactionType: 'Type',
   withdrawal: 'Withdrawal',

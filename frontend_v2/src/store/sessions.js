@@ -44,6 +44,8 @@ export default {
   },
 
   getters: {
-    loading: ({ loading }) => loading,
+    loading({ loading }) {
+      return loading;
+    },
   },
 };

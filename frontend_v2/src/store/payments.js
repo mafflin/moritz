@@ -1,5 +1,12 @@
 import axios from 'axios';
+import router from '../router';
 import normalize from '../utils/normalize';
+import parseUrlParams, { parseDate, parseString } from '../utils/parseUrlParams';
+
+const QUERY_PARAMS = {
+  groupId: parseString,
+  date: parseDate,
+};
 
 export default {
   namespaced: true,
@@ -9,7 +16,9 @@ export default {
     entities: {},
     loading: false,
     filter: {
-      q: null,
+      sort: null,
+      asc: true,
+      groupId: null,
       date: null,
     },
   },
@@ -34,10 +43,11 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async filterList({ commit, dispatch }, filter) {
-      commit('setFilter', filter);
+    updateFilter({ commit }, query) {
+      const filter = parseUrlParams(query, QUERY_PARAMS);
+      const date = filter.date || parseDate(new Date());
 
-      await dispatch('fetchList');
+      commit('setFilter', { ...filter, date });
     },
 
     async fetchList({ commit, getters: { query } }) {
@@ -52,18 +62,54 @@ export default {
 
         console.log(error.message);
       } finally {
+        router.push({ query }).catch(() => {});
+
         commit('setLoading', false);
       }
+    },
+
+    async filterList({ commit, dispatch }, filter) {
+      commit('setFilter', filter);
+
+      dispatch('fetchList');
     },
   },
 
   getters: {
-    list: ({ ids, entities }) => ids.map((id) => entities[id]),
-    loading: ({ loading }) => loading,
-    filter: ({ filter }) => filter,
-    query: ({ filter }, rootState, getters, rootGetters) => {
-      const groupId = rootGetters['groups/selected']?.id;
-      return { ...filter, groupId };
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    total({ ids }) {
+      return ids.length;
+    },
+
+    debit(state, { list }) {
+      return list.map(({ debit }) => debit).reduce((a, b) => a + b, 0);
+    },
+
+    credit(state, { list }) {
+      return list.map(({ credit }) => credit).reduce((a, b) => a + b, 0);
+    },
+
+    delta(state, { debit, credit }) {
+      return debit + credit;
+    },
+
+    withdrawal(state, { list }) {
+      return list.map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0);
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    filter({ filter }) {
+      return filter;
+    },
+
+    query({ filter }) {
+      return filter;
     },
   },
 };

@@ -13,6 +13,15 @@
       </tr>
     </thead>
     <tbody>
+      <tr v-if="!payments.length">
+        <td
+          id="empty-state"
+          :colspan="headers.length"
+        >
+          <h4>{{ $t('payments.noPayments') }}</h4>
+        </td>
+      </tr>
+
       <tr
         v-for="payment in payments"
         :key="payment.id"
@@ -59,6 +68,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+#empty-state {
+  text-align: center;
+}
+
 .mdl-data-table {
   width: 100%;
   table-layout: fixed;

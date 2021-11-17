@@ -3,6 +3,11 @@ import router from '../router';
 import formatErrors from '../utils/formatErrors';
 import normalize from '../utils/normalize';
 
+const UNMATCHED = {
+  color: 'blue-grey',
+  unmatched: true,
+};
+
 export default {
   namespaced: true,
 
@@ -131,13 +136,39 @@ export default {
           break;
       }
     },
+
+    openDeleteGroup(state, groupId) {
+      router.push({ name: 'DeleteGroup', params: { groupId } });
+    },
+
+    openEditGroup(state, groupId) {
+      router.push({ name: 'EditGroup', params: { groupId } });
+    },
+
+    openEditRules(state, groupId) {
+      router.push({ name: 'EditRules', params: { groupId } });
+    },
   },
 
   getters: {
-    list: ({ ids, entities }) => ids.map((id) => entities[id]),
-    loading: ({ loading }) => loading,
-    errors: ({ errors }) => errors,
-    selected: ({ entities }, getters, rootState) => {
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    listWithUnmatched(state, { list }, rootState, rootGetters) {
+      const id = rootGetters['settings/unmatchedGroupId'];
+      return [...list, { ...UNMATCHED, id }];
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
+
+    selected({ entities }, getters, rootState) {
       const { groupId } = rootState.route.params;
       return entities[groupId];
     },

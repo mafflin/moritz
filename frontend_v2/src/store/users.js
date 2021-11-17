@@ -36,13 +36,13 @@ export default {
       dispatch('sessions/deleteCurrent', {}, { root: true });
     },
 
-    async initShowPage({ dispatch }, id) {
+    async initShowPage({ dispatch }, { id, query }) {
       await dispatch('sessions/createCurrent', id, { root: true });
       await dispatch('fetchCurrent');
+      await dispatch('settings/fetchCurrent', {}, { root: true });
       await dispatch('groups/fetchList', {}, { root: true });
 
-      dispatch('settings/fetchCurrent', {}, { root: true });
-      dispatch('payments/fetchList', {}, { root: true });
+      dispatch('payments/updateFilter', query, { root: true });
     },
 
     async fetchList({ commit }) {
@@ -79,8 +79,16 @@ export default {
   },
 
   getters: {
-    list: ({ ids, entities }) => ids.map((id) => entities[id]),
-    current: ({ current }) => current,
-    loading: ({ loading }) => loading,
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    current({ current }) {
+      return current;
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
   },
 };

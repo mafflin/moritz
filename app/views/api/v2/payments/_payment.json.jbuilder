@@ -11,6 +11,6 @@ json.extract! payment,
   :currency,
   :note
 
-json.debit payment.debit.to_f
-json.credit payment.credit.to_f
+json.debit payment.debit.to_i
+json.credit payment.credit.to_i
 json.withdrawal payment.withdrawal.to_i

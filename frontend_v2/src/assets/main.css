@@ -1,5 +1,8 @@
 /* MARGINS and PADDINGS */
 
+.m-0 {
+  margin: 0;
+}
 .m-1 {
   margin: 5px;
 }
@@ -7,6 +10,9 @@
   margin: 10px;
 }
 
+.ml-0 {
+  margin-left: 0;
+}
 .ml-1 {
   margin-left: 5px;
 }
@@ -14,6 +20,9 @@
   margin-left: 10px;
 }
 
+.mr-1 {
+  margin-right: 0;
+}
 .mr-1 {
   margin-right: 5px;
 }
@@ -45,6 +54,7 @@
 /* MARGINS and PADDINGS */
 
 .mdl-dialog {
+  width: 600px;
   z-index: 100;
 }
 

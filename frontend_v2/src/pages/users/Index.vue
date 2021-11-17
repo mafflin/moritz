@@ -18,7 +18,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('users', ['list', 'isLoading']),
+    ...mapGetters('users', ['list', 'loading']),
   },
 };
 </script>

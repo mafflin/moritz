@@ -16,13 +16,15 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: UserIndex,
-    beforeEnter: () => store.dispatch('users/initIndexPage'),
+    beforeEnter: () => store
+      .dispatch('users/initIndexPage'),
   },
   {
     path: '/users/:id',
     component: UserShow,
     name: 'User',
-    beforeEnter: ({ params: { id } }) => store.dispatch('users/initShowPage', id),
+    beforeEnter: ({ params: { id }, query }) => store
+      .dispatch('users/initShowPage', { id, query }),
     children: [
       {
         path: 'add_group',
@@ -44,8 +46,9 @@ const routes = [
       {
         path: 'edit_rules/:groupId',
         name: 'EditRules',
-        components: RulesEditDialog,
-        beforeEnter: ({ params: { groupId } }) => store.dispatch('rules/initModal', groupId),
+        component: RulesEditDialog,
+        beforeEnter: ({ params: { groupId } }) => store
+          .dispatch('rules/initModal', groupId),
       },
     ],
   },

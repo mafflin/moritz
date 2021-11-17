@@ -80,3 +80,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mdl-textfield {
+  width: 100%;
+}
+</style>

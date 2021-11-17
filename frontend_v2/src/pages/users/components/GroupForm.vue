@@ -21,7 +21,7 @@
       </span>
     </div>
 
-    <div class="p-2">
+    <div>
       <span
         v-for="color in colors"
         :key="color"
@@ -101,3 +101,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mdl-textfield {
+  width: 100%;
+}
+</style>

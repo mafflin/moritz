@@ -72,6 +72,8 @@ export default {
         const { data } = await axios.post('/api/v2/rules/create_single', { rule });
 
         commit('setList', [...list, data]);
+
+        dispatch('payments/fetchList', {}, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -87,6 +89,7 @@ export default {
         await axios.post('/api/v2/rules/delete_single', { id });
 
         dispatch('fetchList', groupId);
+        dispatch('payments/fetchList', {}, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -108,8 +111,16 @@ export default {
   },
 
   getters: {
-    list: ({ ids, entities }) => ids.map((id) => entities[id]),
-    loading: ({ loading }) => loading,
-    errors: ({ errors }) => errors,
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
   },
 };

@@ -3,8 +3,12 @@
     <i class="mdl-layout-icon material-icons">pets</i>
 
     <div class="mdl-layout__header-row">
-      <span class="mdl-layout__title">{{ $t('titles.app') }}</span>
+      <span class="mdl-layout__title">
+        {{ $t('titles.app') }}
+      </span>
+
       <div class="mdl-layout-spacer" />
+
       <nav
         v-if="current"
         class="mdl-navigation"
@@ -20,14 +24,10 @@
         v-if="current"
         class="mdl-navigation"
       >
-        <router-link
-          :to="{ name: 'User', params: { id: current.id } }"
+        <img
+          class="mdl-chip__contact ml-2"
+          :src="current.avatar"
         >
-          <img
-            class="mdl-chip__contact ml-2"
-            :src="current.avatar"
-          >
-        </router-link>
       </nav>
     </div>
   </header>

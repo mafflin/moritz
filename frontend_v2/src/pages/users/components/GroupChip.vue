@@ -1,37 +1,29 @@
 <template>
   <span
     :class="chipClassName"
+    @click="handleSelect"
   >
-    <router-link
-      v-if="editable"
-      :to="{ name: 'EditRules', params: { groupId: group.id } }"
-      class="mdl-chip__text mdl-color-text--white clickable"
-    >
-      {{ group.name }}
-    </router-link>
-
     <span
-      v-else
-      class="mdl-chip__text"
+      class="mdl-chip__text mdl-color-text--white"
     >
       {{ group.name }}
     </span>
 
-    <router-link
-      v-if="editable"
-      :to="{ name: 'EditGroup', params: { groupId: group.id } }"
-      class="mdl-chip__action"
+    <span
+      v-if="group.unmatched"
+      class="mdl-chip__action pr-1"
     >
-      <i class="material-icons mdl-color-text--white">edit</i>
-    </router-link>
+      <i class="material-icons mdl-color-text--white">format_underlined</i>
+    </span>
 
-    <router-link
-      v-if="editable"
-      :to="{ name: 'DeleteGroup', params: { groupId: group.id } }"
+    <span
+      v-for="{icon, action} in actions"
+      :key="action"
       class="mdl-chip__action"
+      @click.stop="$emit(action, group.id)"
     >
-      <i class="material-icons mdl-color-text--white">cancel</i>
-    </router-link>
+      <i class="material-icons mdl-color-text--white">{{ icon }}</i>
+    </span>
   </span>
 </template>
 
@@ -43,24 +35,79 @@ export default {
       type: Object,
       required: true,
     },
+    selectedId: {
+      type: String,
+      default: null,
+    },
     editable: {
+      type: Boolean,
+      default: false,
+    },
+    selectable: {
       type: Boolean,
       default: false,
     },
   },
 
+  emits: [
+    'open-delete-group',
+    'open-edit-group',
+    'open-edit-rules',
+    'select',
+  ],
+
   computed: {
     chipClassName() {
-      const { editable, group: { color } } = this;
-      const deletable = editable && 'mdl-chip--deletable';
+      const {
+        actionsEnabled, isSelected, selectable, group: { color },
+      } = this;
+      const editable = actionsEnabled && 'mdl-chip--deletable';
       const colored = color && `mdl-color--${color} mdl-color-text--white`;
+      const clickable = selectable && 'clickable';
+      const selected = isSelected && 'selected mdl-shadow--8dp';
       return [
         'mdl-chip',
         'mr-1',
-        deletable,
+        selected,
+        editable,
         colored,
+        clickable,
       ].filter((item) => !!item);
+    },
+
+    actionsEnabled() {
+      return this.editable && !this.group.unmatched;
+    },
+
+    isSelected() {
+      return this.selectedId === this.group.id;
+    },
+
+    actions() {
+      if (!this.actionsEnabled) return [];
+      return [
+        { icon: 'edit', action: 'open-edit-group' },
+        { icon: 'control_point_duplicate', action: 'open-edit-rules' },
+        { icon: 'cancel', action: 'open-delete-group' },
+      ];
+    },
+  },
+
+  methods: {
+    handleSelect() {
+      const {
+        isSelected, selectable, group, $emit,
+      } = this;
+      if (!selectable) return;
+
+      $emit('select', isSelected ? null : group.id);
     },
   },
 };
 </script>
+
+<style scoped>
+.selected {
+  font-weight: bold;
+}
+</style>
