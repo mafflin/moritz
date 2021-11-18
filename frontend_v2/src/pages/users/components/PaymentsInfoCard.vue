@@ -11,21 +11,13 @@
     </div>
 
     <div class="mdl-card__supporting-text mdl-card--expand">
-      <h6 class="m-0">
-        {{ $t('payments.debit') }}:
-        <span class="mdl-color-text--deep-orange">{{ debit }}</span>
-      </h6>
-      <h6 class="m-0">
-        {{ $t('payments.credit') }}:
-        <span class="mdl-color-text--indigo">{{ credit }}</span>
-      </h6>
-      <h6 class="m-0">
-        {{ $t('payments.delta') }}:
-        <span class="mdl-color-text--deep-purple">{{ delta }}</span>
-      </h6>
-      <h6 class="m-0">
-        {{ $t('payments.withdrawal') }}:
-        <span class="mdl-color-text--pink">{{ withdrawal }}</span>
+      <h6
+        v-for="({ color, key, value }) in displayedAttributes"
+        :key="key"
+        class="m-0"
+      >
+        {{ $t(`payments.${key}`) }}:
+        <span :class="color">{{ value }}</span>
       </h6>
     </div>
 
@@ -41,6 +33,8 @@
 </template>
 
 <script>
+import payment from '../../../utils/payment';
+
 export default {
   props: {
     total: {
@@ -62,6 +56,13 @@ export default {
     withdrawal: {
       type: Number,
       default: 0,
+    },
+  },
+
+  computed: {
+    displayedAttributes() {
+      return payment.numericAttributes
+        .map((el) => ({ ...el, value: this[el.key] }));
     },
   },
 };

@@ -5,7 +5,7 @@
         <button
           :disabled="loading"
           class="mdl-button mdl-js-button mdl-button--icon"
-          @click="handleYearChange(year-1)"
+          @click="handleYearSubtract"
         >
           <i class="material-icons">chevron_left</i>
         </button>
@@ -16,7 +16,7 @@
           disabled
           class="mdl-button mdl-js-button mdl-color-text--black"
         >
-          {{ year }}
+          {{ selected?.format('YYYY') }}
         </button>
       </div>
 
@@ -24,7 +24,7 @@
         <button
           :disabled="loading"
           class="mdl-button mdl-js-button mdl-button--icon"
-          @click="handleYearChange(year+1)"
+          @click="handleYearAdd"
         >
           <i class="material-icons">chevron_right</i>
         </button>
@@ -42,7 +42,7 @@
         <button
           :class="{
             'mdl-button mdl-js-button': true,
-            'mdl-button--accent mdl-button--raised':_month === month
+            'mdl-button--accent mdl-button--raised': _month === selected?.format('MMM')
           }"
           @click="handleMonthChange(_month)"
         >
@@ -55,6 +55,7 @@
 
 <script>
 import moment from 'moment';
+import { ISO_DATE_FORMAT } from '../../../utils/parseUrlParams';
 
 export default {
   props: {
@@ -74,42 +75,46 @@ export default {
 
   data() {
     return {
-      year: null,
-      month: null,
+      selectedDate: null,
     };
   },
 
   computed: {
+    selected: {
+      get() {
+        return moment(this.date);
+      },
+
+      set(value) {
+        const date = value.format(ISO_DATE_FORMAT);
+
+        this.$emit('change', { date });
+      },
+    },
+
     months() {
       return moment.months()
         .map((month) => moment().month(month).format('MMM'));
     },
   },
 
-  mounted() {
-    const selected = moment(this.date);
-
-    this.year = parseInt(selected.format('YYYY'), 10);
-    this.month = selected.format('MMM');
-  },
-
   methods: {
     handleMonthChange(value) {
-      this.month = value;
-      this.handleDateChange();
+      const year = this.selected.year();
+      const month = moment().month(value).format('MM');
+      const day = '01';
+
+      this.selected = moment([year, month, day].join('-'));
     },
 
-    handleYearChange(value) {
-      this.year = value;
-      this.handleDateChange();
+    handleYearSubtract() {
+      this.selected = this.selected
+        .subtract(1, 'years');
     },
 
-    handleDateChange() {
-      const { year, month } = this;
-      const date = moment([year, month].join(), 'YYYYMMM')
-        .format('YYYY-MM-DD');
-
-      this.$emit('change', date);
+    handleYearAdd() {
+      this.selected = this.selected
+        .add(1, 'years');
     },
   },
 };

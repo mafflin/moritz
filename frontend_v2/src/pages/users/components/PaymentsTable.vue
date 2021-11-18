@@ -69,7 +69,7 @@ export default {
 
   computed: {
     headers() {
-      return payment.sortable;
+      return payment.sortableAttributes;
     },
   },
 

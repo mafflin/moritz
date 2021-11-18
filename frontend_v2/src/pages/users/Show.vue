@@ -2,8 +2,30 @@
   <div>
     <router-view />
 
-    <div class="mdl-grid">
-      <payments-card
+    <div
+      v-if="collapsed"
+      class="mdl-grid"
+    >
+      <collapsed-panel
+        :groups="listWithUnmatched"
+        :filter="filter"
+        :total="total"
+        :debit="debit"
+        :credit="credit"
+        :delta="delta"
+        :withdrawal="withdrawal"
+        :selected-group-id="filter.groupId"
+        @group-select="filterList"
+        @date-change="filterList"
+        @toggle-collapsed="toggleCollapsed"
+      />
+    </div>
+
+    <div
+      v-else
+      class="mdl-grid"
+    >
+      <payments-info-card
         :total="total"
         :debit="debit"
         :credit="credit"
@@ -41,20 +63,23 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import GroupsCard from './components/GroupsCard.vue';
+import CollapsedPanel from './components/CollapsedPanel.vue';
 import DateFilterCard from './components/DateFilterCard.vue';
-import PaymentsCard from './components/PaymentsCard.vue';
+import GroupsCard from './components/GroupsCard.vue';
+import PaymentsInfoCard from './components/PaymentsInfoCard.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 
 export default {
   components: {
-    GroupsCard,
+    CollapsedPanel,
     DateFilterCard,
-    PaymentsCard,
+    GroupsCard,
+    PaymentsInfoCard,
     PaymentsTable,
   },
 
   computed: {
+    ...mapGetters('settings', ['collapsed']),
     ...mapGetters('users', ['current']),
     ...mapGetters('payments', [
       'loading',
@@ -67,9 +92,7 @@ export default {
       'filter',
     ]),
     ...mapGetters('groups', ['listWithUnmatched']),
-    ...mapGetters('rules', {
-      rules: 'list',
-    }),
+    ...mapGetters('rules', { rules: 'list' }),
   },
 
   mounted() {
@@ -84,6 +107,7 @@ export default {
       'handleQueryParamsUpdate',
     ]),
     ...mapActions('groups', ['openDeleteGroup', 'openEditGroup', 'openEditRules']),
+    ...mapActions('settings', ['toggleCollapsed']),
   },
 };
 </script>

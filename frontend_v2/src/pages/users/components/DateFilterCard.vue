@@ -34,7 +34,7 @@ export default {
   ],
 
   methods: {
-    handleDateChange(date) {
+    handleDateChange({ date }) {
       this.$emit('submit', { date });
     },
   },

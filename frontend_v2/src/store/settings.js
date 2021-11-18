@@ -5,6 +5,7 @@ export default {
 
   state: {
     current: {},
+    collapsed: true,
     loading: false,
   },
 
@@ -12,6 +13,10 @@ export default {
   mutations: {
     setCurrent(state, settings) {
       state.current = settings;
+    },
+
+    setCollapsed(state, value) {
+      state.collapsed = value;
     },
 
     setLoading(state, value) {
@@ -36,6 +41,10 @@ export default {
         commit('setLoading', false);
       }
     },
+
+    toggleCollapsed({ commit, getters: { collapsed } }) {
+      commit('setCollapsed', !collapsed);
+    },
   },
 
   getters: {
@@ -45,6 +54,10 @@ export default {
 
     unmatchedGroupId({ current }) {
       return current.unmatchedId;
+    },
+
+    collapsed({ collapsed }) {
+      return collapsed;
     },
 
     loading({ loading }) {
