@@ -32,12 +32,10 @@
     </div>
 
     <div
-      v-for="(quarter, index) in calendar"
-      :key="index"
       class="mdl-grid"
     >
       <div
-        v-for="_month in quarter"
+        v-for="_month in months"
         :key="_month"
         class="mdl-cell mdl-cell--4-col"
       >
@@ -57,8 +55,6 @@
 
 <script>
 import moment from 'moment';
-
-const CALENDAR_WIDTH = 3;
 
 export default {
   props: {
@@ -84,25 +80,16 @@ export default {
   },
 
   computed: {
-    calendar() {
+    months() {
       return moment.months()
-        .map((month) => moment().month(month).format('MMM'))
-        .reduce((rows, month, index) => {
-          if (index % CALENDAR_WIDTH === 0) {
-            rows.push([month]);
-          } else {
-            rows[rows.length - 1].push(month);
-          }
-          return rows;
-        },
-        []);
+        .map((month) => moment().month(month).format('MMM'));
     },
   },
 
   mounted() {
     const selected = moment(this.date);
 
-    this.year = selected.format('YYYY');
+    this.year = parseInt(selected.format('YYYY'), 10);
     this.month = selected.format('MMM');
   },
 
