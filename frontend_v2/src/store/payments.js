@@ -1,11 +1,14 @@
 import axios from 'axios';
 import router from '../router';
 import normalize from '../utils/normalize';
-import parseUrlParams, { parseDate, parseString } from '../utils/parseUrlParams';
+import payment from '../utils/payment';
+import parseUrlParams, { parseBoolean, parseDate, parseString } from '../utils/parseUrlParams';
 
 const QUERY_PARAMS = {
   groupId: parseString,
   date: parseDate,
+  sort: payment.parseSortable,
+  asc: parseBoolean,
 };
 
 export default {
@@ -17,7 +20,7 @@ export default {
     loading: false,
     filter: {
       sort: null,
-      asc: true,
+      asc: false,
       groupId: null,
       date: null,
     },
@@ -78,6 +81,17 @@ export default {
   getters: {
     list({ ids, entities }) {
       return ids.map((id) => entities[id]);
+    },
+
+    sortedList(state, { list, filter: { sort, asc } }) {
+      if (!sort) return list;
+
+      const sorted = list.sort((a, b) => {
+        if (a[sort] < b[sort]) { return -1; }
+        if (a[sort] > b[sort]) { return 1; }
+        return 0;
+      });
+      return asc ? sorted : sorted.reverse();
     },
 
     total({ ids }) {

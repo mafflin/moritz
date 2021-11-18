@@ -1,6 +1,12 @@
 <template>
   <form @submit.prevent="$emit('submit')">
-    <div :class="inputClassName">
+    <div
+      :class="{
+        'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
+        'is-invalid': errors.name,
+        'is-dirty': groupName,
+      }"
+    >
       <input
         id="group-name"
         v-model="name"
@@ -78,19 +84,6 @@ export default {
 
         this.$emit('change', { name });
       },
-    },
-
-    inputClassName() {
-      const { errors, groupName } = this;
-      const invalid = errors.name ? 'is-invalid' : null;
-      const dirty = groupName ? 'is-dirty' : null;
-      return [
-        'mdl-textfield',
-        'mdl-js-textfield',
-        'mdl-textfield--floating-label',
-        dirty,
-        invalid,
-      ];
     },
   },
 

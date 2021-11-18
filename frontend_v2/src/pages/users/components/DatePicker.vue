@@ -42,7 +42,10 @@
         class="mdl-cell mdl-cell--4-col"
       >
         <button
-          :class="`mdl-button mdl-js-button ${_month === month && selectedClassName}`"
+          :class="{
+            'mdl-button mdl-js-button': true,
+            'mdl-button--accent mdl-button--raised':_month === month
+          }"
           @click="handleMonthChange(_month)"
         >
           {{ _month }}
@@ -56,7 +59,6 @@
 import moment from 'moment';
 
 const CALENDAR_WIDTH = 3;
-const SELECTED_CLASS_NAME = 'mdl-button--accent mdl-button--raised';
 
 export default {
   props: {
@@ -94,10 +96,6 @@ export default {
           return rows;
         },
         []);
-    },
-
-    selectedClassName() {
-      return SELECTED_CLASS_NAME;
     },
   },
 

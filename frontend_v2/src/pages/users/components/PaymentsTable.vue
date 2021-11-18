@@ -3,12 +3,16 @@
     <thead>
       <tr>
         <th
-          v-for="({ value, width }, index) in headers"
-          :key="index"
-          :width="width"
-          class="mdl-data-table__cell--non-numeric"
+          v-for="header in headers"
+          :key="header"
+          :class="{
+            'mdl-data-table__cell--non-numeric clickable': true,
+            'mdl-data-table__header--sorted-ascending': header === sort && asc,
+            'mdl-data-table__header--sorted-descending': header === sort && !asc,
+          }"
+          @click="handleSort(header)"
         >
-          {{ $t(`payments.${value}`) }}
+          {{ $t(`payments.${header}`) }}
         </th>
       </tr>
     </thead>
@@ -27,11 +31,13 @@
         :key="payment.id"
       >
         <td
-          v-for="({ value }, index) in headers"
+          v-for="(header, index) in headers"
           :key="index"
           class="mdl-data-table__cell--non-numeric"
         >
-          {{ payment[value] }}
+          <div>
+            {{ payment[header] }}
+          </div>
         </td>
       </tr>
     </tbody>
@@ -39,17 +45,7 @@
 </template>
 
 <script>
-const HEADERS = [
-  { value: 'bookedAt', width: '8%' },
-  { value: 'bank', width: '7%' },
-  { value: 'transactionType', width: '11%' },
-  { value: 'details' },
-  { value: 'beneficiary', width: '15%' },
-  { value: 'note', width: '10%' },
-  { value: 'withdrawal', width: '10%' },
-  { value: 'debit', width: '7%' },
-  { value: 'credit', width: '7%' },
-];
+import payment from '../../../utils/payment';
 
 export default {
   props: {
@@ -57,11 +53,31 @@ export default {
       type: Array,
       default: () => [],
     },
+    sort: {
+      type: String,
+      default: null,
+    },
+    asc: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  emits: [
+    'sort',
+  ],
 
   computed: {
     headers() {
-      return HEADERS;
+      return payment.sortable;
+    },
+  },
+
+  methods: {
+    handleSort(sort) {
+      const asc = this.sort !== sort ? this.asc : !this.asc;
+
+      this.$emit('sort', { sort, asc });
     },
   },
 };

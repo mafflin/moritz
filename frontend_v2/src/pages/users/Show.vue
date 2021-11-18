@@ -30,7 +30,10 @@
     <div class="mdl-grid">
       <payments-table
         class="mdl-cell mdl-cell--12-col"
-        :payments="list"
+        :payments="sortedList"
+        :sort="filter.sort"
+        :asc="filter.asc"
+        @sort="filterList"
       />
     </div>
   </div>
@@ -55,7 +58,7 @@ export default {
     ...mapGetters('users', ['current']),
     ...mapGetters('payments', [
       'loading',
-      'list',
+      'sortedList',
       'total',
       'debit',
       'credit',

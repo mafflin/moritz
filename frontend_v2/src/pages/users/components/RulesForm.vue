@@ -17,7 +17,13 @@
       </span>
     </div>
 
-    <div :class="inputClassName">
+    <div
+      :class="{
+        'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
+        'is-invalid': errors.match,
+        'is-dirty': match,
+      }"
+    >
       <input
         id="rule-match"
         v-model="match"
@@ -62,21 +68,6 @@ export default {
     return {
       match: '',
     };
-  },
-
-  computed: {
-    inputClassName() {
-      const { errors, match } = this;
-      const invalid = errors.match ? 'is-invalid' : null;
-      const dirty = match ? 'is-dirty' : null;
-      return [
-        'mdl-textfield',
-        'mdl-js-textfield',
-        'mdl-textfield--floating-label',
-        dirty,
-        invalid,
-      ];
-    },
   },
 };
 </script>

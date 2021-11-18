@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
 
-export const parseBoolean = (value) => !!value;
+export const parseBoolean = (value) => value === 'true';
 
 export const parseString = (value) => (value ? String(value) : null);
 
