@@ -62,9 +62,11 @@ export default {
         actionsEnabled, isSelected, selectable, group: { color },
       } = this;
       const editable = actionsEnabled && 'mdl-chip--deletable';
-      const colored = color && `mdl-color--${color} mdl-color-text--white`;
       const clickable = selectable && 'clickable';
-      const selected = isSelected && 'selected mdl-shadow--8dp';
+      const selected = isSelected && 'selected mdl-shadow--6dp';
+      const colored = (isSelected || !selectable)
+        && color
+        && `mdl-color--${color} mdl-color-text--white`;
       return [
         'mdl-chip',
         'mr-1',

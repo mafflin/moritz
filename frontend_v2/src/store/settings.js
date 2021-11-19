@@ -5,7 +5,7 @@ export default {
 
   state: {
     current: {},
-    collapsed: true,
+    collapsed: false,
     loading: false,
   },
 

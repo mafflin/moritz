@@ -2,52 +2,13 @@
   <div>
     <router-view />
 
-    <div
-      v-if="collapsed"
-      class="mdl-grid"
-    >
-      <collapsed-panel
-        :groups="listWithUnmatched"
-        :filter="filter"
-        :total="total"
-        :debit="debit"
-        :credit="credit"
-        :delta="delta"
-        :withdrawal="withdrawal"
-        :selected-group-id="filter.groupId"
-        @group-select="filterList"
-        @date-change="filterList"
-        @toggle-collapsed="toggleCollapsed"
-      />
-    </div>
+    <card-panel-collapsed v-if="collapsed" />
+    <card-panel v-else />
 
-    <div
-      v-else
-      class="mdl-grid"
-    >
-      <payments-info-card
-        :total="total"
-        :debit="debit"
-        :credit="credit"
-        :delta="delta"
-        :withdrawal="withdrawal"
-      />
-
-      <groups-card
-        :groups="listWithUnmatched"
-        :selected-id="filter.groupId"
-        @select="filterList"
-        @open-delete-group="openDeleteGroup"
-        @open-edit-group="openEditGroup"
-        @open-edit-rules="openEditRules"
-      />
-
-      <date-filter-card
-        :filter="filter"
-        :loading="loading"
-        @submit="filterList"
-      />
-    </div>
+    <collapse-button
+      :collapsed="collapsed"
+      @toggle="toggleCollapsed"
+    />
 
     <div class="mdl-grid">
       <payments-table
@@ -63,18 +24,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import CollapsedPanel from './components/CollapsedPanel.vue';
-import DateFilterCard from './components/DateFilterCard.vue';
-import GroupsCard from './components/GroupsCard.vue';
-import PaymentsInfoCard from './components/PaymentsInfoCard.vue';
+import CardPanel from './containers/CardPanel.vue';
+import CardPanelCollapsed from './containers/CardPanelCollapsed.vue';
+import CollapseButton from './components/CollapseButton.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 
 export default {
   components: {
-    CollapsedPanel,
-    DateFilterCard,
-    GroupsCard,
-    PaymentsInfoCard,
+    CardPanel,
+    CardPanelCollapsed,
+    CollapseButton,
     PaymentsTable,
   },
 
@@ -84,15 +43,8 @@ export default {
     ...mapGetters('payments', [
       'loading',
       'sortedList',
-      'total',
-      'debit',
-      'credit',
-      'delta',
-      'withdrawal',
       'filter',
     ]),
-    ...mapGetters('groups', ['listWithUnmatched']),
-    ...mapGetters('rules', { rules: 'list' }),
   },
 
   mounted() {
@@ -100,14 +52,14 @@ export default {
   },
 
   methods: {
-    ...mapActions('payments', [
-      'fetchList',
-      'filterList',
-      'openEditGroup',
-      'handleQueryParamsUpdate',
-    ]),
-    ...mapActions('groups', ['openDeleteGroup', 'openEditGroup', 'openEditRules']),
     ...mapActions('settings', ['toggleCollapsed']),
+    ...mapActions('payments', ['fetchList', 'filterList']),
   },
 };
 </script>
+
+<style scoped>
+.collapse-button {
+  text-align: center;
+}
+</style>
