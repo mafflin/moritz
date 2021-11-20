@@ -27,6 +27,10 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
+
+    reset(state) {
+      state.current = null;
+    },
   },
   /* eslint-enable no-param-reassign */
 

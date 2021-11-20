@@ -6,10 +6,9 @@
         :key="group.id"
         :group="group"
         :selected-id="selectedId"
+        extendable
         selectable
         @select="handleGroupSelect"
-        @open-delete-group="handleOpenDeleteGroup"
-        @open-edit-group="handleOpenEditGroup"
         @open-edit-rules="handleOpenEditRules"
       />
     </div>
@@ -45,8 +44,6 @@ export default {
   },
 
   emits: [
-    'open-delete-group',
-    'open-edit-group',
     'open-edit-rules',
     'select',
   ],
@@ -54,14 +51,6 @@ export default {
   methods: {
     handleGroupSelect(groupId) {
       this.$emit('select', { groupId });
-    },
-
-    handleOpenDeleteGroup(groupId) {
-      this.$emit('open-delete-group', groupId);
-    },
-
-    handleOpenEditGroup(groupId) {
-      this.$emit('open-edit-group', groupId);
     },
 
     handleOpenEditRules(groupId) {

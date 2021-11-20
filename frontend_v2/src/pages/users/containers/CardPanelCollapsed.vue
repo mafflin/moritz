@@ -19,6 +19,7 @@
             :groups="listWithUnmatched"
             :selected-id="filter.groupId"
             @select="filterList"
+            @open-edit-rules="openEditRules"
           />
         </div>
 
@@ -61,7 +62,7 @@ export default {
 
   methods: {
     ...mapActions('payments', ['filterList']),
-    ...mapActions('groups', ['openDeleteGroup', 'openEditGroup', 'openEditRules']),
+    ...mapActions('groups', ['openEditRules']),
   },
 };
 </script>

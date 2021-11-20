@@ -20,7 +20,7 @@ export default {
     loading: false,
     filter: {
       sort: null,
-      asc: false,
+      asc: null,
       groupId: null,
       date: null,
     },
@@ -41,6 +41,12 @@ export default {
 
     setFilter(state, filter) {
       state.filter = { ...state.filter, ...filter };
+    },
+
+    reset(state) {
+      state.ids = [];
+      state.filter = Object.keys(state.filter)
+        .reduce((acc, key) => ({ ...acc, [key]: null }), {});
     },
   },
   /* eslint-enable no-param-reassign */

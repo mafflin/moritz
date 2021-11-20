@@ -13,6 +13,8 @@
         :group="group"
         :selected-id="selectedId"
         editable
+        extendable
+        deletable
         selectable
         @select="handleGroupSelect"
         @open-delete-group="handleOpenDeleteGroup"

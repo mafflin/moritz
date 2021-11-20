@@ -1,7 +1,5 @@
 export default (items = []) => {
   const ids = items.map((item) => item.id);
-  const entities = items
-    .map((item) => ({ [item.id]: item }))
-    .reduce((acc, current) => ({ ...acc, ...current }), {});
+  const entities = items.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
   return { ids, entities };
 };

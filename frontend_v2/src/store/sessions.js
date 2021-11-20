@@ -34,7 +34,9 @@ export default {
       try {
         await axios.post('/api/v2/sessions/delete_current');
 
-        commit('users/setCurrent', null, { root: true });
+        commit('users/reset', {}, { root: true });
+        commit('settings/reset', {}, { root: true });
+        commit('payments/reset', {}, { root: true });
       } catch (error) {
         console.log(error.message);
       } finally {

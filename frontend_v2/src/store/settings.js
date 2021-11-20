@@ -22,6 +22,11 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
+
+    reset(state) {
+      state.current = {};
+      state.collapsed = false;
+    },
   },
   /* eslint-enable no-param-reassign */
 

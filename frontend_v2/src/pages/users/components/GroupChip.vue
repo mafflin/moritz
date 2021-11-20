@@ -4,7 +4,7 @@
     @click="handleSelect"
   >
     <span
-      class="mdl-chip__text mdl-color-text--white"
+      class="mdl-chip__text"
     >
       {{ group.name }}
     </span>
@@ -13,16 +13,20 @@
       v-if="group.unmatched"
       class="mdl-chip__action pr-1"
     >
-      <i class="material-icons mdl-color-text--white">format_underlined</i>
+      <i :class="{ 'material-icons': true, 'mdl-color-text--white': isSelected }">
+        format_underlined
+      </i>
     </span>
 
     <span
-      v-for="{icon, action} in actions"
+      v-for="{ icon, action } in actions"
       :key="action"
       class="mdl-chip__action"
       @click.stop="$emit(action, group.id)"
     >
-      <i class="material-icons mdl-color-text--white">{{ icon }}</i>
+      <i :class="{ 'material-icons': true, 'mdl-color-text--white': isSelected }">
+        {{ icon }}
+      </i>
     </span>
   </span>
 </template>
@@ -43,6 +47,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    deletable: {
+      type: Boolean,
+      default: false,
+    },
+    extendable: {
+      type: Boolean,
+      default: false,
+    },
     selectable: {
       type: Boolean,
       default: false,
@@ -57,11 +69,28 @@ export default {
   ],
 
   computed: {
+    isSelected() {
+      return this.selectedId === this.group.id;
+    },
+
+    actions() {
+      const {
+        group, editable, deletable, extendable,
+      } = this;
+      if (group.unmatched) return [];
+
+      return [
+        { icon: 'edit', action: 'open-edit-group', active: editable },
+        { icon: 'control_point_duplicate', action: 'open-edit-rules', active: extendable },
+        { icon: 'cancel', action: 'open-delete-group', active: deletable },
+      ].filter(({ active }) => !!active);
+    },
+
     chipClassName() {
       const {
-        actionsEnabled, isSelected, selectable, group: { color },
+        actions, isSelected, selectable, group: { color },
       } = this;
-      const editable = actionsEnabled && 'mdl-chip--deletable';
+      const editable = actions.length && 'mdl-chip--deletable';
       const clickable = selectable && 'clickable';
       const selected = isSelected && 'selected mdl-shadow--6dp';
       const colored = (isSelected || !selectable)
@@ -75,23 +104,6 @@ export default {
         colored,
         clickable,
       ].filter((item) => !!item);
-    },
-
-    actionsEnabled() {
-      return this.editable && !this.group.unmatched;
-    },
-
-    isSelected() {
-      return this.selectedId === this.group.id;
-    },
-
-    actions() {
-      if (!this.actionsEnabled) return [];
-      return [
-        { icon: 'edit', action: 'open-edit-group' },
-        { icon: 'control_point_duplicate', action: 'open-edit-rules' },
-        { icon: 'cancel', action: 'open-delete-group' },
-      ];
     },
   },
 
