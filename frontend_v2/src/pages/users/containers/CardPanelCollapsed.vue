@@ -11,6 +11,7 @@
             :credit="credit"
             :delta="delta"
             :withdrawal="withdrawal"
+            @on-report-upload="uploadReport"
           />
         </div>
 
@@ -63,6 +64,7 @@ export default {
   methods: {
     ...mapActions('payments', ['filterList']),
     ...mapActions('groups', ['openEditRules']),
+    ...mapActions('reports', { uploadReport: 'createSingle' }),
   },
 };
 </script>

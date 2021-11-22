@@ -22,20 +22,21 @@
     </div>
 
     <div class="mdl-card__actions">
-      <router-link
-        to="#"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
-      >
-        <i class="material-icons">file_upload</i>
-      </router-link>
+      <report-upload-button
+        :loading="loading"
+        @select="handleReportUpload"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import payment from '../../../utils/payment';
+import ReportUploadButton from './ReportUploadButton.vue';
 
 export default {
+  components: { ReportUploadButton },
+
   props: {
     total: {
       type: Number,
@@ -57,12 +58,26 @@ export default {
       type: Number,
       default: 0,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  emits: [
+    'on-report-upload',
+  ],
 
   computed: {
     displayedAttributes() {
       return payment.numericAttributes
         .map((el) => ({ ...el, value: this[el.key] }));
+    },
+  },
+
+  methods: {
+    handleReportUpload(report) {
+      this.$emit('on-report-upload', report);
     },
   },
 };

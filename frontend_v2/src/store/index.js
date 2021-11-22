@@ -3,6 +3,7 @@ import { createStore } from 'vuex';
 
 import groups from './groups';
 import payments from './payments';
+import reports from './reports';
 import rules from './rules';
 import sessions from './sessions';
 import settings from './settings';
@@ -12,6 +13,7 @@ export default createStore({
   modules: {
     groups,
     payments,
+    reports,
     rules,
     sessions,
     settings,

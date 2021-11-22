@@ -47,6 +47,10 @@ Rails.application.routes.draw do
         post :fetch_list
         post :fetch_current
       end
+
+      resource :reports, only: [] do
+        post :create_single
+      end
     end
   end
 end

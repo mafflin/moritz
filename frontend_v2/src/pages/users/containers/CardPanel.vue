@@ -8,6 +8,7 @@
       :credit="credit"
       :delta="delta"
       :withdrawal="withdrawal"
+      @on-report-upload="uploadReport"
     />
 
     <groups-card
@@ -56,6 +57,7 @@ export default {
   methods: {
     ...mapActions('payments', ['filterList']),
     ...mapActions('groups', ['openDeleteGroup', 'openEditGroup', 'openEditRules']),
+    ...mapActions('reports', { uploadReport: 'createSingle' }),
   },
 };
 </script>
