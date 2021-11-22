@@ -9,12 +9,14 @@
       :delta="delta"
       :withdrawal="withdrawal"
       :loading="loading"
+      :reduced="panelReduced"
       @on-report-upload="uploadReport"
     />
 
     <groups-card
       :groups="listWithUnmatched"
       :selected-id="filter.groupId"
+      :reduced="panelReduced"
       @select="filterList"
       @open-delete-group="openDeleteGroup"
       @open-edit-group="openEditGroup"
@@ -24,14 +26,13 @@
     <date-filter-card
       :filter="filter"
       :loading="loading"
+      :reduced="panelReduced"
       @submit="filterList"
     />
   </div>
 </template>
 
 <script>
-// TODO: Refactor. Do not duplicate the whole logic.
-
 import { mapActions, mapGetters } from 'vuex';
 import DateFilterCard from '../components/DateFilterCard.vue';
 import GroupsCard from '../components/GroupsCard.vue';
@@ -47,6 +48,7 @@ export default {
   computed: {
     ...mapGetters('groups', ['listWithUnmatched']),
     ...mapGetters('reports', ['loading']),
+    ...mapGetters('settings', ['panelReduced']),
     ...mapGetters('payments', [
       'loading',
       'total',

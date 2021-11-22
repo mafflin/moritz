@@ -7,7 +7,7 @@ export default {
 
   state: {
     current: {},
-    collapsed: false,
+    panelReduced: false,
     loading: false,
     message: {},
   },
@@ -18,8 +18,8 @@ export default {
       state.current = settings;
     },
 
-    setCollapsed(state, value) {
-      state.collapsed = value;
+    setPanelReduced(state, value) {
+      state.panelReduced = value;
     },
 
     setLoading(state, value) {
@@ -32,30 +32,36 @@ export default {
 
     reset(state) {
       state.current = {};
-      state.collapsed = false;
+      state.panelReduced = false;
     },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchCurrent({ commit }) {
+    async fetchCurrent({ commit, dispatch }) {
       commit('setLoading', true);
 
       try {
         const { data } = await axios.post('/api/v2/settings/fetch_current');
+        const panelReduced = !!localStorage.getItem('panelReduced');
 
         commit('setCurrent', data);
+        commit('setPanelReduced', panelReduced);
       } catch (error) {
         commit('setCurrent', {});
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    toggleCollapsed({ commit, getters: { collapsed } }) {
-      commit('setCollapsed', !collapsed);
+    togglePanelReduced({ commit, getters: { panelReduced } }) {
+      const newValue = !panelReduced;
+
+      commit('setPanelReduced', newValue);
+
+      localStorage.setItem('panelReduced', newValue ? 1 : '');
     },
 
     async showMessage({ commit }, { t, error }) {
@@ -76,8 +82,8 @@ export default {
       return current.unmatchedId;
     },
 
-    collapsed({ collapsed }) {
-      return collapsed;
+    panelReduced({ panelReduced }) {
+      return panelReduced;
     },
 
     loading({ loading }) {

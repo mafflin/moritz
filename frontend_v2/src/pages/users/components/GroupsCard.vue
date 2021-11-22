@@ -1,20 +1,34 @@
 <template>
-  <div class="mdl-card mdl-cell mdl-shadow--2dp">
-    <div class="mdl-card__title">
+  <div
+    :class="{
+      'mdl-cell mdl-shadow--2dp': true,
+      'mdl-card ': !reduced,
+      'mdl-grid': reduced,
+    }"
+  >
+    <div
+      v-if="!reduced"
+      class="mdl-card__title"
+    >
       <h2 class="mdl-card__title-text">
         {{ $t('titles.groups') }}
       </h2>
     </div>
 
-    <div class="mdl-card__supporting-text mdl-card--expand">
+    <div
+      :class="{
+        'mdl-card__supporting-text mdl-card--expand': !reduced,
+        'mdl-cell--10-col': reduced
+      }"
+    >
       <group-chip
         v-for="group in groups"
         :key="group.id"
         :group="group"
         :selected-id="selectedId"
-        editable
+        :editable="!reduced"
+        :deletable="!reduced"
         extendable
-        deletable
         selectable
         @select="handleGroupSelect"
         @open-delete-group="handleOpenDeleteGroup"
@@ -23,14 +37,12 @@
       />
     </div>
 
-    <div class="mdl-card__actions">
-      <button
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mr-1"
-        @click="handleGroupSelect(null)"
-      >
-        <i class="material-icons">clear</i>
-      </button>
-
+    <div
+      :class="{
+        'mdl-card__actions': !reduced,
+        'mdl-cell--2-col': reduced
+      }"
+    >
       <router-link
         :to="{ name: 'AddGroup' }"
         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
@@ -57,6 +69,10 @@ export default {
     selectedId: {
       type: String,
       default: null,
+    },
+    reduced: {
+      type: Boolean,
+      default: false,
     },
   },
 

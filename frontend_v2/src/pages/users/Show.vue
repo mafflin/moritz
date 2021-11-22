@@ -2,12 +2,11 @@
   <div>
     <router-view />
 
-    <card-panel-collapsed v-if="collapsed" />
-    <card-panel v-else />
+    <card-panel />
 
-    <collapse-button
-      :collapsed="collapsed"
-      @toggle="toggleCollapsed"
+    <reduce-panel-button
+      :panel-reduced="panelReduced"
+      @toggle="togglePanelReduced"
     />
 
     <div class="mdl-grid">
@@ -25,20 +24,18 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import CardPanel from './containers/CardPanel.vue';
-import CardPanelCollapsed from './containers/CardPanelCollapsed.vue';
-import CollapseButton from './components/CollapseButton.vue';
+import ReducePanelButton from './components/ReducePanelButton.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 
 export default {
   components: {
     CardPanel,
-    CardPanelCollapsed,
-    CollapseButton,
+    ReducePanelButton,
     PaymentsTable,
   },
 
   computed: {
-    ...mapGetters('settings', ['collapsed']),
+    ...mapGetters('settings', ['panelReduced']),
     ...mapGetters('users', ['current']),
     ...mapGetters('payments', [
       'loading',
@@ -52,7 +49,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('settings', ['toggleCollapsed']),
+    ...mapActions('settings', ['togglePanelReduced']),
     ...mapActions('payments', ['fetchList', 'filterList']),
   },
 };

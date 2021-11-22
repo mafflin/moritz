@@ -1,27 +1,63 @@
 <template>
-  <div class="mdl-card mdl-cell mdl-shadow--2dp">
-    <div class="mdl-card__title">
-      <h2 class="mdl-card__title-text">
+  <div
+    :class="{
+      'mdl-cell mdl-shadow--2dp': true,
+      'mdl-card': !reduced,
+      'mdl-grid': reduced,
+    }"
+  >
+    <div
+      v-if="!reduced"
+      class="mdl-card__title"
+    >
+      <h6 class="mdl-card__title-text">
         {{ $t('titles.payments') }}
-      </h2>
+      </h6>
       <span
         class="mdl-badge"
         :data-badge="total"
       />
     </div>
 
-    <div class="mdl-card__supporting-text mdl-card--expand">
-      <h6
-        v-for="({ color, key, value }) in displayedAttributes"
-        :key="key"
-        class="m-0"
-      >
-        {{ $t(`payments.${key}`) }}:
-        <span :class="color">{{ value }}</span>
-      </h6>
+    <div
+      :class="{
+        'mdl-card__supporting-text mdl-card--expand': !reduced,
+        'mdl-cell--10-col': reduced,
+      }"
+    >
+      <div class="mdl-grid">
+        <h6
+          v-if="reduced"
+          class="m-0 mdl-cell--12-col"
+        >
+          {{ $t('titles.payments') }}
+          <span
+            class="mdl-badge"
+            :data-badge="total"
+          />
+        </h6>
+
+        <p
+          v-for="({ color, key, value }) in displayedAttributes"
+          :key="key"
+          :class="{
+            'm-0': true,
+            'mdl-cell--6-col': reduced,
+            'mdl-cell--12-col': !reduced,
+          }"
+        >
+          {{ $t(`payments.${key}`) }}:
+          <span :class="color">{{ value }}</span>
+        </p>
+      </div>
     </div>
 
-    <div class="mdl-card__actions">
+    <div
+      :class="{
+        'mdl-card__actions': !reduced,
+        'mdl-cell--2-col': reduced
+      }"
+    >
       <file-upload-button
         :loading="loading"
         accept=".csv"
@@ -62,6 +98,10 @@ export default {
       default: 0,
     },
     loading: {
+      type: Boolean,
+      default: false,
+    },
+    reduced: {
       type: Boolean,
       default: false,
     },

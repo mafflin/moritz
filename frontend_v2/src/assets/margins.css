@@ -2,10 +2,16 @@
   margin: 0;
 }
 .m-1 {
-  margin: 5px;
+  margin: 4px;
 }
 .m-2 {
-  margin: 10px;
+  margin: 8px;
+}
+.m-3 {
+  margin: 12px;
+}
+.m-4 {
+  margin: 16px;
 }
 
 .my-0 {
@@ -17,18 +23,31 @@
   margin-left: 0;
 }
 .ml-1 {
-  margin-left: 5px;
+  margin-left: 4px;
 }
 .ml-2 {
-  margin-left: 10px;
+  margin-left: 8px;
 }
+.ml-3 {
+  margin-left: 12px;
+}
+.ml-4 {
+  margin-left: 16px;
+}
+
 
 .mr-0 {
   margin-right: 0;
 }
 .mr-1 {
-  margin-right: 5px;
+  margin-right: 4px;
 }
 .mr-2 {
-  margin-right: 10px;
+  margin-right: 8px;
+}
+.mr-3 {
+  margin-right: 12px;
+}
+.mr-4 {
+  margin-right: 16px;
 }

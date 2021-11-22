@@ -3,24 +3,26 @@
     <thead>
       <tr>
         <th
-          v-for="header in headers"
-          :key="header"
+          v-for="column in columns"
+          :id="`table-header-${column}`"
+          :key="column"
           :class="{
             'mdl-data-table__cell--non-numeric clickable': true,
-            'mdl-data-table__header--sorted-ascending': header === sort && asc,
-            'mdl-data-table__header--sorted-descending': header === sort && !asc,
+            'mdl-data-table__header--sorted-ascending': column === sort && asc,
+            'mdl-data-table__header--sorted-descending': column === sort && !asc,
           }"
-          @click="handleSort(header)"
+          @click="handleSort(column)"
         >
-          {{ $t(`payments.${header}`) }}
+          {{ $t(`payments.${column}`) }}
         </th>
       </tr>
     </thead>
+
     <tbody>
       <tr v-if="!payments.length">
         <td
           id="empty-state"
-          :colspan="headers.length"
+          :colspan="columns.length"
         >
           <h4>{{ $t('payments.noPayments') }}</h4>
         </td>
@@ -31,12 +33,12 @@
         :key="payment.id"
       >
         <td
-          v-for="(header, index) in headers"
+          v-for="(column, index) in columns"
           :key="index"
           class="mdl-data-table__cell--non-numeric"
         >
           <div>
-            {{ payment[header] }}
+            {{ payment[column] }}
           </div>
         </td>
       </tr>
@@ -68,7 +70,7 @@ export default {
   ],
 
   computed: {
-    headers() {
+    columns() {
       return payment.sortableAttributes;
     },
   },
@@ -86,6 +88,10 @@ export default {
 <style lang="css" scoped>
 #empty-state {
   text-align: center;
+}
+
+#table-header-details {
+  width: 35%;
 }
 
 .mdl-data-table {

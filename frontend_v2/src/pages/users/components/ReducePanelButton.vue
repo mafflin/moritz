@@ -5,7 +5,7 @@
       @click="$emit('toggle')"
     >
       <i
-        v-if="collapsed"
+        v-if="panelReduced"
         class="material-icons"
       >
         expand_more
@@ -23,7 +23,7 @@
 <script>
 export default {
   props: {
-    collapsed: {
+    panelReduced: {
       type: Boolean,
       required: true,
     },

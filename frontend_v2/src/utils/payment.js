@@ -11,9 +11,9 @@ const SORTABLE_ATTRIBUTES = [
 ];
 
 const NUMERIC_ATTRIBUTES = [
-  { key: 'debit', color: 'mdl-color-text--deep-orange' },
+  { key: 'debit', color: 'mdl-color-text--green' },
   { key: 'credit', color: 'mdl-color-text--indigo' },
-  { key: 'delta', color: 'mdl-color-text--deep-purple' },
+  { key: 'delta', color: 'mdl-color-text--blue-grey' },
   { key: 'withdrawal', color: 'mdl-color-text--pink' },
 ];
 
