@@ -24,21 +24,36 @@
         v-if="current"
         class="mdl-navigation"
       >
-        <img
-          class="mdl-chip__contact ml-2"
-          :src="current.avatar"
-        >
+        <file-upload-button
+          :image="current.avatar"
+          :loading="loading"
+          accept="image/*"
+          icon="add_a_photo"
+          small
+          @select="handleImageUpdate"
+        />
       </nav>
     </div>
   </header>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import FileUploadButton from '../components/FileUploadButton.vue';
 
 export default {
+  components: { FileUploadButton },
+
   computed: {
     ...mapGetters('users', ['current', 'loading']),
+  },
+
+  methods: {
+    ...mapActions('users', ['updateCurrent']),
+
+    handleImageUpdate(image) {
+      this.updateCurrent({ image });
+    },
   },
 };
 </script>

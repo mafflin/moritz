@@ -22,8 +22,11 @@
     </div>
 
     <div class="mdl-card__actions">
-      <report-upload-button
+      <file-upload-button
         :loading="loading"
+        accept=".csv"
+        icon="file_upload"
+        colored
         @select="handleReportUpload"
       />
     </div>
@@ -32,10 +35,10 @@
 
 <script>
 import payment from '../../../utils/payment';
-import ReportUploadButton from './ReportUploadButton.vue';
+import FileUploadButton from '../../../components/FileUploadButton.vue';
 
 export default {
-  components: { ReportUploadButton },
+  components: { FileUploadButton },
 
   props: {
     total: {

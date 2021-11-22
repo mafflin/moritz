@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resource :users, only: [] do
         post :fetch_list
         post :fetch_current
+        post :update_current
       end
 
       resource :reports, only: [] do

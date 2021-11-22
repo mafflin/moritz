@@ -5,6 +5,7 @@
       'mdl-js-snackbar': true ,
       'mdl-snackbar mdl-snackbar--active': hasMessage,
       'mdl-color--red': message.error,
+      'mdl-color--green': message.t,
     }"
     :timeout="5000"
   >

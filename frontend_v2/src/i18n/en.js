@@ -55,6 +55,10 @@ const titles = {
   users: 'Users',
 };
 
+const users = {
+  updateSuccess: 'User updated!',
+};
+
 export default {
   ...globals,
 
@@ -63,4 +67,5 @@ export default {
   reports,
   rules,
   titles,
+  users,
 };

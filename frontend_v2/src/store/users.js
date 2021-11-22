@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fileEncoder from '../utils/fileEncoder';
 import normalize from '../utils/normalize';
 
 export default {
@@ -76,6 +77,23 @@ export default {
         commit('setCurrent', null);
 
         console.log(error.message);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async updateCurrent({ commit, dispatch }, { image }) {
+      commit('setLoading', true);
+
+      try {
+        const { target: { result: avatarBase64 } } = await fileEncoder(image, false);
+        const { data } = await axios
+          .post('/api/v2/users/update_current', { user: { avatarBase64 } });
+
+        commit('setCurrent', data);
+        dispatch('settings/showMessage', { t: 'users.updateSuccess' }, { root: true });
+      } catch (error) {
+        dispatch('settings/showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }

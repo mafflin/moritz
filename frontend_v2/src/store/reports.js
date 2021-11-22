@@ -28,11 +28,7 @@ export default {
         dispatch('payments/fetchList', {}, { root: true });
         dispatch('settings/showMessage', { t: 'reports.uploadSuccess' }, { root: true });
       } catch (error) {
-        dispatch(
-          'settings/showMessage',
-          { error: error.message },
-          { root: true },
-        );
+        dispatch('settings/showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
