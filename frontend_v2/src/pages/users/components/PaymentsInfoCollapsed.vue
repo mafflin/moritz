@@ -27,7 +27,7 @@
       </p>
     </div>
 
-    <div class="mdl-card__actions">
+    <div class="mdl-cell--2-col">
       <report-upload-button
         :loading="loading"
         @select="handleReportUpload"

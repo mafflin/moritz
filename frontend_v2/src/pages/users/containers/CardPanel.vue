@@ -8,6 +8,7 @@
       :credit="credit"
       :delta="delta"
       :withdrawal="withdrawal"
+      :loading="loading"
       @on-report-upload="uploadReport"
     />
 
@@ -29,6 +30,8 @@
 </template>
 
 <script>
+// TODO: Refactor. Do not duplicate the whole logic.
+
 import { mapActions, mapGetters } from 'vuex';
 import DateFilterCard from '../components/DateFilterCard.vue';
 import GroupsCard from '../components/GroupsCard.vue';
@@ -43,6 +46,7 @@ export default {
 
   computed: {
     ...mapGetters('groups', ['listWithUnmatched']),
+    ...mapGetters('reports', ['loading']),
     ...mapGetters('payments', [
       'loading',
       'total',

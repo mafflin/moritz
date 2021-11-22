@@ -7,17 +7,21 @@
 
       <router-view />
     </main>
+
+    <snackbar />
   </div>
 </template>
 
 <script>
 import AppHeader from './containers/Header.vue';
 import Loading from './containers/Loading.vue';
+import Snackbar from './containers/Snackbar.vue';
 
 export default {
   components: {
     AppHeader,
     Loading,
+    Snackbar,
   },
 };
 </script>

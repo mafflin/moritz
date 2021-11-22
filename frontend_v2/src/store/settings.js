@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const MESSAGE_TIMEOUT_MS = 5000;
+
 export default {
   namespaced: true,
 
@@ -7,6 +9,7 @@ export default {
     current: {},
     collapsed: false,
     loading: false,
+    message: {},
   },
 
   /* eslint-disable no-param-reassign */
@@ -21,6 +24,10 @@ export default {
 
     setLoading(state, value) {
       state.loading = value;
+    },
+
+    setMessage(state, value) {
+      state.message = value;
     },
 
     reset(state) {
@@ -50,6 +57,14 @@ export default {
     toggleCollapsed({ commit, getters: { collapsed } }) {
       commit('setCollapsed', !collapsed);
     },
+
+    async showMessage({ commit }, { t, error }) {
+      commit('setMessage', { t, error });
+
+      await new Promise((resolve) => setTimeout(resolve, MESSAGE_TIMEOUT_MS));
+
+      commit('setMessage', {});
+    },
   },
 
   getters: {
@@ -67,6 +82,14 @@ export default {
 
     loading({ loading }) {
       return loading;
+    },
+
+    message({ message }) {
+      return message;
+    },
+
+    hasMessage(state, { message }) {
+      return !!Object.keys(message).length;
     },
   },
 };

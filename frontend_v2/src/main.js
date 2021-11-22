@@ -7,7 +7,10 @@ import messages from './i18n';
 import router from './router';
 import store from './store';
 import upgradeElement from './mixins/upgradeElement';
+
 import './assets/main.css';
+import './assets/margins.css';
+import './assets/paddings.css';
 
 const i18n = createI18n({
   locale: 'en',

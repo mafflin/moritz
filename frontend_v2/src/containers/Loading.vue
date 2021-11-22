@@ -12,7 +12,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters('users', ['loading']),
+    ...mapGetters(['loading']),
   },
 };
 </script>

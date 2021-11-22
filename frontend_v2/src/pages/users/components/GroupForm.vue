@@ -36,7 +36,7 @@
       >
         <i
           v-if="color === group.color"
-          class="material-icons mdl-chip__contact"
+          class="material-icons mdl-chip__contact m-0"
         >
           blur_circular
         </i>

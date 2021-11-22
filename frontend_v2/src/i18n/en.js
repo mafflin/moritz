@@ -36,6 +36,10 @@ const payments = {
   withdrawal: 'Withdrawal',
 };
 
+const reports = {
+  uploadSuccess: 'Uploaded succesfully!',
+};
+
 const rules = {
   manage: 'Manage Rules',
   match: 'Match',
@@ -56,6 +60,7 @@ export default {
 
   groups,
   payments,
+  reports,
   rules,
   titles,
 };

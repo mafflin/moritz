@@ -19,4 +19,16 @@ export default createStore({
     settings,
     users,
   },
+
+  getters: {
+    loading(state, getters) {
+      return getters['groups/loading']
+        || getters['payments/loading']
+        || getters['reports/loading']
+        || getters['rules/loading']
+        || getters['sessions/loading']
+        || getters['settings/loading']
+        || getters['users/loading'];
+    },
+  },
 });
