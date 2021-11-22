@@ -24,6 +24,7 @@ class Payment < ApplicationRecord
     db: 'DB',
     n26: 'n26',
     revolut: 'revolut',
+    commerz: 'commerz',
   }
   DIGEST_ALGORITHM = 'sha256'
   DIGEST_PARAMS = [

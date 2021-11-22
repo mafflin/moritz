@@ -1,0 +1,5 @@
+Transaction date,Value date,Transaction type,Booking text,Amount,Currency,Account of initiator,Bank code of account of initiator,IBAN of account of initiator,Category
+16.11.2021,16.11.2021,debit,"Zillertaler Gletscherb Hintertux A T Karte Nr. 1234 0000 0000 4321 Mastercard Debit Zillertaler Gletscherb Hintertux AUT 2021-11-13T09:03:09 Kartenzahlung",-117.00,EUR,123456780,10090000,DE12300111100000000000,Credit Card Payment
+13.11.2021,13.11.2021,debit,"Zillertaler Gletscherb Hintertux A T Karte Nr. 1234 0000 0000 4321 Mastercard Debit Zillertaler Gletscherb Hintertux AUT 2021-11-14T13:41:22 Kartenzahlung",-5.60,EUR,123456780,10090000,DE12300111100000000000,Credit Card Payment
+11.11.2021,11.11.2021,debit,"Zillertaler Gletscherb Hintertux A T Karte Nr. 1234 0000 0000 4321 Mastercard Debit Zillertaler Gletscherb Hintertux AUT 2021-11-14T12:24:50 Kartenzahlung",-16.70,EUR,123456780,10090000,DE12300111100000000000,Credit Card Payment
+19.10.2021,19.10.2021,credit,"Greek Guy Die Turkei End-to-End-Ref.: NOTPROVIDED Kundenreferenz: XXX01",500.00,EUR,123456780,10090000,DE12300111100000000000,Income

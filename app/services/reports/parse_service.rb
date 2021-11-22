@@ -1,9 +1,22 @@
 module Reports
   class ParseService < ApplicationService
     PARSERS = [
-      { service: Parsers::DbParseService, match: 'Booking date;Value date;Transaction Type' },
-      { service: Parsers::N26ParseService, match: '"Date","Payee","Account number"' },
-      { service: Parsers::RevolutParseService, match: 'Type,Product,Started Date' },
+      {
+        service: Parsers::DbParseService,
+        match: 'Booking date;Value date;Transaction Type'
+      },
+      {
+        service: Parsers::N26ParseService,
+        match: '"Date","Payee","Account number"'
+      },
+      {
+        service: Parsers::CommerzParseService,
+        match: 'Bank code of account of initiator,IBAN of account of initiator,Category'
+      },
+      {
+        service: Parsers::RevolutParseService,
+        match: 'Type,Product,Started Date'
+      },
     ]
 
     def initialize(csv)

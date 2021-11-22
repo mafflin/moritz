@@ -26,6 +26,14 @@ RSpec.describe Reports::ParseService do
       expect(revolut_service).to be_a(Parsers::RevolutParseService)
     end
 
+    it 'matches commerz csv to a corresponding service' do
+      report = file_fixture('commerz.csv').read
+      commerz_service = Reports::ParseService.new(report)
+        .instance_variable_get(:@bank_specific_service)
+
+      expect(commerz_service).to be_a(Parsers::CommerzParseService)
+    end
+
     it 'raises an error if report is not recognized' do
       csv = 'unsupported, csv, report, type'
 
