@@ -30,7 +30,7 @@
 
 <script>
 import moment from 'moment';
-import { ISO_DATE_FORMAT } from '../../../utils/parseUrlParams';
+import { ISO_DATE_FORMAT } from '../../../utils/globals';
 
 export default {
   props: {

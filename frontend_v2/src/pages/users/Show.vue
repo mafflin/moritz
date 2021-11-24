@@ -15,9 +15,16 @@
         :payments="sortedList"
         :sort="filter.sort"
         :asc="filter.asc"
+        :highlighted-id="highlightedId"
         @sort="filterList"
       />
     </div>
+
+    <search-results
+      :q="q"
+      :results="list"
+      @search-item-click="filterPaymentsList"
+    />
   </div>
 </template>
 
@@ -26,21 +33,25 @@ import { mapActions, mapGetters } from 'vuex';
 import CardPanel from './containers/CardPanel.vue';
 import ReducePanelButton from './components/ReducePanelButton.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
+import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
     CardPanel,
     ReducePanelButton,
     PaymentsTable,
+    SearchResults,
   },
 
   computed: {
     ...mapGetters('settings', ['panelReduced']),
+    ...mapGetters('search', ['q', 'list']),
     ...mapGetters('users', ['current']),
     ...mapGetters('payments', [
       'loading',
       'sortedList',
       'filter',
+      'highlightedId',
     ]),
   },
 
@@ -51,6 +62,7 @@ export default {
   methods: {
     ...mapActions('settings', ['togglePanelReduced']),
     ...mapActions('payments', ['fetchList', 'filterList']),
+    ...mapActions('search', ['filterPaymentsList']),
   },
 };
 </script>

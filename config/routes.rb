@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
       resource :payments, only: [] do
         post :fetch_list
+        post :fetch_search_results
         post :fetch_single
         post :update_single
       end

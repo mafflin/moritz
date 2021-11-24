@@ -13,6 +13,7 @@ specifiers:
   eslint-config-airbnb: ^18.2.1
   eslint-plugin-import: ^2.25.3
   eslint-plugin-vue: ^7.0.0
+  lodash: ^4.17.21
   moment: ^2.29.1
   regenerator-runtime: ^0.13.9
   vue: ^3.2.21
@@ -25,6 +26,7 @@ dependencies:
   actioncable: 5.2.6
   axios: 0.24.0
   core-js: 3.19.1
+  lodash: 4.17.21
   moment: 2.29.1
   regenerator-runtime: 0.13.9
   vue: 3.2.22
@@ -5750,7 +5752,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols/2.2.0:
     resolution: {integrity: sha512-VeIAFslyIerEJLXHziedo2basKbMKtTw3vfn5IzG0XTjhAVEJyNHnL2p7vc+wBDSdQuUpNw3M2u6xb9QsAY5Eg==}

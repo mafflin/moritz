@@ -64,6 +64,13 @@ class Payment < ApplicationRecord
         user.rules.map(&:match_string)
       )
     end
+
+    def match(query)
+      where(
+        'concat(beneficiary, details, note, original_debit, original_credit) ilike ?',
+        "%#{query}%"
+      )
+    end
   end
 
   def notify_subscribers

@@ -1,7 +1,7 @@
 module Api::V2
   class PaymentsController < ApplicationController
     def fetch_list
-      @payments = Payments::SearchService.new(
+      @payments = Payments::FetchService.new(
         user: current_user,
         date: params[:date],
         group_id: params[:group_id]
@@ -21,6 +21,15 @@ module Api::V2
       else
         head :unprocessable_entity
       end
+    end
+
+    def fetch_search_results
+      @payments = Payments::SearchService.new(
+        user: current_user,
+        q: params[:q]
+      ).perform
+
+      render :fetch_list
     end
 
     private
