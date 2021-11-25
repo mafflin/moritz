@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="$emit('submit', match)">
+  <form @submit.prevent="handleSubmit">
     <div>
       <span
         v-for="rule in rules"
@@ -26,16 +26,27 @@
     >
       <input
         id="rule-match"
+        ref="input"
         v-model="match"
         class="mdl-textfield__input"
         type="text"
       >
+
+      <button
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+      >
+        <i class="material-icons">
+          send
+        </i>
+      </button>
+
       <label
         for="rule-match"
         class="mdl-textfield__label"
       >
         {{ $t('rules.match') }}
       </label>
+
       <span
         class="mdl-textfield__error"
         visibility="visibile"
@@ -47,7 +58,11 @@
 </template>
 
 <script>
+import focusOnInput from '../../../mixins/focusOnInput';
+
 export default {
+  mixins: [focusOnInput],
+
   props: {
     rules: {
       type: Array,
@@ -69,11 +84,21 @@ export default {
       match: '',
     };
   },
+
+  methods: {
+    handleSubmit() {
+      this.$emit('submit', this.match);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .mdl-textfield {
   width: 100%;
+}
+
+.mdl-button {
+  right: 0;
 }
 </style>

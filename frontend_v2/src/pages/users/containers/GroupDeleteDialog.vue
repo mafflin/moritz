@@ -2,6 +2,7 @@
   <dialog
     open
     class="mdl-dialog"
+    @keydown.esc="$refs.close.click()"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('groups.deleteHint') }}
@@ -27,7 +28,9 @@
         class="mdl-button close"
         :to="{ name: 'User' }"
       >
-        {{ $t('cancel') }}
+        <span ref="close">
+          {{ $t('cancel') }}
+        </span>
       </router-link>
     </div>
   </dialog>

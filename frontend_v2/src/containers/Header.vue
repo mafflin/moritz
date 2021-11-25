@@ -14,7 +14,7 @@
       >
         <search
           :q="q"
-          @submit="handleSearch"
+          @submit="fetchResults"
         />
       </nav>
 
@@ -69,10 +69,6 @@ export default {
 
     handleImageUpdate(image) {
       this.updateCurrent({ image });
-    },
-
-    handleSearch(q) {
-      this.fetchResults(q);
     },
   },
 };

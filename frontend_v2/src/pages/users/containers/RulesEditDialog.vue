@@ -2,9 +2,15 @@
   <dialog
     open
     class="mdl-dialog"
+    @keydown.esc="$refs.close.click()"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('rules.manage') }}
+
+      <group-chip
+        class="group-chip"
+        :group="selected"
+      />
     </h4>
 
     <div class="mdl-dialog__content">
@@ -22,7 +28,9 @@
         class="mdl-button close"
         :to="{ name: 'User' }"
       >
-        {{ $t('close') }}
+        <span ref="close">
+          {{ $t('close') }}
+        </span>
       </router-link>
     </div>
   </dialog>
@@ -30,15 +38,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import GroupChip from '../components/GroupChip.vue';
 import RulesForm from '../components/RulesForm.vue';
 
 export default {
   components: {
+    GroupChip,
     RulesForm,
   },
 
   computed: {
     ...mapGetters('rules', ['list', 'errors']),
+    ...mapGetters('groups', ['selected']),
   },
 
   methods: {
@@ -46,3 +57,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.group-chip {
+  vertical-align: middle;
+}
+</style>

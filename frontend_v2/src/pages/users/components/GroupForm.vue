@@ -9,6 +9,7 @@
     >
       <input
         id="group-name"
+        ref="input"
         v-model="name"
         class="mdl-textfield__input"
         type="text"
@@ -46,7 +47,11 @@
 </template>
 
 <script>
+import focusOnInput from '../../../mixins/focusOnInput';
+
 export default {
+  mixins: [focusOnInput],
+
   props: {
     group: {
       type: Object,

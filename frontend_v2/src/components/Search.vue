@@ -1,20 +1,23 @@
 <template>
   <form @submit.prevent>
-    <div>
-      <i class="search-icon material-icons pr-1">
-        search
-      </i>
-
-      <div
-        class="mdl-textfield mdl-js-textfield"
+    <div
+      class="mdl-textfield mdl-js-textfield"
+    >
+      <input
+        v-model="query"
+        autocomplete="off"
+        class="mdl-textfield__input"
+        type="text"
       >
-        <input
-          v-model="query"
-          autocomplete="off"
-          class="mdl-textfield__input"
-          type="text"
-        >
-      </div>
+
+      <button
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        disabled
+      >
+        <i class="material-icons">
+          search
+        </i>
+      </button>
     </div>
   </form>
 </template>
@@ -67,17 +70,11 @@ export default {
 </script>
 
 <style scoped>
-.search-icon {
-  font-size: 25px;
-  vertical-align: middle;
-  border-bottom: 1px solid white;
+.mdl-button {
+  right: 0;
 }
 
 .mdl-textfield {
-  width: 120px;
-}
-
-.mdl-textfield__input {
-  border-bottom: 1px solid white;
+  width: 200px;
 }
 </style>
