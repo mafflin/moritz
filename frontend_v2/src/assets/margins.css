@@ -18,6 +18,23 @@
   margin-top: 0;
   margin-bottom: 0;
 }
+.my-1 {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.my-2 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.my-3 {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.my-4 {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
 
 .ml-0 {
   margin-left: 0;

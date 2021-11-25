@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div>
+    <div class="my-4">
       <span
         v-for="rule in rules"
         :key="rule.match"
@@ -36,7 +36,7 @@
         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
       >
         <i class="material-icons">
-          send
+          add_circle_outline
         </i>
       </button>
 
@@ -44,7 +44,7 @@
         for="rule-match"
         class="mdl-textfield__label"
       >
-        {{ $t('rules.match') }}
+        {{ $t('rules.add') }}
       </label>
 
       <span

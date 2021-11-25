@@ -19,13 +19,12 @@
     </span>
 
     <span
-      v-for="{ icon, action } in actions"
-      :key="action"
+      v-if="extendable && !group.unmatched"
       class="mdl-chip__action"
-      @click.stop="$emit(action, group.id)"
+      @click.stop="$emit('open-edit-rules', group.id)"
     >
       <i :class="{ 'material-icons': true, 'mdl-color-text--white': isSelected }">
-        {{ icon }}
+        build_circle
       </i>
     </span>
   </span>
@@ -43,14 +42,6 @@ export default {
       type: String,
       default: null,
     },
-    editable: {
-      type: Boolean,
-      default: false,
-    },
-    deletable: {
-      type: Boolean,
-      default: false,
-    },
     extendable: {
       type: Boolean,
       default: false,
@@ -62,8 +53,6 @@ export default {
   },
 
   emits: [
-    'open-delete-group',
-    'open-edit-group',
     'open-edit-rules',
     'select',
   ],
@@ -73,24 +62,11 @@ export default {
       return this.selectedId === this.group.id;
     },
 
-    actions() {
-      const {
-        group, editable, deletable, extendable,
-      } = this;
-      if (group.unmatched) return [];
-
-      return [
-        { icon: 'edit', action: 'open-edit-group', active: editable },
-        { icon: 'control_point_duplicate', action: 'open-edit-rules', active: extendable },
-        { icon: 'cancel', action: 'open-delete-group', active: deletable },
-      ].filter(({ active }) => !!active);
-    },
-
     chipClassName() {
       const {
-        actions, isSelected, selectable, group: { color },
+        isSelected, extendable, selectable, group: { color, unmatched },
       } = this;
-      const editable = actions.length && 'mdl-chip--deletable';
+      const editable = !unmatched && extendable && 'mdl-chip--deletable';
       const clickable = selectable && 'clickable';
       const selected = isSelected && 'selected mdl-shadow--6dp';
       const colored = (isSelected || !selectable)

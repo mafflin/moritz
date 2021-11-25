@@ -43,6 +43,7 @@ const reports = {
 };
 
 const rules = {
+  add: 'Add rule',
   manage: 'Manage Rules',
   match: 'Match',
 };

@@ -4,13 +4,28 @@
     class="mdl-dialog"
     @keydown.esc="$refs.close.click()"
   >
-    <h4 class="mdl-dialog__title">
-      {{ $t('rules.manage') }}
+    <h4 :class="`mdl-dialog__title mdl-color-text--${selected.color}`">
+      {{ selected.name }}
 
-      <group-chip
-        class="group-chip"
-        :group="selected"
-      />
+      <router-link
+        type="button"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        :to="{ name: 'EditGroup' }"
+      >
+        <i class="material-icons">
+          edit
+        </i>
+      </router-link>
+
+      <router-link
+        type="button"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        :to="{ name: 'DeleteGroup' }"
+      >
+        <i class="material-icons">
+          delete
+        </i>
+      </router-link>
     </h4>
 
     <div class="mdl-dialog__content">
@@ -38,12 +53,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import GroupChip from '../components/GroupChip.vue';
 import RulesForm from '../components/RulesForm.vue';
 
 export default {
   components: {
-    GroupChip,
     RulesForm,
   },
 
@@ -59,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.group-chip {
-  vertical-align: middle;
+.mdl-button--icon {
+  float: right;
 }
 </style>
