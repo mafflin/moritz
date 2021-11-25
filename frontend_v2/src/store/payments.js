@@ -18,6 +18,7 @@ export default {
     ids: [],
     entities: {},
     loading: false,
+    highlightedId: null,
     filter: {
       sort: null,
       asc: null,
@@ -37,6 +38,10 @@ export default {
 
     setLoading(state, value) {
       state.loading = value;
+    },
+
+    setHighlighted(state, id) {
+      state.highlightedId = id;
     },
 
     setFilter(state, filter) {
@@ -61,6 +66,7 @@ export default {
 
     async fetchList({ commit, getters: { query } }) {
       commit('setLoading', true);
+      commit('setHighlighted', null);
 
       try {
         const { data } = await axios.post('/api/v2/payments/fetch_list', query);
@@ -80,13 +86,17 @@ export default {
     async filterList({ commit, dispatch }, filter) {
       commit('setFilter', filter);
 
-      dispatch('fetchList');
+      await dispatch('fetchList');
     },
   },
 
   getters: {
     list({ ids, entities }) {
       return ids.map((id) => entities[id]);
+    },
+
+    highlightedId({ highlightedId }) {
+      return highlightedId;
     },
 
     sortedList(state, { list, filter: { sort, asc } }) {

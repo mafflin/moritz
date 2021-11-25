@@ -1,6 +1,6 @@
 <template>
   <table class="payments-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-    <thead>
+    <thead v-if="header">
       <tr>
         <th
           v-for="column in columns"
@@ -31,6 +31,12 @@
       <tr
         v-for="payment in payments"
         :key="payment.id"
+        :ref="payment.id"
+        :class="{
+          'clickable': clickable,
+          'highlighted': payment.id === highlightedId,
+        }"
+        @click="handleRowClick(payment)"
       >
         <td
           v-for="(column, index) in columns"
@@ -55,6 +61,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    columns: {
+      type: Array,
+      default: () => payment.sortableAttributes,
+    },
+    highlightedId: {
+      type: String,
+      default: null,
+    },
     sort: {
       type: String,
       default: null,
@@ -63,16 +77,26 @@ export default {
       type: Boolean,
       default: false,
     },
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
+    header: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   emits: [
+    'row-click',
     'sort',
   ],
 
-  computed: {
-    columns() {
-      return payment.sortableAttributes;
-    },
+  updated() {
+    const { highlightedId, $refs: { [highlightedId]: highlighted } } = this;
+    if (!highlighted) return;
+
+    highlighted.scrollIntoView({ behaiviour: 'smooth', block: 'start', inline: 'nearest' });
   },
 
   methods: {
@@ -80,6 +104,12 @@ export default {
       const asc = this.sort !== sort ? this.asc : !this.asc;
 
       this.$emit('sort', { sort, asc });
+    },
+
+    handleRowClick(item) {
+      if (!this.clickable) return;
+
+      this.$emit('row-click', item);
     },
   },
 };
@@ -97,6 +127,10 @@ export default {
 .mdl-data-table {
   width: 100%;
   table-layout: fixed;
+}
+
+.highlighted {
+  background-color: skyblue;
 }
 
 th, td {

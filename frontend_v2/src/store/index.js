@@ -5,6 +5,7 @@ import groups from './groups';
 import payments from './payments';
 import reports from './reports';
 import rules from './rules';
+import search from './search';
 import sessions from './sessions';
 import settings from './settings';
 import users from './users';
@@ -15,6 +16,7 @@ export default createStore({
     payments,
     reports,
     rules,
+    search,
     sessions,
     settings,
     users,
@@ -26,6 +28,7 @@ export default createStore({
         || getters['payments/loading']
         || getters['reports/loading']
         || getters['rules/loading']
+        || getters['search/loading']
         || getters['sessions/loading']
         || getters['settings/loading']
         || getters['users/loading'];

@@ -1,6 +1,5 @@
 import moment from 'moment';
-
-export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
+import { ISO_DATE_FORMAT } from './globals';
 
 export const parseBoolean = (value) => value === 'true';
 

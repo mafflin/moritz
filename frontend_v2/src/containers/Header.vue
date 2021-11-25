@@ -11,6 +11,15 @@
 
       <nav
         v-if="current"
+      >
+        <search
+          :q="q"
+          @submit="fetchResults"
+        />
+      </nav>
+
+      <nav
+        v-if="current"
         class="mdl-navigation"
       >
         <router-link
@@ -40,16 +49,23 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import FileUploadButton from '../components/FileUploadButton.vue';
+import Search from '../components/Search.vue';
 
 export default {
-  components: { FileUploadButton },
+  components: {
+    FileUploadButton,
+    Search,
+  },
 
   computed: {
-    ...mapGetters('users', ['current', 'loading']),
+    ...mapGetters(['loading']),
+    ...mapGetters('users', ['current']),
+    ...mapGetters('search', ['q']),
   },
 
   methods: {
     ...mapActions('users', ['updateCurrent']),
+    ...mapActions('search', ['fetchResults']),
 
     handleImageUpdate(image) {
       this.updateCurrent({ image });

@@ -9,6 +9,7 @@ const globals = {
   edit: 'Edit',
   explore: 'Explore',
   logout: 'Logout',
+  search: 'Search',
   submit: 'Submit',
   total: 'Total',
   upload: 'Upload',
@@ -32,6 +33,7 @@ const payments = {
   details: 'Details',
   noPayments: 'No payments found! :(',
   note: 'Note',
+  searchResults: '{total} payments found',
   transactionType: 'Type',
   withdrawal: 'Withdrawal',
 };
@@ -41,6 +43,7 @@ const reports = {
 };
 
 const rules = {
+  add: 'Add rule',
   manage: 'Manage Rules',
   match: 'Match',
 };

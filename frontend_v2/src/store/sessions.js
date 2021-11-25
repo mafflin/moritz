@@ -37,6 +37,7 @@ export default {
         commit('users/reset', {}, { root: true });
         commit('settings/reset', {}, { root: true });
         commit('payments/reset', {}, { root: true });
+        commit('search/reset', {}, { root: true });
       } catch (error) {
         console.log(error.message);
       } finally {

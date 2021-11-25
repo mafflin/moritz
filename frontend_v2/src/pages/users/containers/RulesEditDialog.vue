@@ -2,9 +2,30 @@
   <dialog
     open
     class="mdl-dialog"
+    @keydown.esc="$refs.close.click()"
   >
-    <h4 class="mdl-dialog__title">
-      {{ $t('rules.manage') }}
+    <h4 :class="`mdl-dialog__title mdl-color-text--${selected.color}`">
+      {{ selected.name }}
+
+      <router-link
+        type="button"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        :to="{ name: 'EditGroup' }"
+      >
+        <i class="material-icons">
+          edit
+        </i>
+      </router-link>
+
+      <router-link
+        type="button"
+        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        :to="{ name: 'DeleteGroup' }"
+      >
+        <i class="material-icons">
+          delete
+        </i>
+      </router-link>
     </h4>
 
     <div class="mdl-dialog__content">
@@ -22,7 +43,9 @@
         class="mdl-button close"
         :to="{ name: 'User' }"
       >
-        {{ $t('close') }}
+        <span ref="close">
+          {{ $t('close') }}
+        </span>
       </router-link>
     </div>
   </dialog>
@@ -39,6 +62,7 @@ export default {
 
   computed: {
     ...mapGetters('rules', ['list', 'errors']),
+    ...mapGetters('groups', ['selected']),
   },
 
   methods: {
@@ -46,3 +70,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mdl-button--icon {
+  float: right;
+}
+</style>
