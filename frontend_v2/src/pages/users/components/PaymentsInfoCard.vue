@@ -1,15 +1,6 @@
 <template>
-  <div
-    :class="{
-      'mdl-cell mdl-shadow--2dp': true,
-      'mdl-card': !reduced,
-      'mdl-grid': reduced,
-    }"
-  >
-    <div
-      v-if="!reduced"
-      class="mdl-card__title"
-    >
+  <div class="mdl-card mdl-cell mdl-shadow--2dp">
+    <div class="mdl-card__title">
       <h6 class="mdl-card__title-text">
         {{ $t('titles.payments') }}
       </h6>
@@ -19,45 +10,20 @@
       />
     </div>
 
-    <div
-      :class="{
-        'mdl-card__supporting-text mdl-card--expand': !reduced,
-        'mdl-cell--10-col': reduced,
-      }"
-    >
+    <div class="mdl-card__supporting-text mdl-card--expand">
       <div class="mdl-grid">
-        <h6
-          v-if="reduced"
+        <p
+          v-for="({ key, value }) in attributes"
+          :key="key"
           class="m-0 mdl-cell--12-col"
         >
-          {{ $t('titles.payments') }}
-          <span
-            class="mdl-badge"
-            :data-badge="total"
-          />
-        </h6>
-
-        <p
-          v-for="({ color, key, value }) in displayedAttributes"
-          :key="key"
-          :class="{
-            'm-0': true,
-            'mdl-cell--6-col': reduced,
-            'mdl-cell--12-col': !reduced,
-          }"
-        >
           {{ $t(`payments.${key}`) }}:
-          <span :class="color">{{ value }}</span>
+          <strong>{{ value }}</strong>
         </p>
       </div>
     </div>
 
-    <div
-      :class="{
-        'mdl-card__actions': !reduced,
-        'mdl-cell--2-col': reduced
-      }"
-    >
+    <div class="mdl-card__actions">
       <file-upload-button
         :loading="loading"
         accept=".csv"
@@ -70,8 +36,14 @@
 </template>
 
 <script>
-import { NUMERIC_PAYMENT_ATTRIBUTES } from '../../../utils/globals';
 import FileUploadButton from '../../../components/FileUploadButton.vue';
+
+export const ATTRIBUTES = [
+  'debit',
+  'credit',
+  'delta',
+  'withdrawal',
+];
 
 export default {
   components: { FileUploadButton },
@@ -101,10 +73,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    reduced: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   emits: [
@@ -112,9 +80,8 @@ export default {
   ],
 
   computed: {
-    displayedAttributes() {
-      return NUMERIC_PAYMENT_ATTRIBUTES
-        .map((el) => ({ ...el, value: this[el.key] }));
+    attributes() {
+      return ATTRIBUTES.map((key) => ({ key, value: this[key] }));
     },
   },
 

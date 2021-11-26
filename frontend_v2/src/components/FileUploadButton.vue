@@ -10,7 +10,7 @@
     <button
       v-else
       :class="{
-        'mdl-button mdl-js-button mdl-js-ripple-effect': true,
+        'mdl-button mdl-js-button': true,
         'mdl-button--fab mdl-button--colored': colored,
         'mdl-button--icon': small,
       }"

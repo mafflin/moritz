@@ -18,7 +18,7 @@
     <td v-if="actions">
       <router-link
         type="button"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        class="mdl-button mdl-js-button mdl-button--icon"
         :to="{ name: 'EditPayment', params: { paymentId: payment.id } }"
       >
         <i class="material-icons mdl-color-text--blue-grey">

@@ -1,26 +1,12 @@
 <template>
-  <div
-    :class="{
-      'mdl-cell mdl-shadow--2dp': true,
-      'mdl-card ': !reduced,
-      'mdl-grid': reduced,
-    }"
-  >
-    <div
-      v-if="!reduced"
-      class="mdl-card__title"
-    >
+  <div class="mdl-card mdl-cell mdl-shadow--2dp">
+    <div class="mdl-card__title">
       <h2 class="mdl-card__title-text">
         {{ $t('titles.groups') }}
       </h2>
     </div>
 
-    <div
-      :class="{
-        'mdl-card__supporting-text mdl-card--expand': !reduced,
-        'mdl-cell--10-col': reduced
-      }"
-    >
+    <div class="mdl-card__supporting-text mdl-card--expand">
       <group-chip
         v-for="group in groups"
         :key="group.id"
@@ -33,15 +19,10 @@
       />
     </div>
 
-    <div
-      :class="{
-        'mdl-card__actions': !reduced,
-        'mdl-cell--2-col': reduced
-      }"
-    >
+    <div class="mdl-card__actions">
       <router-link
         :to="{ name: 'AddGroup' }"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab mdl-button--colored"
+        class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
       >
         <i class="material-icons">add</i>
       </router-link>
@@ -66,15 +47,9 @@ export default {
       type: String,
       default: null,
     },
-    reduced: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   emits: [
-    'open-delete-group',
-    'open-edit-group',
     'open-edit-rules',
     'select',
   ],

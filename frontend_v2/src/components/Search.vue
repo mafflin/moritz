@@ -17,9 +17,11 @@
       <button
         v-if="query"
         class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--white"
-        @click="handleReset"
       >
-        <i class="material-icons">
+        <i
+          class="material-icons"
+          @click="handleReset"
+        >
           close
         </i>
       </button>

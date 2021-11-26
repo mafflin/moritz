@@ -13,13 +13,6 @@ export const SORTABLE_PAYMENT_ATTRIBUTES = [
   { key: 'credit', numeric: true },
 ];
 
-export const NUMERIC_PAYMENT_ATTRIBUTES = [
-  { key: 'debit', color: 'mdl-color-text--green' },
-  { key: 'credit', color: 'mdl-color-text--indigo' },
-  { key: 'delta', color: 'mdl-color-text--blue-grey' },
-  { key: 'withdrawal', color: 'mdl-color-text--pink' },
-];
-
 export const parseSortable = (value) => (SORTABLE_PAYMENT_ATTRIBUTES
   .map(({ key }) => key)
   .includes(value) ? value : null);

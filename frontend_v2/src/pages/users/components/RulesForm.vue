@@ -33,7 +33,7 @@
       >
 
       <button
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        class="mdl-button mdl-js-button mdl-button--icon"
       >
         <i class="material-icons">
           add_circle_outline

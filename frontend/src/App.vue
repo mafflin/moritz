@@ -1,5 +1,8 @@
 <template>
-  <v-app id="app">
+  <v-app
+    id="app"
+    class="mdl-layout mdl-js-layout mdl-layout--fixed-header"
+  >
     <nav-bar />
     <loading />
 

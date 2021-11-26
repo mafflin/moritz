@@ -36,7 +36,7 @@ const payments = {
   note: 'Note',
   searchResults: '{total} payments found',
   transactionType: 'Type',
-  withdrawal: 'Withdrawal',
+  withdrawal: 'Cash',
 };
 
 const reports = {

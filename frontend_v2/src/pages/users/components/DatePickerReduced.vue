@@ -1,30 +1,24 @@
 <template>
-  <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--4-col">
-      <button
-        :disabled="loading"
-        class="mdl-button mdl-js-button mdl-button--icon"
-        @click="handleMonthSubtract"
-      >
-        <i class="material-icons">chevron_left</i>
-      </button>
-    </div>
+  <div class="mdl-grid date-picker">
+    <button
+      :disabled="loading"
+      class="mdl-button mdl-js-button mdl-button--icon"
+      @click="handleMonthSubtract"
+    >
+      <i class="material-icons">chevron_left</i>
+    </button>
 
-    <div class="mdl-cell mdl-cell--4-col">
-      <button class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised">
-        {{ selected?.format('MMM YY') }}
-      </button>
-    </div>
+    <button class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised">
+      {{ selected?.format('MMM YY') }}
+    </button>
 
-    <div class="mdl-cell mdl-cell--4-col">
-      <button
-        :disabled="loading"
-        class="mdl-button mdl-js-button mdl-button--icon"
-        @click="handleMonthAdd"
-      >
-        <i class="material-icons">chevron_right</i>
-      </button>
-    </div>
+    <button
+      :disabled="loading"
+      class="mdl-button mdl-js-button mdl-button--icon"
+      @click="handleMonthAdd"
+    >
+      <i class="material-icons">chevron_right</i>
+    </button>
   </div>
 </template>
 
@@ -83,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-.mdl-grid {
+.date-picker {
   text-align: center;
 }
 </style>

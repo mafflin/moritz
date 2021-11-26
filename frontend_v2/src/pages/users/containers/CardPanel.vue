@@ -5,14 +5,12 @@
     <date-filter-card
       :filter="filter"
       :loading="loading"
-      :reduced="panelReduced"
       @submit="filterList"
     />
 
     <groups-card
       :groups="listWithUnmatched"
       :selected-id="filter.groupId"
-      :reduced="panelReduced"
       @select="filterList"
       @open-edit-rules="openEditRules"
     />
@@ -24,7 +22,6 @@
       :delta="delta"
       :withdrawal="withdrawal"
       :loading="loading"
-      :reduced="panelReduced"
       @on-report-upload="uploadReport"
     />
   </div>
@@ -46,7 +43,6 @@ export default {
   computed: {
     ...mapGetters('groups', ['listWithUnmatched']),
     ...mapGetters('reports', ['loading']),
-    ...mapGetters('settings', ['panelReduced']),
     ...mapGetters('payments', [
       'loading',
       'total',

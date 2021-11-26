@@ -9,7 +9,7 @@
 
       <router-link
         type="button"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        class="mdl-button mdl-js-button mdl-button--icon"
         :to="{ name: 'EditGroup' }"
       >
         <i class="material-icons">
@@ -19,7 +19,7 @@
 
       <router-link
         type="button"
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+        class="mdl-button mdl-js-button mdl-button--icon"
         :to="{ name: 'DeleteGroup' }"
       >
         <i class="material-icons">

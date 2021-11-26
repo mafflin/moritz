@@ -90,9 +90,11 @@ export default {
 .slide-enter-active {
   animation: slide-in .5s;
 }
+
 .slide-leave-active {
   animation: slide-in .5s reverse;
 }
+
 @keyframes slide-in {
   0% {
     top: -100px;
