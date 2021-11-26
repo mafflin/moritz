@@ -2,7 +2,7 @@
   <dialog
     open
     class="mdl-dialog"
-    @keydown.esc="$refs.close.click()"
+    @keydown.esc="closeModal"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('groups.addNew') }}
@@ -22,23 +22,19 @@
       class="mdl-dialog__actions"
     >
       <button
-        type="button"
-        class="mdl-button"
+        type="submit"
+        class="mdl-button mdl-button--raised mdl-button--accent"
         @click="handleSubmit"
       >
         {{ $t('submit') }}
       </button>
 
-      <router-link
-
-        type="button"
-        class="mdl-button close"
-        :to="{ name: 'User' }"
+      <button
+        class="mdl-button"
+        @click="closeModal"
       >
-        <span ref="close">
-          {{ $t('cancel') }}
-        </span>
-      </router-link>
+        {{ $t('cancel') }}
+      </button>
     </div>
   </dialog>
 </template>
@@ -68,6 +64,7 @@ export default {
 
   methods: {
     ...mapActions('groups', ['createSingle']),
+    ...mapActions('users', ['closeModal']),
 
     handleFieldChange(attrs) {
       this.group = { ...this.group, ...attrs };

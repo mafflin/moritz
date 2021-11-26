@@ -83,7 +83,7 @@ export default {
 
         commit('setList', [...list, data]);
 
-        router.push({ name: 'User' });
+        dispatch('users/closeModal', {}, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -100,7 +100,7 @@ export default {
 
         commit('setSingle', data);
 
-        router.push({ name: 'User' });
+        dispatch('users/closeModal', {}, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -116,8 +116,8 @@ export default {
         await axios.post('/api/v2/groups/delete_single', { id });
 
         dispatch('fetchList');
-
-        router.push({ name: 'User' });
+        dispatch('payments/filterList', { groupId: null }, { root: true });
+        dispatch('users/closeModal', {}, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -135,14 +135,6 @@ export default {
           console.log(message);
           break;
       }
-    },
-
-    openDeleteGroup(state, groupId) {
-      router.push({ name: 'DeleteGroup', params: { groupId } });
-    },
-
-    openEditGroup(state, groupId) {
-      router.push({ name: 'EditGroup', params: { groupId } });
     },
 
     openEditRules(state, groupId) {

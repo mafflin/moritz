@@ -1,13 +1,14 @@
 import axios from 'axios';
 import router from '../router';
 import normalize from '../utils/normalize';
-import payment from '../utils/payment';
+import { parseSortable } from '../utils/globals';
 import parseUrlParams, { parseBoolean, parseDate, parseString } from '../utils/parseUrlParams';
+import formatErrors from '../utils/formatErrors';
 
 const QUERY_PARAMS = {
   groupId: parseString,
   date: parseDate,
-  sort: payment.parseSortable,
+  sort: parseSortable,
   asc: parseBoolean,
 };
 
@@ -17,6 +18,7 @@ export default {
   state: {
     ids: [],
     entities: {},
+    errors: {},
     loading: false,
     highlightedId: null,
     filter: {
@@ -44,8 +46,18 @@ export default {
       state.highlightedId = id;
     },
 
+    setSingle(state, item) {
+      state.entities = { ...state.entities, [item.id]: item };
+    },
+
     setFilter(state, filter) {
       state.filter = { ...state.filter, ...filter };
+    },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
     },
 
     reset(state) {
@@ -83,20 +95,65 @@ export default {
       }
     },
 
+    async fetchSingle({ commit, dispatch }, id) {
+      commit('setLoading', true);
+
+      try {
+        const { data } = await axios.post('/api/v2/payments/fetch_single', { id });
+
+        commit('setSingle', data);
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async updateSingle({ commit, dispatch, getters }, payment) {
+      const { id, note } = payment;
+      const withdrawal = payment.withdrawal || 0;
+
+      commit('setLoading', true);
+      commit('setErrors', {});
+
+      try {
+        await axios.post('/api/v2/payments/update_single', { id, note, withdrawal });
+
+        commit('setSingle', { ...getters.selected, note, withdrawal });
+
+        dispatch('users/closeModal', {}, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
     async filterList({ commit, dispatch }, filter) {
       commit('setFilter', filter);
 
       await dispatch('fetchList');
     },
+
+    handleError({ commit }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          console.log(message);
+          break;
+      }
+    },
   },
 
   getters: {
-    list({ ids, entities }) {
-      return ids.map((id) => entities[id]);
-    },
-
-    highlightedId({ highlightedId }) {
-      return highlightedId;
+    list({ ids, entities, highlightedId }) {
+      return ids.map((id) => {
+        const highlighted = id === highlightedId;
+        return highlighted ? { ...entities[id], highlighted } : entities[id];
+      });
     },
 
     sortedList(state, { list, filter: { sort, asc } }) {
@@ -140,6 +197,15 @@ export default {
 
     query({ filter }) {
       return filter;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
+
+    selected({ entities }, getters, rootState) {
+      const { paymentId } = rootState.route.params;
+      return entities[paymentId];
     },
   },
 };

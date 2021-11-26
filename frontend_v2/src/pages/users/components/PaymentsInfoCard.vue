@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import payment from '../../../utils/payment';
+import { NUMERIC_PAYMENT_ATTRIBUTES } from '../../../utils/globals';
 import FileUploadButton from '../../../components/FileUploadButton.vue';
 
 export default {
@@ -113,7 +113,7 @@ export default {
 
   computed: {
     displayedAttributes() {
-      return payment.numericAttributes
+      return NUMERIC_PAYMENT_ATTRIBUTES
         .map((el) => ({ ...el, value: this[el.key] }));
     },
   },

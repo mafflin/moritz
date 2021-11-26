@@ -1,5 +1,9 @@
 <template>
   <form @submit.prevent>
+    <i class="material-icons search-icon pr-1">
+      search
+    </i>
+
     <div
       class="mdl-textfield mdl-js-textfield"
     >
@@ -11,11 +15,12 @@
       >
 
       <button
-        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-        disabled
+        v-if="query"
+        class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--white"
+        @click="handleReset"
       >
         <i class="material-icons">
-          search
+          close
         </i>
       </button>
     </div>
@@ -65,12 +70,25 @@ export default {
     handleSubmit() {
       this.$emit('submit', this.value);
     },
+
+    handleReset() {
+      this.value = '';
+
+      this.handleSubmit();
+    },
   },
 };
 </script>
 
 <style scoped>
-.mdl-button {
+.search-icon {
+  font-size: 25px;
+  color: rgba(0,0,0,.12);
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.mdl-button--icon {
   right: 0;
 }
 

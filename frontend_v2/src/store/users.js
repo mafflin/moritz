@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../router';
 import fileEncoder from '../utils/fileEncoder';
 import normalize from '../utils/normalize';
 
@@ -97,6 +98,14 @@ export default {
       } finally {
         commit('setLoading', false);
       }
+    },
+
+    closeModal({ getters, rootGetters }) {
+      const { id } = getters.current;
+      const query = rootGetters['payments/query'];
+
+      router.push({ name: 'User', params: { id }, query })
+        .catch(() => {});
     },
   },
 

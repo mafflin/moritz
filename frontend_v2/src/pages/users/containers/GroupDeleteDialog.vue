@@ -2,6 +2,7 @@
   <dialog
     open
     class="mdl-dialog"
+    @keydown.esc="closeModal"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('groups.deleteHint') }}
@@ -15,20 +16,21 @@
 
     <div class="mdl-dialog__actions">
       <button
-        type="button"
+        type="submit"
         class="mdl-button mdl-color--red mdl-color-text--white"
         @click="deleteSingle"
       >
         {{ $t('delete') }}
       </button>
 
-      <router-link
-        type="button"
-        class="mdl-button close"
-        :to="{ name: 'User' }"
+      <button
+        class="mdl-button"
+        @click="closeModal"
       >
-        {{ $t('cancel') }}
-      </router-link>
+        <span ref="close">
+          {{ $t('cancel') }}
+        </span>
+      </button>
     </div>
   </dialog>
 </template>
@@ -46,6 +48,7 @@ export default {
 
   methods: {
     ...mapActions('groups', ['deleteSingle']),
+    ...mapActions('users', ['closeModal']),
   },
 };
 </script>

@@ -3,17 +3,23 @@
     <thead v-if="header">
       <tr>
         <th
-          v-for="column in columns"
-          :id="`table-header-${column}`"
-          :key="column"
+          v-for="({ key, numeric, width }) in columns"
+          :key="key"
+          :width="width"
           :class="{
-            'mdl-data-table__cell--non-numeric clickable': true,
-            'mdl-data-table__header--sorted-ascending': column === sort && asc,
-            'mdl-data-table__header--sorted-descending': column === sort && !asc,
+            'clickable': true,
+            'mdl-data-table__cell': numeric,
+            'mdl-data-table__cell--non-numeric': !numeric,
+            'mdl-data-table__header--sorted-ascending': key === sort && asc,
+            'mdl-data-table__header--sorted-descending': key === sort && !asc,
           }"
-          @click="handleSort(column)"
+          @click="handleSort(key)"
         >
-          {{ $t(`payments.${column}`) }}
+          {{ $t(`payments.${key}`) }}
+        </th>
+
+        <th v-if="actions">
+          {{ $t('payments.actions') }}
         </th>
       </tr>
     </thead>
@@ -22,40 +28,35 @@
       <tr v-if="!payments.length">
         <td
           id="empty-state"
-          :colspan="columns.length"
+          :colspan="colspan"
         >
-          <h4>{{ $t('payments.noPayments') }}</h4>
+          <h6>{{ $t('payments.noPayments') }}</h6>
         </td>
       </tr>
 
-      <tr
+      <payment-table-row
         v-for="payment in payments"
         :key="payment.id"
-        :ref="payment.id"
-        :class="{
-          'clickable': clickable,
-          'highlighted': payment.id === highlightedId,
-        }"
+        :payment="payment"
+        :columns="columns"
+        :clickable="clickable"
+        :actions="actions"
+        :class="{ 'clickable': clickable }"
         @click="handleRowClick(payment)"
-      >
-        <td
-          v-for="(column, index) in columns"
-          :key="index"
-          class="mdl-data-table__cell--non-numeric"
-        >
-          <div>
-            {{ payment[column] }}
-          </div>
-        </td>
-      </tr>
+      />
     </tbody>
   </table>
 </template>
 
 <script>
-import payment from '../../../utils/payment';
+import { SORTABLE_PAYMENT_ATTRIBUTES } from '../../../utils/globals';
+import PaymentTableRow from './PaymentTableRow.vue';
 
 export default {
+  components: {
+    PaymentTableRow,
+  },
+
   props: {
     payments: {
       type: Array,
@@ -63,11 +64,19 @@ export default {
     },
     columns: {
       type: Array,
-      default: () => payment.sortableAttributes,
+      default: () => SORTABLE_PAYMENT_ATTRIBUTES,
     },
-    highlightedId: {
-      type: String,
-      default: null,
+    header: {
+      type: Boolean,
+      default: true,
+    },
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
+    actions: {
+      type: Boolean,
+      default: false,
     },
     sort: {
       type: String,
@@ -77,14 +86,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    clickable: {
-      type: Boolean,
-      default: false,
-    },
-    header: {
-      type: Boolean,
-      default: true,
-    },
   },
 
   emits: [
@@ -92,11 +93,12 @@ export default {
     'sort',
   ],
 
-  updated() {
-    const { highlightedId, $refs: { [highlightedId]: highlighted } } = this;
-    if (!highlighted) return;
-
-    highlighted.scrollIntoView({ behaiviour: 'smooth', block: 'start', inline: 'nearest' });
+  computed: {
+    colspan() {
+      return [...this.columns, this.actions]
+        .filter((col) => !!col)
+        .length;
+    },
   },
 
   methods: {
@@ -120,7 +122,7 @@ export default {
   text-align: center;
 }
 
-#table-header-details {
+.details {
   width: 35%;
 }
 
@@ -129,15 +131,7 @@ export default {
   table-layout: fixed;
 }
 
-.highlighted {
-  background-color: skyblue;
-}
-
-th, td {
+th {
   white-space: normal;
-}
-
-th:last-child, td:last-child {
-  text-align: right;
 }
 </style>

@@ -5,14 +5,13 @@
     @keydown.esc="closeModal"
   >
     <h4 class="mdl-dialog__title">
-      {{ $t('groups.edit') }}
+      {{ $t('edit') }}
     </h4>
 
     <div class="mdl-dialog__content">
-      <group-form
-        :group="group"
+      <payment-form
+        :payment="payment"
         :errors="errors"
-        :colors="groupColors"
         @change="handleFieldChange"
         @submit="handleSubmit"
       />
@@ -39,46 +38,49 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import GroupForm from '../components/GroupForm.vue';
+import PaymentForm from '../components/PaymentForm.vue';
 
 export default {
   components: {
-    GroupForm,
+    PaymentForm,
   },
 
   data() {
     return {
-      group: {
-        name: '',
-        color: null,
-      },
+      payment: {},
     };
   },
 
   computed: {
     ...mapGetters('settings', ['groupColors']),
-    ...mapGetters('groups', ['selected', 'errors']),
+    ...mapGetters('payments', ['selected', 'errors']),
   },
 
   created() {
     if (!this.selected) return;
 
-    this.group = { ...this.selected };
+    this.payment = { ...this.selected };
   },
 
   methods: {
-    ...mapActions('groups', ['updateSingle']),
+    ...mapActions('payments', ['updateSingle']),
     ...mapActions('users', ['closeModal']),
 
     handleFieldChange(attrs) {
-      this.group = { ...this.group, ...attrs };
+      this.payment = { ...this.payment, ...attrs };
     },
 
     handleSubmit() {
-      const { group, updateSingle } = this;
+      const { payment, updateSingle } = this;
 
-      updateSingle(group);
+      updateSingle(payment);
     },
   },
 };
 </script>
+
+<style scoped>
+.mdl-button--icon {
+  float: right;
+}
+</style>

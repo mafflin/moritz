@@ -15,7 +15,7 @@
         :payments="sortedList"
         :sort="filter.sort"
         :asc="filter.asc"
-        :highlighted-id="highlightedId"
+        actions
         @sort="filterList"
       />
     </div>
@@ -51,7 +51,6 @@ export default {
       'loading',
       'sortedList',
       'filter',
-      'highlightedId',
     ]),
   },
 

@@ -1,18 +1,20 @@
 <template>
-  <div
+  <router-link
+    :to="{ name: 'User', params: { id: user.id } }"
     :style="background"
     class="user-card-image mdl-card mdl-cell mdl-shadow--2dp"
   >
     <div class="mdl-card__title mdl-card--expand" />
-    <div class="mdl-card__actions">
-      <router-link
-        :to="{ name: 'User', params: { id: user.id } }"
+    <div
+      class="mdl-card__actions p-4"
+    >
+      <span
         class="user-card-image__name"
       >
         {{ user.name }}
-      </router-link>
+      </span>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -33,6 +35,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.user-card-image {
+  text-decoration: none;
+}
+
 .mdl-card__actions {
   background: rgba(0, 0, 0, 0.5);
 }
@@ -41,5 +47,9 @@ export default {
   color: white;
   font-weight: 700;
   text-decoration: none;
+}
+
+.material-icons {
+  vertical-align: middle;
 }
 </style>

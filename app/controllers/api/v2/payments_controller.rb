@@ -1,5 +1,7 @@
 module Api::V2
   class PaymentsController < ApplicationController
+    before_action :set_payment, only: [:fetch_single, :update_single]
+
     def fetch_list
       @payments = Payments::FetchService.new(
         user: current_user,
@@ -9,17 +11,13 @@ module Api::V2
     end
 
     def fetch_single
-      @payment = current_user.payments.find(params[:id])
     end
 
     def update_single
-      if Payments::UpdateService.new(
-        user: current_user,
-        attributes: payment_params,
-      ).perform
-        head :no_content
+      if @payment.update(payment_params)
+        render :fetch_single
       else
-        head :unprocessable_entity
+        render json: @payment.errors, status: :unprocessable_entity
       end
     end
 
@@ -35,13 +33,14 @@ module Api::V2
     private
 
     def payment_params
-      params.require(:payment).permit(:id, :note, :withdrawal)
+      params.require(:payment)
+        .permit(:id, :note, :withdrawal)
     end
 
     private
 
-    def set_user
-      @user = current_user
+    def set_payment
+      @payment = current_user.payments.find(params[:id])
     end
   end
 end

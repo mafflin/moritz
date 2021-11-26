@@ -24,6 +24,7 @@ const groups = {
 };
 
 const payments = {
+  actions: 'Actions',
   bank: 'Bank',
   beneficiary: 'Beneficiary',
   bookedAt: 'Date',
@@ -31,7 +32,7 @@ const payments = {
   debit: 'Debit',
   delta: 'Delta',
   details: 'Details',
-  noPayments: 'No payments found! :(',
+  noPayments: 'No payments found. Try to adjust filters.',
   note: 'Note',
   searchResults: '{total} payments found',
   transactionType: 'Type',

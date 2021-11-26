@@ -2,6 +2,21 @@
   <div
     class="mdl-grid"
   >
+    <date-filter-card
+      :filter="filter"
+      :loading="loading"
+      :reduced="panelReduced"
+      @submit="filterList"
+    />
+
+    <groups-card
+      :groups="listWithUnmatched"
+      :selected-id="filter.groupId"
+      :reduced="panelReduced"
+      @select="filterList"
+      @open-edit-rules="openEditRules"
+    />
+
     <payments-info-card
       :total="total"
       :debit="debit"
@@ -11,23 +26,6 @@
       :loading="loading"
       :reduced="panelReduced"
       @on-report-upload="uploadReport"
-    />
-
-    <groups-card
-      :groups="listWithUnmatched"
-      :selected-id="filter.groupId"
-      :reduced="panelReduced"
-      @select="filterList"
-      @open-delete-group="openDeleteGroup"
-      @open-edit-group="openEditGroup"
-      @open-edit-rules="openEditRules"
-    />
-
-    <date-filter-card
-      :filter="filter"
-      :loading="loading"
-      :reduced="panelReduced"
-      @submit="filterList"
     />
   </div>
 </template>
@@ -62,7 +60,7 @@ export default {
 
   methods: {
     ...mapActions('payments', ['filterList']),
-    ...mapActions('groups', ['openDeleteGroup', 'openEditGroup', 'openEditRules']),
+    ...mapActions('groups', ['openEditRules']),
     ...mapActions('reports', { uploadReport: 'createSingle' }),
   },
 };

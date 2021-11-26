@@ -26,10 +26,10 @@
 import PaymentsTable from './PaymentsTable.vue';
 
 const COLUMNS = [
-  'bookedAt',
-  'details',
-  'debit',
-  'credit',
+  { key: 'bookedAt' },
+  { key: 'details', width: '60%' },
+  { key: 'debit', numeric: true },
+  { key: 'credit', numeric: true },
 ];
 
 export default {
