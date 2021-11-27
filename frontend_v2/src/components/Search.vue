@@ -1,5 +1,8 @@
 <template>
-  <form @submit.prevent>
+  <form
+    @submit.prevent
+    @keydown.esc="handleReset"
+  >
     <i class="material-icons search-icon pr-1">
       search
     </i>
@@ -14,17 +17,13 @@
         type="text"
       >
 
-      <button
+      <span
         v-if="query"
         class="mdl-button mdl-js-button mdl-button--icon mdl-color-text--white"
+        @click="handleReset"
       >
-        <i
-          class="material-icons"
-          @click="handleReset"
-        >
-          close
-        </i>
-      </button>
+        <i class="material-icons">close</i>
+      </span>
     </div>
   </form>
 </template>

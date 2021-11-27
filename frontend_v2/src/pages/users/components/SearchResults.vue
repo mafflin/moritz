@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slide-in">
     <div
       v-if="q"
       class="search-results mdl-shadow--6dp"
@@ -87,20 +87,15 @@ export default {
   text-align: right;
 }
 
-.slide-enter-active {
-  animation: slide-in .5s;
+.slide-in-enter-active {
+  transition: all 0.5s ease-out;
 }
 
-.slide-leave-active {
-  animation: slide-in .5s reverse;
+.slide-in-leave-active {
+  transition: all 0.5s ease-out;
 }
 
-@keyframes slide-in {
-  0% {
-    top: -100px;
-  }
-  100% {
-    top: 64px;
-  }
-}
-</style>
+.slide-in-enter-from,
+.slide-in-leave-to {
+  transform: translateY(-100%);
+}</style>

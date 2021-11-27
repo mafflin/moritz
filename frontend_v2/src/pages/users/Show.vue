@@ -2,14 +2,6 @@
   <div>
     <router-view />
 
-    <transition name="slide-in">
-      <card-panel-reduced v-if="panelReduced" />
-    </transition>
-
-    <transition name="slide-in">
-      <card-panel v-if="!panelReduced" />
-    </transition>
-
     <reduce-panel-button
       :panel-reduced="panelReduced"
       @toggle="togglePanelReduced"
@@ -36,25 +28,20 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import CardPanel from './containers/CardPanel.vue';
-import CardPanelReduced from './containers/CardPanelReduced.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 import ReducePanelButton from './components/ReducePanelButton.vue';
 import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
-    CardPanel,
-    CardPanelReduced,
-    ReducePanelButton,
     PaymentsTable,
+    ReducePanelButton,
     SearchResults,
   },
 
   computed: {
     ...mapGetters('settings', ['panelReduced']),
     ...mapGetters('search', ['q', 'list']),
-    ...mapGetters('users', ['current']),
     ...mapGetters('payments', [
       'loading',
       'sortedList',
@@ -73,19 +60,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.slide-in-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-in-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-in-enter-from,
-.slide-in-leave-to {
-  transform: translateY(-100px);
-  opacity: 0;
-}
-</style>

@@ -70,7 +70,6 @@ export default {
   computed: {
     ...mapGetters('groups', ['listWithUnmatched']),
     ...mapGetters('reports', ['loading']),
-    ...mapGetters('settings', ['panelReduced']),
     ...mapGetters('payments', [
       'loading',
       'total',
@@ -93,13 +92,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.panel {
-  width: 100%;
-  top: 0;
-  position: sticky;
-  background-color: white;
-  z-index: 8;
-}
-</style>

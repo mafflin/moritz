@@ -8,7 +8,7 @@
       <i class="material-icons">chevron_left</i>
     </button>
 
-    <button class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised">
+    <button class="mdl-button mdl-js-button">
       {{ selected?.format('MMM YY') }}
     </button>
 
