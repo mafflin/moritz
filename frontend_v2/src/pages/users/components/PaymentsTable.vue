@@ -1,5 +1,5 @@
 <template>
-  <table class="payments-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <thead v-if="header">
       <tr>
         <th
@@ -120,10 +120,6 @@ export default {
 <style lang="css" scoped>
 #empty-state {
   text-align: center;
-}
-
-.payments-table {
-  scroll-margin-top: 200px;
 }
 
 .mdl-data-table {

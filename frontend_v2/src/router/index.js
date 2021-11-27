@@ -6,7 +6,6 @@ import UserShow from '../pages/users/Show.vue';
 import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
-import Panel from '../pages/users/containers/Panel.vue';
 import PaymentEditDialog from '../pages/users/containers/PaymentEditDialog.vue';
 import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
 
@@ -23,10 +22,7 @@ const routes = [
   },
   {
     path: '/users/:id',
-    components: {
-      default: UserShow,
-      panel: Panel,
-    },
+    component: UserShow,
     name: 'User',
     beforeEnter: ({ params: { id }, query }) => store
       .dispatch('users/initShowPage', { id, query }),

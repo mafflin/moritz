@@ -2,6 +2,22 @@
   <div>
     <router-view />
 
+    <transition
+      name="slide-in"
+      mode="out-in"
+    >
+      <card-panel-reduced
+        v-if="panelReduced"
+        ref="low"
+        :style="{'--height': '-88px'}"
+      />
+      <card-panel
+        v-else
+        ref="high"
+        :style="{'--height': '-324px'}"
+      />
+    </transition>
+
     <reduce-panel-button
       :panel-reduced="panelReduced"
       @toggle="togglePanelReduced"
@@ -28,12 +44,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import CardPanel from './containers/CardPanel.vue';
+import CardPanelReduced from './containers/CardPanelReduced.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 import ReducePanelButton from './components/ReducePanelButton.vue';
 import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
+    CardPanel,
+    CardPanelReduced,
     PaymentsTable,
     ReducePanelButton,
     SearchResults,
@@ -60,3 +80,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.slide-in-enter-active {
+  transition: all 0.5s ease;
+}
+
+.slide-in-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-in-leave-to,
+.slide-in-enter-from {
+  transform: translateY(var(--height));
+}
+</style>

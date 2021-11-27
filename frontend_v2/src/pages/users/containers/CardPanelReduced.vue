@@ -1,6 +1,6 @@
 <template>
   <div
-    class="panel mdl-grid mdl-shadow--2dp"
+    class="sticky mdl-grid mdl-shadow--2dp"
   >
     <div class="mdl-cell mdl-cell--2-col">
       <date-picker-reduced
@@ -92,3 +92,12 @@ export default {
   },
 };
 </script>
+<style scoped>
+.sticky {
+  width: 100%;
+  top: 0;
+  position: sticky;
+  background-color: white;
+  z-index: 8;
+}
+</style>

@@ -65,6 +65,10 @@ export default {
   background-color: skyblue;
 }
 
+tr {
+  scroll-margin-top: 120px;
+}
+
 td {
   white-space: normal;
 }

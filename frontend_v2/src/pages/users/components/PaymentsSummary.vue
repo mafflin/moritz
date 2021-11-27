@@ -14,11 +14,11 @@
       <span
         class="value"
       >{{ delta }}</span>
+      <span
+        class="value mdl-badge"
+        :data-badge="total"
+      />
     </span>
-    <span
-      class="value mdl-badge"
-      :data-badge="total"
-    />
 
     <span
       class="m-0 mdl-cell--6-col"
