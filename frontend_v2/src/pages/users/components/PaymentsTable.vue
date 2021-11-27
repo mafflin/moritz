@@ -122,8 +122,8 @@ export default {
   text-align: center;
 }
 
-.details {
-  width: 35%;
+.payments-table {
+  scroll-margin-top: 200px;
 }
 
 .mdl-data-table {

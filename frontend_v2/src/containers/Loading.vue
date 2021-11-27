@@ -19,8 +19,10 @@ export default {
 
 <style lang="css" scoped>
 .loader-wrapper {
+  position: fixed;
   height: 5px;
   width: 100%;
+  z-index: 9;
 }
 
 .mdl-progress {

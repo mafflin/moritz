@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserIndex from '../pages/users/Index.vue';
 import UserShow from '../pages/users/Show.vue';
 
-import CardPanelReduced from '../pages/users/containers/CardPanelReduced.vue';
 import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
@@ -23,10 +22,7 @@ const routes = [
   },
   {
     path: '/users/:id',
-    components: {
-      default: UserShow,
-      header: CardPanelReduced,
-    },
+    component: UserShow,
     name: 'User',
     beforeEnter: ({ params: { id }, query }) => store
       .dispatch('users/initShowPage', { id, query }),

@@ -2,8 +2,8 @@
   <div
     ref="snackbar"
     :class="{
-      'mdl-js-snackbar': true ,
-      'mdl-snackbar mdl-snackbar--active': hasMessage,
+      'hidden': !hasMessage,
+      'mdl-js-snackbar mdl-snackbar mdl-snackbar--active': hasMessage,
       'mdl-color--red': message.error,
       'mdl-color--green': message.t,
     }"
@@ -31,3 +31,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.hidden {
+  display: none;
+}
+</style>
