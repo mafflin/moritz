@@ -6,8 +6,10 @@ import UserShow from '../pages/users/Show.vue';
 import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
+import Panel from '../pages/users/containers/Panel.vue';
 import PaymentEditDialog from '../pages/users/containers/PaymentEditDialog.vue';
 import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
+import UserCreateDialog from '../pages/users/containers/UserCreateDialog.vue';
 
 import store from '../store';
 
@@ -19,10 +21,22 @@ const routes = [
     component: UserIndex,
     beforeEnter: () => store
       .dispatch('users/initIndexPage'),
+    children: [
+      {
+        path: 'signup',
+        name: 'Signup',
+        component: UserCreateDialog,
+        beforeEnter: () => store
+          .commit('users/setErrors', {}),
+      },
+    ],
   },
   {
     path: '/users/:id',
-    component: UserShow,
+    components: {
+      default: UserShow,
+      panel: Panel,
+    },
     name: 'User',
     beforeEnter: ({ params: { id }, query }) => store
       .dispatch('users/initShowPage', { id, query }),
@@ -64,7 +78,19 @@ const routes = [
   },
 ];
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  store.commit('setLoading', true);
+
+  next();
+});
+
+router.beforeEach(() => {
+  store.commit('setLoading', false);
+});
+
+export default router;

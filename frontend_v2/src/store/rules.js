@@ -74,6 +74,7 @@ export default {
         commit('setList', [...list, data]);
 
         dispatch('payments/fetchList', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -90,6 +91,7 @@ export default {
 
         dispatch('fetchList', groupId);
         dispatch('payments/fetchList', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {

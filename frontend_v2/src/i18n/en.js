@@ -9,7 +9,10 @@ const globals = {
   edit: 'Edit',
   explore: 'Explore',
   logout: 'Logout',
+  new: 'New',
   search: 'Search',
+  signup: 'Sign up',
+  success: 'Success!',
   submit: 'Submit',
   total: 'Total',
   upload: 'Upload',
@@ -60,6 +63,7 @@ const titles = {
 };
 
 const users = {
+  name: 'User name',
   updateSuccess: 'User updated!',
 };
 

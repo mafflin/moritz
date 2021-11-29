@@ -1,7 +1,7 @@
 <template>
   <div class="date-picker">
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-cell mdl-cell--1-col-phone">
         <button
           :disabled="loading"
           class="mdl-button mdl-js-button mdl-button--icon"
@@ -11,7 +11,7 @@
         </button>
       </div>
 
-      <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-cell mdl-cell--1-col-phone">
         <button
           disabled
           class="mdl-button mdl-js-button mdl-color-text--black"
@@ -20,7 +20,7 @@
         </button>
       </div>
 
-      <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-cell mdl-cell--1-col-phone">
         <button
           :disabled="loading"
           class="mdl-button mdl-js-button mdl-button--icon"
@@ -37,7 +37,7 @@
       <div
         v-for="_month in months"
         :key="_month"
-        class="mdl-cell mdl-cell--4-col"
+        class="mdl-cell mdl-cell--1-col-phone"
       >
         <button
           :class="{

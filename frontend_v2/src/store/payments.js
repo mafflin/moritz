@@ -121,7 +121,8 @@ export default {
 
         commit('setSingle', { ...getters.selected, note, withdrawal });
 
-        dispatch('users/closeModal', {}, { root: true });
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {

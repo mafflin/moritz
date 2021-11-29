@@ -2,7 +2,7 @@
   <dialog
     open
     class="mdl-dialog"
-    @keydown.esc="closeModal"
+    @keydown.esc="closeUserModal"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('groups.edit') }}
@@ -20,7 +20,6 @@
 
     <div class="mdl-dialog__actions">
       <button
-        type="submit"
         class="mdl-button mdl-button--raised mdl-button--accent"
         @click="handleSubmit"
       >
@@ -29,7 +28,7 @@
 
       <button
         class="mdl-button"
-        @click="closeModal"
+        @click="closeUserModal"
       >
         {{ $t('cancel') }}
       </button>
@@ -68,7 +67,7 @@ export default {
 
   methods: {
     ...mapActions('groups', ['updateSingle']),
-    ...mapActions('users', ['closeModal']),
+    ...mapActions('users', ['closeUserModal']),
 
     handleFieldChange(attrs) {
       this.group = { ...this.group, ...attrs };

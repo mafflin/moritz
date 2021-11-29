@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       end
 
       resource :users, only: [] do
+        post :create_single
         post :fetch_list
         post :fetch_current
         post :update_current

@@ -82,6 +82,14 @@ export default {
   overflow: auto;
 }
 
+@media screen and (max-width: 1024px) {
+  .search-results  {
+    top: 56px;
+    width: 80%;
+    max-width: 80%;
+  }
+}
+
 .search-results--total {
   background-color: white;
   text-align: right;
@@ -98,4 +106,5 @@ export default {
 .slide-in-enter-from,
 .slide-in-leave-to {
   transform: translateY(-100%);
-}</style>
+}
+</style>

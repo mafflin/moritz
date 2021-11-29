@@ -1,5 +1,6 @@
 export const ISO_DATE_FORMAT = 'YYYY-MM-DD';
 export const INPUT_DEBOUNCE_TIME_MS = 350;
+export const MESSAGE_TIMEOUT_MS = 5000;
 
 export const SORTABLE_PAYMENT_ATTRIBUTES = [
   { key: 'bookedAt', width: '8%' },

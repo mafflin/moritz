@@ -83,10 +83,8 @@ export default {
 
 <style scoped>
 .search-icon {
-  font-size: 25px;
   color: rgba(0,0,0,.12);
   vertical-align: middle;
-  border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
 .mdl-button--icon {
@@ -94,6 +92,6 @@ export default {
 }
 
 .mdl-textfield {
-  width: 200px;
+  max-width: 200px;
 }
 </style>

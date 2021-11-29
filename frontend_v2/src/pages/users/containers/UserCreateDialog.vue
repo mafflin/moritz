@@ -2,25 +2,22 @@
   <dialog
     open
     class="mdl-dialog"
-    @keydown.esc="closeUserModal"
+    @keydown.esc="closeIndexModal"
   >
     <h4 class="mdl-dialog__title">
-      {{ $t('groups.addNew') }}
+      {{ $t('signup') }}
     </h4>
 
     <div class="mdl-dialog__content">
-      <group-form
-        :group="group"
+      <user-form
+        :user="user"
         :errors="errors"
-        :colors="groupColors"
         @change="handleFieldChange"
         @submit="handleSubmit"
       />
     </div>
 
-    <div
-      class="mdl-dialog__actions"
-    >
+    <div class="mdl-dialog__actions">
       <button
         class="mdl-button mdl-button--raised mdl-button--accent"
         @click="handleSubmit"
@@ -28,52 +25,55 @@
         {{ $t('submit') }}
       </button>
 
-      <button
+      <botton
         class="mdl-button"
-        @click="closeUserModal"
+        @click="closeIndexModal"
       >
         {{ $t('cancel') }}
-      </button>
+      </botton>
     </div>
   </dialog>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import GroupForm from '../components/GroupForm.vue';
+import UserForm from '../components/UserForm.vue';
 
 export default {
   components: {
-    GroupForm,
+    UserForm,
   },
 
   data() {
     return {
-      group: {
+      user: {
         name: '',
-        color: null,
       },
     };
   },
 
   computed: {
-    ...mapGetters('settings', ['groupColors']),
-    ...mapGetters('groups', ['errors']),
+    ...mapGetters('users', ['errors']),
   },
 
   methods: {
-    ...mapActions('groups', ['createSingle']),
-    ...mapActions('users', ['closeUserModal']),
+    ...mapActions('users', ['createSingle', 'closeIndexModal']),
 
     handleFieldChange(attrs) {
-      this.group = { ...this.group, ...attrs };
+      this.user = { ...this.user, ...attrs };
     },
 
     handleSubmit() {
-      const { group, createSingle } = this;
+      const { user, createSingle } = this;
 
-      createSingle(group);
+      createSingle(user);
     },
   },
 };
 </script>
+
+<style scoped>
+.mdl-button--icon {
+  float: right;
+}
+</style>

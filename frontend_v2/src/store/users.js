@@ -1,6 +1,7 @@
 import axios from 'axios';
 import router from '../router';
 import fileEncoder from '../utils/fileEncoder';
+import formatErrors from '../utils/formatErrors';
 import normalize from '../utils/normalize';
 
 export default {
@@ -9,6 +10,7 @@ export default {
   state: {
     ids: [],
     entities: {},
+    errors: {},
     current: null,
     loading: false,
   },
@@ -28,6 +30,12 @@ export default {
 
     setLoading(state, value) {
       state.loading = value;
+    },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
     },
 
     reset(state) {
@@ -92,20 +100,54 @@ export default {
           .post('/api/v2/users/update_current', { user: { avatarBase64 } });
 
         commit('setCurrent', data);
-        dispatch('settings/showMessage', { t: 'users.updateSuccess' }, { root: true });
+        dispatch('showMessage', { t: 'users.updateSuccess' }, { root: true });
       } catch (error) {
-        dispatch('settings/showMessage', { error: error.message }, { root: true });
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    closeModal({ getters, rootGetters }) {
+    async createSingle({ commit, dispatch, getters: { list } }, { name }) {
+      commit('setLoading', true);
+      commit('setErrors', {});
+
+      try {
+        const { data } = await axios
+          .post('/api/v2/users/create_single', { user: { name } });
+        commit('setList', [...list, data]);
+
+        dispatch('closeIndexModal');
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit, dispatch }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          dispatch('showMessage', { error: message }, { root: true });
+          break;
+      }
+    },
+
+    closeUserModal({ getters, rootGetters }) {
       const { id } = getters.current;
       const query = rootGetters['payments/query'];
 
       router.push({ name: 'User', params: { id }, query })
         .catch(() => {});
+    },
+
+    closeIndexModal() {
+      router.push({ name: 'Users' });
     },
   },
 
@@ -120,6 +162,10 @@ export default {
 
     loading({ loading }) {
       return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
     },
   },
 };

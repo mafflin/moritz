@@ -1,14 +1,20 @@
 <template>
   <div class="mdl-grid">
     <span
-      class="m-0 mdl-cell--6-col"
+      class="m-0 mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--1-col-phone"
     >
       {{ $t('payments.debit') }}:
       <span class="value">{{ debit }}</span>
     </span>
 
     <span
-      class="m-0 mdl-cell--6-col"
+      class="
+        m-0
+        mdl-cell--6-col
+        mdl-cell--4-col-tablet
+        mdl-cell--2-col-phone
+        mdl-cell--order-4-phone
+      "
     >
       {{ $t('payments.delta') }}:
       <span
@@ -21,14 +27,14 @@
     </span>
 
     <span
-      class="m-0 mdl-cell--6-col"
+      class="m-0 mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--1-col-phone"
     >
       {{ $t('payments.credit') }}:
       <span class="value">{{ credit }}</span>
     </span>
 
     <span
-      class="m-0 mdl-cell"
+      class="m-0 mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--hide-phone"
     >
       {{ $t('payments.withdrawal') }}:
       <span class="value">{{ withdrawal }}</span>
@@ -81,7 +87,7 @@ export default {
 </script>
 
 <style scoped>
-.mdl-cell--6-col {
+.mdl-cell--6-col mdl-cell--4-col-tablet {
   font-size: 16px;
 }
 

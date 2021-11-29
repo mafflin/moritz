@@ -1,7 +1,7 @@
 <template>
   <tr
     ref="row"
-    :class="{ 'highlighted': payment.highlighted }"
+    :class="{ 'mdl-color--accent': payment.highlighted }"
   >
     <td
       v-for="({ key, numeric, width }) in columns"
@@ -61,10 +61,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.highlighted {
-  background-color: skyblue;
-}
-
 tr {
   scroll-margin-top: 120px;
 }

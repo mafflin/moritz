@@ -1,5 +1,7 @@
 <template>
   <div class="mdl-grid">
+    <router-view />
+
     <user-card
       v-for="(user, index) in list"
       :key="index"

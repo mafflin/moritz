@@ -11,6 +11,7 @@
 
       <nav
         v-if="current"
+        class="mdl-cell--hide-phone"
       >
         <search
           :q="q"
@@ -29,11 +30,12 @@
           <span>{{ $t('logout') }}</span>
         </router-link>
       </nav>
+
       <nav
-        v-if="current"
         class="mdl-navigation"
       >
         <file-upload-button
+          v-if="current"
           :image="current.avatar"
           :loading="loading"
           accept="image/*"
@@ -41,6 +43,14 @@
           small
           @select="handleImageUpdate"
         />
+
+        <router-link
+          v-else
+          :to="{ name: 'Signup' }"
+          class="mdl-button mdl-js-button mdl-button--icon mdl-button--fab mdl-button--colored"
+        >
+          <i class="material-icons">person_add</i>
+        </router-link>
       </nav>
     </div>
   </header>

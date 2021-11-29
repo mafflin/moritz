@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters('settings', ['message', 'hasMessage']),
+    ...mapGetters(['message', 'hasMessage']),
   },
 };
 </script>

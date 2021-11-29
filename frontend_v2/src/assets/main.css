@@ -1,7 +1,8 @@
 .mdl-dialog {
-  width: 600px;
+  width: 50%;
   z-index: 100;
   position: fixed;
+  top: 64px;
 }
 
 .mdl-card__actions {

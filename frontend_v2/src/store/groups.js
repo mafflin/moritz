@@ -44,7 +44,7 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchList({ commit }) {
+    async fetchList({ commit, dispatch }) {
       commit('setLoading', true);
 
       try {
@@ -54,7 +54,7 @@ export default {
       } catch (error) {
         commit('setList', []);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
@@ -83,7 +83,8 @@ export default {
 
         commit('setList', [...list, data]);
 
-        dispatch('users/closeModal', {}, { root: true });
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -100,7 +101,8 @@ export default {
 
         commit('setSingle', data);
 
-        dispatch('users/closeModal', {}, { root: true });
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -117,7 +119,8 @@ export default {
 
         dispatch('fetchList');
         dispatch('payments/filterList', { groupId: null }, { root: true });
-        dispatch('users/closeModal', {}, { root: true });
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -125,14 +128,14 @@ export default {
       }
     },
 
-    handleError({ commit }, { response = {}, message }) {
+    handleError({ commit, dispatch }, { response = {}, message }) {
       const { status, data } = response;
       switch (status) {
         case 422:
           commit('setErrors', data);
           break;
         default:
-          console.log(message);
+          dispatch('showMessage', { error: message }, { root: true });
           break;
       }
     },

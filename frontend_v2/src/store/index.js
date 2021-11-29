@@ -1,5 +1,5 @@
-/* eslint-disable no-param-reassign */
 import { createStore } from 'vuex';
+import { MESSAGE_TIMEOUT_MS } from '../utils/globals';
 
 import groups from './groups';
 import payments from './payments';
@@ -22,9 +22,45 @@ export default createStore({
     users,
   },
 
+  state: {
+    loading: false,
+    message: {},
+  },
+
+  /* eslint-disable no-param-reassign */
+  mutations: {
+    setLoading(state, value) {
+      state.loading = value;
+    },
+
+    setMessage(state, value) {
+      state.message = value;
+    },
+  },
+  /* eslint-enable no-param-reassign */
+
+  actions: {
+    async showMessage({ commit }, { t, error }) {
+      commit('setMessage', { t, error });
+
+      await new Promise((resolve) => setTimeout(resolve, MESSAGE_TIMEOUT_MS));
+
+      commit('setMessage', {});
+    },
+  },
+
   getters: {
-    loading(state, getters) {
-      return getters['groups/loading']
+    message({ message }) {
+      return message;
+    },
+
+    hasMessage(state, { message }) {
+      return !!Object.keys(message).length;
+    },
+
+    loading({ loading }, getters) {
+      return loading
+        || getters['groups/loading']
         || getters['payments/loading']
         || getters['reports/loading']
         || getters['rules/loading']

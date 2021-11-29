@@ -1,7 +1,6 @@
 <template>
   <form
     @submit.prevent="$emit('submit')"
-    @keydown.enter="$emit('submit')"
   >
     <div
       :class="{
@@ -70,10 +69,6 @@ export default {
     payment: {
       type: Object,
       default: null,
-    },
-    colors: {
-      type: Array,
-      default: () => [],
     },
     errors: {
       type: Object,

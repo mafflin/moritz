@@ -2,7 +2,7 @@
   <dialog
     open
     class="mdl-dialog"
-    @keydown.esc="closeModal"
+    @keydown.esc="closeUserModal"
   >
     <h4 :class="`mdl-dialog__title mdl-color-text--${selected.color}`">
       {{ selected.name }}
@@ -40,7 +40,7 @@
     <div class="mdl-dialog__actions">
       <button
         class="mdl-button"
-        @click="closeModal"
+        @click="closeUserModal"
       >
         <span ref="close">
           {{ $t('close') }}
@@ -66,7 +66,7 @@ export default {
 
   methods: {
     ...mapActions('rules', ['createSingle', 'deleteSingle']),
-    ...mapActions('users', ['closeModal']),
+    ...mapActions('users', ['closeUserModal']),
   },
 };
 </script>

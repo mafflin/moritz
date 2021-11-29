@@ -4,6 +4,7 @@
 
     <main class="mdl-layout__content">
       <loading />
+      <router-view name="panel" />
 
       <router-view />
     </main>

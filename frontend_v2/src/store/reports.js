@@ -26,9 +26,9 @@ export default {
         await axios.post('/api/v2/reports/create_single', { report: { encoded } });
 
         dispatch('payments/fetchList', {}, { root: true });
-        dispatch('settings/showMessage', { t: 'reports.uploadSuccess' }, { root: true });
+        dispatch('showMessage', { t: 'reports.uploadSuccess' }, { root: true });
       } catch (error) {
-        dispatch('settings/showMessage', { error: error.message }, { root: true });
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
