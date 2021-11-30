@@ -1,2 +1,5 @@
-json.group_colors @settings[:group_colors]
-json.unmatched_id @settings[:unmatched_id]
+json.extract! @setting,
+  :group_colors,
+  :unmatched_group_id,
+  :panel_expanded,
+  :dark_theme

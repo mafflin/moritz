@@ -71,7 +71,6 @@ export default {
     ...mapGetters(['loading']),
     ...mapGetters('users', ['current']),
     ...mapGetters('search', ['q']),
-    ...mapGetters('settings', ['panelReduced']),
   },
 
   methods: {

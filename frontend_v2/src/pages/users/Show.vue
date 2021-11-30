@@ -3,9 +3,9 @@
     <router-view />
     <router-view name="panel" />
 
-    <reduce-panel-button
-      :panel-reduced="panelReduced"
-      @toggle="togglePanelReduced"
+    <expand-panel-button
+      :panel-expanded="panelExpanded"
+      @toggle="togglePanel"
     />
 
     <div class="mdl-grid">
@@ -30,18 +30,18 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import PaymentsTable from './components/PaymentsTable.vue';
-import ReducePanelButton from './components/ReducePanelButton.vue';
+import ExpandPanelButton from './components/ExpandPanelButton.vue';
 import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
     PaymentsTable,
-    ReducePanelButton,
+    ExpandPanelButton,
     SearchResults,
   },
 
   computed: {
-    ...mapGetters('settings', ['panelReduced']),
+    ...mapGetters('settings', ['panelExpanded']),
     ...mapGetters('search', ['q', 'list']),
     ...mapGetters('payments', [
       'loading',
@@ -55,7 +55,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('settings', ['togglePanelReduced']),
+    ...mapActions('settings', ['togglePanel']),
     ...mapActions('payments', ['fetchList', 'filterList']),
     ...mapActions('search', ['filterPaymentsList']),
   },

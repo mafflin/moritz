@@ -3,15 +3,15 @@
     name="slide-in"
     mode="out-in"
   >
-    <card-panel-reduced
-      v-if="panelReduced"
-      ref="low"
-      :style="{'--height': '-88px'}"
-    />
     <card-panel
-      v-else
+      v-if="panelExpanded"
       ref="high"
       :style="{'--height': '-324px'}"
+    />
+    <card-panel-reduced
+      v-else
+      ref="low"
+      :style="{'--height': '-88px'}"
     />
   </transition>
 </template>
@@ -28,7 +28,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('settings', ['panelReduced']),
+    ...mapGetters('settings', ['panelExpanded']),
   },
 };
 </script>

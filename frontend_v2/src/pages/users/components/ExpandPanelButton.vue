@@ -5,16 +5,16 @@
       @click="$emit('toggle')"
     >
       <i
-        v-if="panelReduced"
+        v-if="panelExpanded"
         class="material-icons"
       >
-        expand_more
+        expand_less
       </i>
       <i
         v-else
         class="material-icons"
       >
-        expand_less
+        expand_more
       </i>
     </div>
   </div>
@@ -23,7 +23,7 @@
 <script>
 export default {
   props: {
-    panelReduced: {
+    panelExpanded: {
       type: Boolean,
       required: true,
     },

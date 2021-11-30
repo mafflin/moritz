@@ -5,9 +5,7 @@ export default {
 
   state: {
     current: {},
-    panelReduced: false,
     loading: false,
-    message: {},
   },
 
   /* eslint-disable no-param-reassign */
@@ -16,17 +14,12 @@ export default {
       state.current = settings;
     },
 
-    setPanelReduced(state, value) {
-      state.panelReduced = value;
-    },
-
     setLoading(state, value) {
       state.loading = value;
     },
 
     reset(state) {
       state.current = {};
-      state.panelReduced = false;
     },
   },
   /* eslint-enable no-param-reassign */
@@ -37,25 +30,32 @@ export default {
 
       try {
         const { data } = await axios.post('/api/v2/settings/fetch_current');
-        const panelReduced = !!localStorage.getItem('panelReduced');
 
         commit('setCurrent', data);
-        commit('setPanelReduced', panelReduced);
       } catch (error) {
         commit('setCurrent', {});
 
-        dispatch('showMessage', { error: error.message });
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    togglePanelReduced({ commit, getters: { panelReduced } }) {
-      const newValue = !panelReduced;
+    async togglePanel({ commit, dispatch, state: { current } }) {
+      const panelExpanded = !current.panelExpanded;
 
-      commit('setPanelReduced', newValue);
+      commit('setLoading', true);
+      commit('setCurrent', { ...current, panelExpanded });
 
-      localStorage.setItem('panelReduced', newValue ? 1 : '');
+      try {
+        await axios.post('/api/v2/settings/update_current', { setting: { panelExpanded } });
+      } catch (error) {
+        commit('setCurrent', {});
+
+        dispatch('showMessage', { error: error.message }, { root: true });
+      } finally {
+        commit('setLoading', false);
+      }
     },
   },
 
@@ -65,11 +65,11 @@ export default {
     },
 
     unmatchedGroupId({ current }) {
-      return current.unmatchedId;
+      return current.unmatchedGroupId;
     },
 
-    panelReduced({ panelReduced }) {
-      return panelReduced;
+    panelExpanded({ current }) {
+      return current.panelExpanded;
     },
 
     loading({ loading }) {
