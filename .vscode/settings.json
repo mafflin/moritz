@@ -1,5 +1,5 @@
 {
-  "eslint.workingDirectories": ["./frontend", "./frontend_v2"],
+  "eslint.workingDirectories": ["./frontend"],
   "eslint.validate": ["javascript", "javascriptreact", "vue"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

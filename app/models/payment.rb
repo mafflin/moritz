@@ -1,8 +1,5 @@
 class Payment < ApplicationRecord
-  include GeoTraceable
-
   belongs_to :user
-  belongs_to :location, optional: true
 
   scope :income, -> { where('credit > 0') }
   scope :expense, -> { where('debit < 0') }
@@ -16,8 +13,6 @@ class Payment < ApplicationRecord
 
   before_save :round_credit
   before_save :round_debit
-
-  after_save :notify_subscribers
 
   ROUND_TO = 2
   BANKS = {
@@ -71,16 +66,6 @@ class Payment < ApplicationRecord
         "%#{query}%"
       )
     end
-  end
-
-  def notify_subscribers
-    PaymentsChannel.broadcast_to(
-      self.user,
-      ApplicationController.render(
-        partial: 'api/v1/payments/payment',
-        locals: { payment: self }
-      )
-    )
   end
 
   private

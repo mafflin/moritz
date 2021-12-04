@@ -1,134 +1,96 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+
+import UserIndex from '../pages/users/Index.vue';
+import UserShow from '../pages/users/Show.vue';
+
+import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
+import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
+import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
+import Panel from '../pages/users/containers/Panel.vue';
+import PaymentEditDialog from '../pages/users/containers/PaymentEditDialog.vue';
+import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
+import UserCreateDialog from '../pages/users/containers/UserCreateDialog.vue';
 
 import store from '../store';
 
-import RouteProxy from '../components/RouteProxy.vue';
-import GroupShow from '../pages/user/pages/group/GroupShow.vue';
-import GroupDelete from '../pages/user/pages/group/GroupDelete.vue';
-import Notes from '../pages/user/pages/payments/Notes.vue';
-import NotFound from '../pages/NotFound.vue';
-import TheMap from '../pages/user/pages/TheMap.vue';
-import Overview from '../pages/user/pages/overview';
-import ProfileUpdate from '../pages/user/pages/ProfileUpdate.vue';
-import Summaries from '../pages/user/pages/payments/Summaries';
-import User from '../pages/user';
-import Users from '../pages/users';
-import Withdrawals from '../pages/user/pages/payments/Withdrawals.vue';
-
-Vue.use(VueRouter);
-
-const mode = 'history';
 const routes = [
   { path: '/', redirect: '/users' },
   {
     path: '/users',
     name: 'Users',
-    component: Users,
-    beforeEnter: async (to, from, next) => {
-      await store.dispatch('sessions/deleteSession');
-      store.dispatch('users/fetchUsers');
-      next();
-    },
-  },
-  {
-    path: '/users/:userId',
-    component: User,
-    beforeEnter: async (to, from, next) => {
-      const { query, params: { userId } } = to;
-      await store.dispatch('users/loadUserPage', { userId, query });
-      next();
-    },
+    component: UserIndex,
+    beforeEnter: () => store
+      .dispatch('users/initIndexPage'),
     children: [
       {
-        path: '',
-        name: 'User',
-        component: Overview,
-        props: ({ query: { q, groupId } }) => ({ query: { q, groupId } }),
-        children: [
-          {
-            path: 'profile/update',
-            name: 'ProfileUpdate',
-            component: ProfileUpdate,
-          },
-          {
-            path: 'summaries',
-            name: 'Summaries',
-            component: Summaries,
-            beforeEnter: (to, from, next) => {
-              store.dispatch('summaries/fetchSummaries');
-              next();
-            },
-          },
-          {
-            path: 'payments/:paymentId',
-            component: RouteProxy,
-            beforeEnter: async ({ params: { paymentId } }, from, next) => {
-              await store.dispatch('payments/fetchPayment', paymentId);
-              next();
-            },
-            children: [
-              {
-                path: '',
-                redirect: 'notes',
-              },
-              {
-                path: 'notes',
-                name: 'Notes',
-                component: Notes,
-              },
-              {
-                path: 'withdrawals',
-                name: 'Withdrawals',
-                component: Withdrawals,
-              },
-            ],
-          },
-          {
-            path: 'groups/:groupId',
-            component: RouteProxy,
-            beforeEnter: async ({ params: { groupId } }, from, next) => {
-              await store.dispatch('groups/fetchGroup', groupId);
-              store.dispatch('rules/fetchRules', groupId);
-              next();
-            },
-            children: [
-              {
-                path: '',
-                name: 'Group',
-                component: GroupShow,
-              },
-              {
-                path: 'delete',
-                name: 'GroupDelete',
-                component: GroupDelete,
-              },
-            ],
-          },
-          {
-            path: 'map',
-            name: 'TheMap',
-            component: TheMap,
-            beforeEnter: (to, from, next) => {
-              if (!store.getters['map/geoServiceEnabled']) return;
-              next();
-            },
-          },
-        ],
+        path: 'signup',
+        name: 'Signup',
+        component: UserCreateDialog,
+        beforeEnter: () => store
+          .commit('users/setErrors', {}),
       },
     ],
   },
-
   {
-    path: '*',
-    name: 'NotFound',
-    component: NotFound,
+    path: '/users/:id',
+    components: {
+      default: UserShow,
+      panel: Panel,
+    },
+    name: 'User',
+    beforeEnter: ({ params: { id }, query }) => store
+      .dispatch('users/initShowPage', { id, query }),
+    children: [
+      {
+        path: 'add_group',
+        name: 'AddGroup',
+        component: GroupAddDialog,
+        beforeEnter: () => store
+          .commit('groups/setErrors'),
+      },
+      {
+        path: 'edit_group/:groupId',
+        name: 'EditGroup',
+        component: GroupEditDialog,
+        beforeEnter: () => store
+          .commit('groups/setErrors'),
+      },
+      {
+        path: 'delete_group/:groupId',
+        name: 'DeleteGroup',
+        component: GroupDeleteDialog,
+      },
+      {
+        path: 'edit_rules/:groupId',
+        name: 'EditRules',
+        component: RulesEditDialog,
+        beforeEnter: ({ params: { groupId } }) => store
+          .dispatch('rules/initModal', groupId),
+      },
+      {
+        path: 'edit_payment/:paymentId',
+        name: 'EditPayment',
+        component: PaymentEditDialog,
+        beforeEnter: ({ params: { paymentId } }) => store
+          .dispatch('payments/fetchSingle', paymentId),
+      },
+    ],
   },
 ];
 
-const router = new VueRouter({
-  mode,
+const router = createRouter({
+  history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  store.commit('setLoading', true);
+
+  next();
+});
+
+router.beforeEach(() => {
+  store.commit('setLoading', false);
 });
 
 export default router;

@@ -1,10 +1,15 @@
-import { fetchEntities, fetchEntity, updateEntity } from '../api';
-import { convertArrayToObject } from '../utils';
+import axios from 'axios';
+import router from '../router';
+import normalize from '../utils/normalize';
+import { parseSortable } from '../utils/globals';
+import parseUrlParams, { parseBoolean, parseDate, parseString } from '../utils/parseUrlParams';
+import formatErrors from '../utils/formatErrors';
 
-const ENTITY_TYPE = 'payments';
-const initialFilter = {
-  date: new Date().toISOString().substr(0, 7),
-  groupId: null,
+const QUERY_PARAMS = {
+  groupId: parseString,
+  date: parseDate,
+  sort: parseSortable,
+  asc: parseBoolean,
 };
 
 export default {
@@ -13,92 +18,205 @@ export default {
   state: {
     ids: [],
     entities: {},
-    selectedId: null,
-    filter: { ...initialFilter },
+    errors: {},
+    loading: false,
+    highlightedId: null,
+    filter: {
+      sort: null,
+      asc: null,
+      groupId: null,
+      date: null,
+    },
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setPayments(state, payments) {
-      state.ids = payments.map((payment) => payment.id);
-      state.entities = { ...state.entities, ...convertArrayToObject(payments) };
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
     },
 
-    setPayment(state, payment) {
-      state.entities = { ...state.entities, [payment.id]: payment };
+    setLoading(state, value) {
+      state.loading = value;
     },
 
-    setSelectedPayment(state, id) {
-      state.selectedId = id;
+    setHighlighted(state, id) {
+      state.highlightedId = id;
+    },
+
+    setSingle(state, item) {
+      state.entities = { ...state.entities, [item.id]: item };
     },
 
     setFilter(state, filter) {
       state.filter = { ...state.filter, ...filter };
     },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
+    },
+
+    reset(state) {
+      state.ids = [];
+      state.filter = Object.keys(state.filter)
+        .reduce((acc, key) => ({ ...acc, [key]: null }), {});
+    },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    updateFilter({ commit, dispatch }, filter) {
+    updateFilter({ commit }, query) {
+      const filter = parseUrlParams(query, QUERY_PARAMS);
+      const date = filter.date || parseDate(new Date());
+
+      commit('setFilter', { ...filter, date });
+    },
+
+    async fetchList({ commit, getters: { query } }) {
+      commit('setLoading', true);
+      commit('setHighlighted', null);
+
+      try {
+        const { data } = await axios.post('/api/v2/payments/fetch_list', query);
+
+        commit('setList', data);
+      } catch (error) {
+        commit('setList', []);
+
+        console.log(error.message);
+      } finally {
+        router.push({ query }).catch(() => {});
+
+        commit('setLoading', false);
+      }
+    },
+
+    async fetchSingle({ commit, dispatch }, id) {
+      commit('setLoading', true);
+
+      try {
+        const { data } = await axios.post('/api/v2/payments/fetch_single', { id });
+
+        commit('setSingle', data);
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async updateSingle({ commit, dispatch, getters }, payment) {
+      const { id, note } = payment;
+      const withdrawal = payment.withdrawal || 0;
+
+      commit('setLoading', true);
+      commit('setErrors', {});
+
+      try {
+        await axios.post('/api/v2/payments/update_single', { id, note, withdrawal });
+
+        commit('setSingle', { ...getters.selected, note, withdrawal });
+
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async filterList({ commit, dispatch }, filter) {
       commit('setFilter', filter);
-      dispatch('fetchPayments');
+
+      await dispatch('fetchList');
     },
 
-    async fetchPayments({ commit, dispatch, getters: { filter, formattedFilter } }) {
-      const { items } = await fetchEntities(ENTITY_TYPE, formattedFilter);
-      if (!items) return;
-
-      commit('setPayments', items);
-      dispatch('router/changeRoute', { query: filter }, { root: true });
-      dispatch('map/drawLocations', {}, { root: true });
+    handleError({ commit }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          console.log(message);
+          break;
+      }
     },
 
-    async fetchPayment({ commit }, id) {
-      const { item } = await fetchEntity(ENTITY_TYPE, id);
+    subscribeToUpdates({ dispatch, rootGetters }) {
+      const cable = rootGetters['cable/cable'];
+      if (!cable) return;
 
-      commit('setSelectedPayment', id);
-      commit('setPayment', item);
-    },
-
-    async updatePayment({ dispatch }, payment) {
-      await updateEntity(ENTITY_TYPE, payment.id, payment);
-
-      dispatch('fetchPayments'); // TODO: Use websockets.
-      dispatch('router/goToHomePage', {}, { root: true });
-    },
-
-    subscribeToUpdates({ commit, rootGetters }) {
-      const cable = rootGetters['sessions/cable'];
       cable.subscriptions.create(
         { channel: 'PaymentsChannel' },
-        { received: (payment) => commit('setPayment', JSON.parse(payment)) },
+        { received: (id) => dispatch('fetchSingle', id) },
       );
-    },
-
-    resetFilter({ commit }) {
-      commit('setFilter', initialFilter);
     },
   },
 
   getters: {
-    selected: ({ selectedId, entities }) => entities[selectedId],
+    list({ ids, entities, highlightedId }) {
+      return ids.map((id) => {
+        const highlighted = id === highlightedId;
+        return highlighted ? { ...entities[id], highlighted } : entities[id];
+      });
+    },
 
-    payments: ({ ids, entities }) => ids.map((id) => entities[id]),
+    sortedList(state, { list, filter: { sort, asc } }) {
+      if (!sort) return list;
 
-    debit: (state, { payments }) => payments
-      .map(({ debit }) => debit).reduce((a, b) => a + b, 0),
+      const sorted = list.sort((a, b) => {
+        if (a[sort] < b[sort]) { return -1; }
+        if (a[sort] > b[sort]) { return 1; }
+        return 0;
+      });
+      return asc ? sorted : sorted.reverse();
+    },
 
-    credit: (state, { payments }) => payments
-      .map(({ credit }) => credit).reduce((a, b) => a + b, 0),
+    total({ ids }) {
+      return ids.length;
+    },
 
-    withdrawal: (state, { payments }) => payments
-      .map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0),
+    debit(state, { list }) {
+      return list.map(({ debit }) => debit).reduce((a, b) => a + b, 0);
+    },
 
-    total: ({ ids }) => ids.length,
+    credit(state, { list }) {
+      return list.map(({ credit }) => credit).reduce((a, b) => a + b, 0);
+    },
 
-    filter: ({ filter }) => filter,
+    delta(state, { debit, credit }) {
+      return debit + credit;
+    },
 
-    formattedFilter: ({ filter }) => {
-      const date = filter.date && `${filter.date}-01`;
-      return { ...filter, date };
+    withdrawal(state, { list }) {
+      return list.map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0);
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    filter({ filter }) {
+      return filter;
+    },
+
+    query({ filter }) {
+      return filter;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
+
+    selected({ entities }, getters, rootState) {
+      const { paymentId } = rootState.route.params;
+      return entities[paymentId];
     },
   },
 };

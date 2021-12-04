@@ -1,7 +1,8 @@
-import { fetchEntities, fetchEntity, updateEntity } from '../api';
-import { convertArrayToObject, fileEncoder, parseUrlQueryParams } from '../utils';
-
-const ENTITY_TYPE = 'users';
+import axios from 'axios';
+import router from '../router';
+import fileEncoder from '../utils/fileEncoder';
+import formatErrors from '../utils/formatErrors';
+import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
@@ -9,72 +10,162 @@ export default {
   state: {
     ids: [],
     entities: {},
-    selectedId: null,
+    errors: {},
+    current: null,
+    loading: false,
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setUsers(state, users) {
-      state.ids = users.map((user) => user.id);
-      state.entities = { ...state.entities, ...convertArrayToObject(users) };
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
     },
 
-    setSelectedUser(state, user) {
-      state.selectedId = user.id;
-      state.entities = { ...state.entities, [user.id]: user };
+    setCurrent(state, user) {
+      state.current = user;
     },
 
-    resetSelectedUser(state) {
-      state.selectedId = null;
+    setLoading(state, value) {
+      state.loading = value;
+    },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
+    },
+
+    reset(state) {
+      state.current = null;
     },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchUsers({ commit, dispatch }) {
-      commit('resetSelectedUser');
-      dispatch('payments/resetFilter', {}, { root: true });
-
-      const { items } = await fetchEntities(ENTITY_TYPE);
-      commit('setUsers', items);
+    initIndexPage({ dispatch }) {
+      dispatch('fetchList');
+      dispatch('sessions/deleteCurrent', {}, { root: true });
     },
 
-    async fetchUser({ commit }, id) {
-      const { item } = await fetchEntity(ENTITY_TYPE, id);
+    async initShowPage({ dispatch }, { id, query }) {
+      await dispatch('sessions/createCurrent', id, { root: true });
+      await dispatch('fetchCurrent');
+      await dispatch('settings/fetchCurrent', {}, { root: true });
+      await dispatch('groups/fetchList', {}, { root: true });
 
-      commit('setSelectedUser', item);
+      dispatch('payments/updateFilter', query, { root: true });
     },
 
-    async updateUser({ commit, dispatch, getters: { selectedId } }, { file }) {
-      const {
-        target: { result: avatarBase64 },
-      } = await fileEncoder(file, false);
-      const { item } = await updateEntity(ENTITY_TYPE, selectedId, { user: { avatarBase64 } });
+    async fetchList({ commit }) {
+      commit('setLoading', true);
 
-      commit('setSelectedUser', item);
-      dispatch('router/goToHomePage', {}, { root: true });
+      try {
+        const { data } = await axios.post('/api/v2/users/fetch_list');
+
+        commit('setList', data);
+      } catch (error) {
+        commit('setList', []);
+
+        console.log(error.message);
+      } finally {
+        commit('setLoading', false);
+      }
     },
 
-    async loadUserPage({ dispatch }, { userId, query }) {
-      await dispatch('sessions/createSession', userId, { root: true });
-      await dispatch('fetchUser', userId);
+    async fetchCurrent({ commit }) {
+      commit('setLoading', true);
 
-      const filter = parseUrlQueryParams(query, ['date', 'groupId']);
+      try {
+        const { data } = await axios.post('/api/v2/users/fetch_current');
 
-      dispatch('groups/fetchGroups', {}, { root: true });
-      dispatch('payments/updateFilter', filter, { root: true });
+        commit('setCurrent', data);
+      } catch (error) {
+        commit('setCurrent', null);
+
+        console.log(error.message);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async updateCurrent({ commit, dispatch }, { image }) {
+      commit('setLoading', true);
+
+      try {
+        const { target: { result: avatarBase64 } } = await fileEncoder(image, false);
+        const { data } = await axios
+          .post('/api/v2/users/update_current', { user: { avatarBase64 } });
+
+        commit('setCurrent', data);
+        dispatch('showMessage', { t: 'users.updateSuccess' }, { root: true });
+      } catch (error) {
+        dispatch('showMessage', { error: error.message }, { root: true });
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async createSingle({ commit, dispatch, getters: { list } }, { name }) {
+      commit('setLoading', true);
+      commit('setErrors', {});
+
+      try {
+        const { data } = await axios
+          .post('/api/v2/users/create_single', { user: { name } });
+        commit('setList', [...list, data]);
+
+        dispatch('closeIndexModal');
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit, dispatch }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          dispatch('showMessage', { error: message }, { root: true });
+          break;
+      }
+    },
+
+    closeUserModal({ getters, rootGetters }) {
+      const { id } = getters.current;
+      const query = rootGetters['payments/query'];
+
+      router.push({ name: 'User', params: { id }, query })
+        .catch(() => {});
+    },
+
+    closeIndexModal() {
+      router.push({ name: 'Users' });
     },
   },
 
   getters: {
-    users({ ids, entities }) {
+    list({ ids, entities }) {
       return ids.map((id) => entities[id]);
     },
 
-    selected({ selectedId, entities }) {
-      return entities[selectedId];
+    current({ current }) {
+      return current;
     },
 
-    selectedId({ selectedId }) {
-      return selectedId;
+    loading({ loading }) {
+      return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
     },
   },
 };

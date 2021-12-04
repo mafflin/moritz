@@ -1,70 +1,56 @@
-import ActionCable from 'actioncable';
-import { createEntity, deleteEntity } from '../api';
-
-const { VUE_APP_ACTION_CABLE_URL } = process.env;
-const ENTITY_TYPE = 'sessions';
+import axios from 'axios';
 
 export default {
   namespaced: true,
 
   state: {
-    session: false,
-    cableRef: null,
+    loading: false,
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setSession(state, session) {
-      state.session = session;
-    },
-
-    setCableRef(state, cableRef) {
-      state.cableRef = cableRef;
+    setLoading(state, value) {
+      state.loading = value;
     },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    async createSession({ commit, dispatch }, userId) {
+    async createCurrent({ commit, dispatch }, userId) {
+      commit('setLoading', true);
+
       try {
-        await createEntity(ENTITY_TYPE, { userId });
+        await axios.post('/api/v2/sessions/create_current', { userId });
 
-        commit('setSession', true);
-
-        dispatch('createWebsocketConnection');
-        dispatch('subscribeToUserUpdates');
-        dispatch('payments/subscribeToUpdates', {}, { root: true });
+        dispatch('cable/connect', {}, { root: true });
       } catch (error) {
-        commit('setSession', false);
+        console.log(error.message);
+      } finally {
+        commit('setLoading', false);
       }
     },
 
-    async deleteSession({ getters: { cable }, commit }) {
-      await deleteEntity(ENTITY_TYPE);
+    async deleteCurrent({ commit }) {
+      commit('setLoading', true);
 
-      cable?.subscriptions?.consumer?.disconnect();
+      try {
+        await axios.post('/api/v2/sessions/delete_current');
 
-      commit('setSession', false);
-      commit('setCableRef', null);
-    },
-
-    createWebsocketConnection({ commit }) {
-      const cableRef = `cable-${Date.now()}`;
-      const cable = ActionCable.createConsumer(VUE_APP_ACTION_CABLE_URL);
-
-      window[cableRef] = cable;
-
-      commit('setCableRef', cableRef);
-    },
-
-    subscribeToUserUpdates({ dispatch, getters: { cable } }) {
-      cable.subscriptions.create(
-        { channel: 'UserUpdatesChannel' },
-        { received: (message) => dispatch('ui/showMessage', message, { root: true }) },
-      );
+        commit('users/reset', {}, { root: true });
+        commit('settings/reset', {}, { root: true });
+        commit('payments/reset', {}, { root: true });
+        commit('search/reset', {}, { root: true });
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        commit('setLoading', false);
+      }
     },
   },
 
   getters: {
-    session: ({ session }) => session,
-    cable: ({ cableRef }) => window[cableRef],
+    loading({ loading }) {
+      return loading;
+    },
   },
 };

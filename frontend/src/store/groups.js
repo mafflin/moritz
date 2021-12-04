@@ -1,9 +1,12 @@
-import {
-  fetchEntities, createEntity, deleteEntity, fetchEntity,
-} from '../api';
-import { convertArrayToObject } from '../utils';
+import axios from 'axios';
+import router from '../router';
+import formatErrors from '../utils/formatErrors';
+import normalize from '../utils/normalize';
 
-const ENTITY_TYPE = 'groups';
+const UNMATCHED = {
+  color: 'blue-grey',
+  unmatched: true,
+};
 
 export default {
   namespaced: true,
@@ -11,82 +14,158 @@ export default {
   state: {
     ids: [],
     entities: {},
-    selectedId: null,
-    newGroup: {
-      name: null,
-    },
+    errors: {},
+    loading: false,
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setGroups(state, groups) {
-      state.ids = groups.map((group) => group.id);
-      state.entities = { ...state.entities, ...convertArrayToObject(groups) };
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.entities = entities;
+      state.ids = ids;
     },
 
-    setSelectedGroup(state, group) {
-      const item = state.entities[group.id];
-      state.selectedId = group.id;
-      state.entities = { ...state.entities, [group.id]: { ...item, ...group } };
+    setSingle(state, item) {
+      state.entities = { ...state.entities, [item.id]: item };
     },
 
-    createGroup(state, group) {
-      state.ids = [...state.ids, group.id];
-      state.entities = { ...state.entities, [group.id]: group };
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
     },
 
-    deleteGroup(state, groupId) {
-      state.ids = state.ids.filter((id) => id !== groupId);
-      state.selectedId = null;
-    },
-
-    setNewGroup(state, name) {
-      state.newGroup = { name };
+    setLoading(state, value) {
+      state.loading = value;
     },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchGroups({ commit }) {
-      const { items } = await fetchEntities(ENTITY_TYPE);
+    async fetchList({ commit, dispatch }) {
+      commit('setLoading', true);
 
-      commit('setGroups', items);
+      try {
+        const { data } = await axios.post('/api/v2/groups/fetch_list');
+
+        commit('setList', data);
+      } catch (error) {
+        commit('setList', []);
+
+        dispatch('showMessage', { error: error.message }, { root: true });
+      } finally {
+        commit('setLoading', false);
+      }
     },
 
-    async fetchGroup({ commit }, id) {
-      const { item } = await fetchEntity(ENTITY_TYPE, id);
+    async fetchSingle({ commit, dispatch }, id) {
+      commit('setLoading', true);
 
-      commit('setSelectedGroup', item);
+      try {
+        const { data } = await axios.post('/api/v2/groups/fetch_single', { id });
+
+        commit('setSingle', data);
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
     },
 
-    async createGroup({ commit, dispatch, getters: { newGroup } }) {
-      const { item } = await createEntity(ENTITY_TYPE, { group: newGroup });
-      if (!item) return;
+    async createSingle({ commit, dispatch, getters: { list } }, group) {
+      commit('setLoading', true);
+      commit('setErrors', {});
 
-      commit('createGroup', item);
-      commit('setNewGroup', null);
+      try {
+        const { data } = await axios.post('/api/v2/groups/create_single', { group });
 
-      dispatch('ui/showMessage', 'Group created!', { root: true });
+        commit('setList', [...list, data]);
+
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
     },
 
-    async deleteGroup({
-      commit, dispatch, rootGetters, getters: { selected },
-    }) {
-      const { id } = selected;
-      const { groupId } = rootGetters['payments/filter'];
+    async updateSingle({ commit, dispatch }, group) {
+      commit('setLoading', true);
+      commit('setErrors', {});
 
-      await deleteEntity(ENTITY_TYPE, id);
+      try {
+        const { data } = await axios.post('/api/v2/groups/update_single', group);
 
-      commit('deleteGroup', id);
-      dispatch('router/goToHomePage', {}, { root: true });
+        commit('setSingle', data);
 
-      if (id !== groupId) return;
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
 
-      dispatch('payments/updateFilter', { groupId: null }, { root: true });
+    async deleteSingle({ commit, dispatch, getters }) {
+      commit('setLoading', true);
+
+      try {
+        const { id } = getters.selected;
+        await axios.post('/api/v2/groups/delete_single', { id });
+
+        dispatch('fetchList');
+        dispatch('payments/filterList', { groupId: null }, { root: true });
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit, dispatch }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          dispatch('showMessage', { error: message }, { root: true });
+          break;
+      }
+    },
+
+    openEditRules(state, groupId) {
+      router.push({ name: 'EditRules', params: { groupId } });
     },
   },
 
   getters: {
-    groups: ({ ids, entities }) => ids.map((id) => entities[id]),
-    selected: ({ selectedId, entities }) => entities[selectedId],
-    newGroup: ({ newGroup }) => newGroup,
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    listWithUnmatched(state, { list }, rootState, rootGetters) {
+      const id = rootGetters['settings/unmatchedGroupId'];
+      return [...list, { ...UNMATCHED, id }];
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
+
+    selected({ entities }, getters, rootState) {
+      const { groupId } = rootState.route.params;
+      return entities[groupId];
+    },
   },
 };

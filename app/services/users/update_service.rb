@@ -15,7 +15,6 @@ module Users
       return false if !@avatar_base64
 
       update_avatar
-      broadcast_user_notification
     end
 
     private
@@ -35,10 +34,6 @@ module Users
         filename: SecureRandom.urlsafe_base64,
         content_type: type,
       )
-    end
-
-    def broadcast_user_notification
-      UserUpdatesChannel.broadcast_to(@user, 'User updated!')
     end
   end
 

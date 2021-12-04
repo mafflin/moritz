@@ -9,32 +9,27 @@
   },
   "dependencies": {
     "actioncable": "^5.2.6",
-    "axios": "^0.24",
-    "core-js": "^3.19.1",
-    "humps": "^2.0",
-    "mapbox-gl": "^2.5",
-    "vue": "^2.6",
-    "vue-router": "^3.5.3",
-    "vuetify": "^2.5.12",
-    "vuex": "^3.6",
-    "vuex-router-sync": "^5.0"
+    "axios": "^0.24.0",
+    "core-js": "^3.19.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "regenerator-runtime": "^0.13.9",
+    "vue": "^3.2.23",
+    "vue-i18n": "^9.2.0-beta.22",
+    "vue-router": "^4.0.12",
+    "vuex": "^4.0.2",
+    "vuex-router-sync": "^6.0.0-rc.1"
   },
   "devDependencies": {
-    "@mdi/font": "^6.4",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
-    "@vue/eslint-config-airbnb": "^5.3",
-    "babel-eslint": "^10.1",
-    "deepmerge": "^4.2",
-    "eslint": "^7.32",
-    "eslint-plugin-prettier": "^4.0",
-    "eslint-plugin-vue": "^7.20.0",
-    "fibers": "^5.0",
-    "sass": "^1.43.4",
-    "sass-loader": "^10",
-    "vue-template-compiler": "^2.6",
-    "vuetify-loader": "^1.7"
+    "@vue/compiler-sfc": "^3.2.23",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-vue": "^7.20.0"
   },
   "eslintConfig": {
     "root": true,
@@ -42,27 +37,17 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/recommended",
-      "@vue/airbnb"
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
     ],
-    "rules": {
-      "import/extensions": "off",
-      "import/no-cycle": "off",
-      "import/no-extraneous-dependencies": "off",
-      "no-console": "off",
-      "no-debugger": "off"
-    },
     "parserOptions": {
       "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+    },
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions"
+    "last 2 versions",
+    "not dead"
   ]
 }

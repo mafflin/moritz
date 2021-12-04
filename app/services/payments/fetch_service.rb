@@ -9,7 +9,7 @@ module Payments
     end
 
     def perform
-      relation = @user.payments.includes(:location).by_month(@date)
+      relation = @user.payments.by_month(@date)
 
       if @group_id == Group::UNMATCHED_ID
         relation = relation.unmatched(@user)

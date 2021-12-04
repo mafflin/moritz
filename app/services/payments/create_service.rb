@@ -17,7 +17,10 @@ module Payments
     private
 
     def run_post_create_hooks
-      GetPaymentLocationsJob.perform_later(@payment)
+      PaymentsChannel.broadcast_to(
+        @user,
+        @payment.id,
+      )
     end
   end
 end

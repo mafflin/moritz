@@ -1,37 +1,43 @@
-import { createEntity } from '../api';
-import { fileEncoder } from '../utils';
-
-const ENTITY_TYPE = 'reports';
+import axios from 'axios';
+import fileEncoder from '../utils/fileEncoder';
 
 export default {
   namespaced: true,
 
   state: {
-    file: null,
+    loading: false,
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setFile(state, file) {
-      state.file = file;
+    setLoading(state, value) {
+      state.loading = value;
     },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    async uploadReport({ commit, dispatch, getters: { file } }) {
-      const {
-        target: { result },
-      } = await fileEncoder(file);
-      const encoded = window.btoa(unescape(encodeURIComponent(result)));
-      await createEntity(ENTITY_TYPE, { report: { encoded } });
+    async createSingle({ commit, dispatch }, file) {
+      commit('setLoading', true);
 
-      dispatch('ui/showMessage', 'File uploaded!', { root: true });
-      dispatch('payments/fetchPayments', {}, { root: true });
+      try {
+        const { target: { result } } = await fileEncoder(file);
+        const encoded = window.btoa(unescape(encodeURIComponent(result)));
+        await axios.post('/api/v2/reports/create_single', { report: { encoded } });
 
-      commit('setFile', null);
+        dispatch('payments/fetchList', {}, { root: true });
+        dispatch('showMessage', { t: 'reports.uploadSuccess' }, { root: true });
+      } catch (error) {
+        dispatch('showMessage', { error: error.message }, { root: true });
+      } finally {
+        commit('setLoading', false);
+      }
     },
   },
 
   getters: {
-    file: ({ file }) => file,
+    loading({ loading }) {
+      return loading;
+    },
   },
 };

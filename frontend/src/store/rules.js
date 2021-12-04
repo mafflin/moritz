@@ -1,7 +1,6 @@
-import { fetchEntities, createEntity, deleteEntity } from '../api';
-import { convertArrayToObject } from '../utils';
-
-const ENTITY_TYPE = 'rules';
+import axios from 'axios';
+import normalize from '../utils/normalize';
+import formatErrors from '../utils/formatErrors';
 
 export default {
   namespaced: true,
@@ -9,51 +8,121 @@ export default {
   state: {
     ids: [],
     entities: {},
+    errors: {},
+    loading: false,
   },
 
+  /* eslint-disable no-param-reassign */
   mutations: {
-    setRules(state, rules) {
-      state.ids = rules.map((rule) => rule.id);
-      state.entities = { ...state.entities, ...convertArrayToObject(rules) };
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
     },
 
-    createRule(state, rule) {
-      state.ids = [...state.ids, rule.id];
-      state.entities = { ...state.entities, [rule.id]: rule };
+    setSingle(state, item) {
+      state.entities = { ...state.entities, [item.id]: item };
     },
 
-    deleteRule(state, ruleId) {
-      state.ids = state.ids.filter((id) => id !== ruleId);
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
+    },
+
+    setLoading(state, value) {
+      state.loading = value;
     },
   },
+  /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchRules({ commit }, groupId) {
-      const { items } = await fetchEntities(ENTITY_TYPE, { groupId });
-      if (!items) return;
+    async initModal({ commit, dispatch }, groupId) {
+      commit('setErrors');
 
-      commit('setRules', items);
+      await dispatch('fetchList', groupId);
     },
 
-    async createRule({ commit, dispatch }, rule) {
-      const { item } = await createEntity(ENTITY_TYPE, { rule });
-      if (!item) return;
+    async fetchList({ commit }, groupId) {
+      commit('setLoading', true);
 
-      commit('createRule', item);
-      dispatch('ui/showMessage', 'Rule created!', { root: true });
-      dispatch('payments/fetchPayments', {}, { root: true });
+      try {
+        const { data } = await axios.post('/api/v2/rules/fetch_list', { groupId });
+
+        commit('setList', data);
+      } catch (error) {
+        commit('setList', []);
+
+        console.log(error.message);
+      } finally {
+        commit('setLoading', false);
+      }
     },
 
-    async deleteRule({ commit, dispatch }, id) {
-      commit('deleteRule', id);
+    async createSingle({
+      commit, dispatch, getters: { list }, rootGetters,
+    }, match) {
+      commit('setLoading', true);
+      commit('setErrors', {});
 
-      await deleteEntity(ENTITY_TYPE, id);
+      try {
+        const { id: groupId } = rootGetters['groups/selected'];
+        const rule = { match, groupId };
+        const { data } = await axios.post('/api/v2/rules/create_single', { rule });
 
-      dispatch('payments/fetchPayments', {}, { root: true });
+        commit('setList', [...list, data]);
+
+        dispatch('payments/fetchList', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async deleteSingle({ commit, dispatch, rootGetters }, id) {
+      commit('setLoading', true);
+
+      try {
+        const { id: groupId } = rootGetters['groups/selected'];
+        await axios.post('/api/v2/rules/delete_single', { id });
+
+        dispatch('fetchList', groupId);
+        dispatch('payments/fetchList', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          console.log(message);
+          break;
+      }
     },
   },
 
   getters: {
-    rules: ({ ids, entities }) => ids.map((id) => entities[id]),
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    loading({ loading }) {
+      return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
+    },
   },
 };

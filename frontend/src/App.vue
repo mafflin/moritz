@@ -1,40 +1,28 @@
 <template>
-  <v-app
-    id="app"
-    class="mdl-layout mdl-js-layout mdl-layout--fixed-header"
-  >
-    <nav-bar />
-    <loading />
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <app-header />
 
-    <v-main>
+    <main class="mdl-layout__content">
+      <loading />
+      <router-view name="panel" />
+
       <router-view />
-    </v-main>
+    </main>
 
-    <notifications />
-  </v-app>
+    <snackbar />
+  </div>
 </template>
 
 <script>
-import Loading from './components/Loading.vue';
-import NavBar from './components/NavBar.vue';
-import Notifications from './components/Notifications.vue';
+import AppHeader from './containers/Header.vue';
+import Loading from './containers/Loading.vue';
+import Snackbar from './containers/Snackbar.vue';
 
 export default {
-  name: 'App',
-
   components: {
+    AppHeader,
     Loading,
-    NavBar,
-    Notifications,
+    Snackbar,
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
-</style>

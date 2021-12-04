@@ -1,21 +1,31 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
+import { createI18n } from 'vue-i18n/index';
 import { sync } from 'vuex-router-sync';
 
 import App from './App.vue';
-import store from './store';
+import messages from './i18n';
 import router from './router';
-import vuetify from './plugins/vuetify';
+import store from './store';
+import upgradeElement from './mixins/upgradeElement';
 
-Vue.config.productionTip = false;
+import './assets/main.css';
+import './assets/margins.css';
+import './assets/paddings.css';
 
-const unsync = sync(store, router);
+const i18n = createI18n({
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages,
+});
 
-new Vue({
-  store,
-  vuetify,
-  router,
-  beforeDestroy() {
-    unsync();
-  },
-  render: (h) => h(App),
-}).$mount('#app');
+const app = createApp(App);
+
+app.mixin(upgradeElement);
+
+app.use(i18n);
+app.use(router);
+app.use(store);
+
+sync(store, router);
+
+app.mount('#app');
