@@ -3,8 +3,8 @@ module Users
     IMAGE_SIZE_LIMIT = 2.megabytes
     IMAGE_TYPES = [
       'image/jpeg',
-      'image/png',
-    ]
+      'image/png'
+    ].freeze
 
     def initialize(user:, params:)
       @user = user
@@ -12,7 +12,7 @@ module Users
     end
 
     def perform
-      return false if !@avatar_base64
+      return false unless @avatar_base64
 
       update_avatar
     end
@@ -24,15 +24,15 @@ module Users
       *, type = meta.split('data:')
       decoded = Base64.decode64(image)
 
-      raise UpdateError.new('Unprocessable image!') if !image || !type
-      raise UpdateError.new('Unsupported image format!') if !IMAGE_TYPES.include?(type)
-      raise UpdateError.new('Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
+      raise(UpdateError, 'Unprocessable image!') if !image || !type
+      raise(UpdateError, 'Unsupported image format!') unless IMAGE_TYPES.include?(type)
+      raise(UpdateError, 'Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
 
       @user.avatar.purge
       @user.avatar.attach(
         io: StringIO.new(decoded),
         filename: SecureRandom.urlsafe_base64,
-        content_type: type,
+        content_type: type
       )
     end
   end

@@ -1,6 +1,6 @@
 module Payments
   class FetchService < ApplicationService
-    DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'
+    DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'.freeze
 
     def initialize(user:, date: nil, group_id: nil)
       @user = user

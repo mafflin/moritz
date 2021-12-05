@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   protected
 
   def current_user
-    if user_id = session[:current_user_id]
+    if (user_id = session[:current_user_id])
       @current_user ||= User.find(user_id)
     else
       @current_user = nil

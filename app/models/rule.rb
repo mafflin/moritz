@@ -4,7 +4,7 @@ class Rule < ApplicationRecord
 
   validates :match, presence: true, uniqueness: {
     scope: [:user_id],
-    case_sensitive: false,
+    case_sensitive: false
   }
 
   before_save :downcase_match
@@ -16,6 +16,6 @@ class Rule < ApplicationRecord
   private
 
   def downcase_match
-    self.match.downcase!
+    match.downcase!
   end
 end

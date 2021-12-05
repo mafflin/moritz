@@ -16,13 +16,13 @@ module Reports
       {
         service: Parsers::RevolutParseService,
         match: 'Type,Product,Started Date'
-      },
-    ]
+      }
+    ].freeze
 
     def initialize(csv)
       parser = PARSERS.find { |entry| csv.include?(entry[:match]) }
 
-      raise ParseError.new('Unknown Bank or invalid file format!') if !parser
+      raise(ParseError, 'Unknown Bank or invalid file format!') unless parser
 
       @bank_specific_service = parser[:service].new(csv)
     end

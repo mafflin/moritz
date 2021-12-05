@@ -1,46 +1,46 @@
-module Api::V2
-  class PaymentsController < ApplicationController
-    before_action :set_payment, only: [:fetch_single, :update_single]
+module Api
+  module V2
+    class PaymentsController < ApplicationController
+      before_action :set_payment, only: [:fetch_single, :update_single]
 
-    def fetch_list
-      @payments = Payments::FetchService.new(
-        user: current_user,
-        date: params[:date],
-        group_id: params[:group_id]
-      ).perform
-    end
-
-    def fetch_single
-    end
-
-    def update_single
-      if @payment.update(payment_params)
-        render :fetch_single
-      else
-        render json: @payment.errors, status: :unprocessable_entity
+      def fetch_list
+        @payments = Payments::FetchService.new(
+          user: current_user,
+          date: params[:date],
+          group_id: params[:group_id]
+        ).perform
       end
-    end
 
-    def fetch_search_results
-      @payments = Payments::SearchService.new(
-        user: current_user,
-        q: params[:q]
-      ).perform
+      def fetch_single
+      end
 
-      render :fetch_list
-    end
+      def update_single
+        if @payment.update(payment_params)
+          render :fetch_single
+        else
+          render json: @payment.errors, status: :unprocessable_entity
+        end
+      end
 
-    private
+      def fetch_search_results
+        @payments = Payments::SearchService.new(
+          user: current_user,
+          q: params[:q]
+        ).perform
 
-    def payment_params
-      params.require(:payment)
-        .permit(:id, :note, :withdrawal)
-    end
+        render :fetch_list
+      end
 
-    private
+      private
 
-    def set_payment
-      @payment = current_user.payments.find(params[:id])
+      def payment_params
+        params.require(:payment)
+          .permit(:id, :note, :withdrawal)
+      end
+
+      def set_payment
+        @payment = current_user.payments.find(params[:id])
+      end
     end
   end
 end

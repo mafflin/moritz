@@ -11,7 +11,7 @@ RUN apk update \
       build-base make \
       libgcrypt-dev libxml2 libxml2-dev \
       curl wget git \
-      nodejs yarn
+      nodejs
 
 ADD . /app
 WORKDIR /app

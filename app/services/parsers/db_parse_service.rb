@@ -1,9 +1,9 @@
 module Parsers
   class DbParseService < BaseParseService
     BANK = Payment::BANKS[:db]
-    COL_SEP = ';'
-    ENCODING_IN = 'ISO-8859-1'
-    DATE_FORMAT = '%m/%d/%Y'
+    COL_SEP = ';'.freeze
+    ENCODING_IN = 'ISO-8859-1'.freeze
+    DATE_FORMAT = '%m/%d/%Y'.freeze
     # Skips additional non-csv lines an the start and the end of the file.
     # Matches a double date 09/28/2021;09/27/2021 in the beginning of the line.
     # Or "Booking" in the header.
@@ -29,7 +29,7 @@ module Parsers
         original_debit: entry['Debit'],
         original_credit: entry['Credit'],
         debit: parse_amount(entry['Debit']),
-        credit: parse_amount(entry['Credit']),
+        credit: parse_amount(entry['Credit'])
       }
     end
 
@@ -43,7 +43,7 @@ module Parsers
     end
 
     def parse_amount(value)
-      value&.gsub(/[,]/, '')&.to_f || 0
+      value&.gsub(/,/, '')&.to_f || 0
     end
   end
 end

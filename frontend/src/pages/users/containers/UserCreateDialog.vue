@@ -25,12 +25,12 @@
         {{ $t('submit') }}
       </button>
 
-      <botton
+      <button
         class="mdl-button"
         @click="closeIndexModal"
       >
         {{ $t('cancel') }}
-      </botton>
+      </button>
     </div>
   </dialog>
 </template>

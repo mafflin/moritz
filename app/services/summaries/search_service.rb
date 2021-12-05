@@ -14,7 +14,7 @@ module Summaries
           group_id: group.id,
           group_name: group.name,
           debit: payments.sum(:debit).to_f,
-          credit: payments.sum(:credit).to_f,
+          credit: payments.sum(:credit).to_f
         }
       end
     end

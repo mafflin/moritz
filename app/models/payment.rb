@@ -19,9 +19,9 @@ class Payment < ApplicationRecord
     db: 'DB',
     n26: 'n26',
     revolut: 'revolut',
-    commerz: 'commerz',
-  }
-  DIGEST_ALGORITHM = 'sha256'
+    commerz: 'commerz'
+  }.freeze
+  DIGEST_ALGORITHM = 'sha256'.freeze
   DIGEST_PARAMS = [
     :booked_at,
     :transaction_type,
@@ -32,8 +32,8 @@ class Payment < ApplicationRecord
     :external_creditor_id,
     :currency,
     :original_debit,
-    :original_credit,
-  ]
+    :original_credit
+  ].freeze
 
   class << self
     def by_year(date)
@@ -71,11 +71,11 @@ class Payment < ApplicationRecord
   private
 
   def round_credit
-    self.credit = self.credit.round(ROUND_TO)
+    self.credit = credit.round(ROUND_TO)
   end
 
   def round_debit
-    self.debit = self.debit.round(ROUND_TO)
+    self.debit = debit.round(ROUND_TO)
   end
 
   def generate_digest

@@ -19,7 +19,7 @@ module Payments
     def run_post_create_hooks
       PaymentsChannel.broadcast_to(
         @user,
-        @payment.id,
+        @payment.id
       )
     end
   end
