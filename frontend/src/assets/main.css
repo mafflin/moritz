@@ -1,5 +1,6 @@
 .mdl-dialog {
-  width: 50%;
+  width: 80%;
+  max-width: 600px;
   z-index: 100;
   position: fixed;
   top: 64px;

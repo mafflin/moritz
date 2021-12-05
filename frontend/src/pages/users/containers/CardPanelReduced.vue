@@ -5,11 +5,12 @@
     <div
       class="
         mdl-cell
-        mdl-cell--2-col
+        mdl-cell--3-col
         mdl-cell--3-col-tablet
-        mdl-cell--2-col-phone
+        mdl-cell--3-col-phone
         mdl-cell--order-0-tablet
         mdl-cell--order-0-phone
+        mdl-cell--middle
       "
     >
       <date-picker-reduced
@@ -22,10 +23,11 @@
       class="
         mdl-cell
         mdl-cell--5-col
-        mdl-cell--7-col-tablet
+        mdl-cell--8-col-tablet
         mdl-cell--4-col-phone
         mdl-cell--order-6-tablet
         mdl-cell--order-6-phone
+        mdl-cell--middle
       "
     >
       <group-chip
@@ -38,20 +40,10 @@
         @select="handleGroupSelect"
         @open-edit-rules="openEditRules"
       />
-    </div>
 
-    <div
-      class="
-        mdl-cell
-        mdl-cell--bottom
-        mdl-cell--1-col
-        mdl-cell--order-7-tablet
-        mdl-cell--order-2-phone
-      "
-    >
       <router-link
         :to="{ name: 'AddGroup' }"
-        class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored"
+        class="add-button mdl-button mdl-js-button mdl-button--icon mdl-color--orange"
       >
         <i class="material-icons">add</i>
       </router-link>
@@ -65,6 +57,7 @@
         mdl-cell--4-col-phone
         mdl-cell--order-1-tablet
         mdl-cell--order-9-phone
+        mdl-cell--middle
       "
     >
       <payments-summary
@@ -81,15 +74,14 @@
     <div
       class="
         mdl-cell
-        mdl-cell--bottom
         mdl-cell--1-col
         mdl-cell--order-2-tablet
         mdl-cell--order-1-phone
+        mdl-cell--middle
       "
     >
       <file-upload-button
         :loading="loading"
-        class="mdl-button mdl-button--fab"
         accept=".csv"
         icon="file_upload"
         colored
@@ -139,6 +131,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .sticky {
   width: 100%;
@@ -146,5 +139,9 @@ export default {
   position: sticky;
   background-color: white;
   z-index: 8;
+}
+
+.add-button {
+  vertical-align: -webkit-baseline-middle;
 }
 </style>

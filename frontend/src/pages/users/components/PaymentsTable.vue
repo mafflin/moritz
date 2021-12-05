@@ -3,12 +3,14 @@
     <thead v-if="header">
       <tr>
         <th
-          v-for="({ key, numeric, width }) in columns"
+          v-for="({ key, numeric, hideOnPhone, hideOnTablet, width }) in columns"
           :key="key"
           :width="width"
           :class="{
             'clickable': true,
             'mdl-data-table__cell': numeric,
+            'mdl-cell--hide-phone': hideOnPhone,
+            'mdl-cell--hide-tablet': hideOnTablet,
             'mdl-data-table__cell--non-numeric': !numeric,
             'mdl-data-table__header--sorted-ascending': key === sort && asc,
             'mdl-data-table__header--sorted-descending': key === sort && !asc,

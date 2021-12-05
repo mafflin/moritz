@@ -4,11 +4,13 @@
     :class="{ 'mdl-color--accent': payment.highlighted }"
   >
     <td
-      v-for="({ key, numeric, width }) in columns"
+      v-for="({ key, numeric, hideOnPhone, hideOnTablet, width }) in columns"
       :key="key"
       :width="width"
       :class="{
         'mdl-data-table__cell': numeric,
+        'mdl-cell--hide-phone': hideOnPhone,
+        'mdl-cell--hide-tablet': hideOnTablet,
         'mdl-data-table__cell--non-numeric': !numeric,
       }"
     >

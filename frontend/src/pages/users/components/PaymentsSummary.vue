@@ -1,5 +1,5 @@
 <template>
-  <div class="mdl-grid">
+  <div class="mdl-grid mdl-grid--no-spacing">
     <span
       class="m-0 mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--1-col-phone"
     >
