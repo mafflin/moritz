@@ -148,13 +148,13 @@ export default {
       }
     },
 
-    subscribeToUpdates({ dispatch, rootGetters }) {
+    subscribeToUpdates({ rootGetters }) {
       const cable = rootGetters['cable/cable'];
       if (!cable) return;
 
       cable.subscriptions.create(
         { channel: 'PaymentsChannel' },
-        { received: (id) => dispatch('fetchSingle', id) },
+        { received: (id) => console.log(id) },
       );
     },
   },

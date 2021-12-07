@@ -6,9 +6,12 @@ module Api
         report = Reports::ParseService.new(csv).perform
 
         if report.present?
-          Payments::ImportService.new(current_user, report).perform
+          created = Payments::ImportService.new(current_user, report)
+            .perform
+            .compact
+            .length
 
-          head :no_content
+          render json: { created: created }, status: :created
         else
           head :unprocessable_entity
         end

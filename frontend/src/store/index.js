@@ -42,8 +42,8 @@ export default createStore({
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async showMessage({ commit }, { t, error }) {
-      commit('setMessage', { t, error });
+    async showMessage({ commit }, { t, tt, error }) {
+      commit('setMessage', { t, tt, error });
 
       await new Promise((resolve) => setTimeout(resolve, MESSAGE_TIMEOUT_MS));
 

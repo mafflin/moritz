@@ -11,7 +11,10 @@ module Payments
         user: @user
       )
 
-      run_post_create_hooks if @payment.save
+      return unless @payment.save
+
+      run_post_create_hooks
+      @payment
     end
 
     private

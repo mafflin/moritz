@@ -43,7 +43,7 @@ const payments = {
 };
 
 const reports = {
-  uploadSuccess: 'Uploaded succesfully!',
+  uploadSuccess: '{created} payments added!',
 };
 
 const rules = {
