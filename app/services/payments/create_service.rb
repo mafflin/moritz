@@ -6,24 +6,8 @@ module Payments
     end
 
     def perform
-      @payment = Payment.new(
-        **@attributes,
-        user: @user
-      )
-
-      return unless @payment.save
-
-      run_post_create_hooks
-      @payment
-    end
-
-    private
-
-    def run_post_create_hooks
-      PaymentsChannel.broadcast_to(
-        @user,
-        @payment.id
-      )
+      @payment = Payment.new(**@attributes, user: @user)
+      @payment if @payment.save
     end
   end
 end

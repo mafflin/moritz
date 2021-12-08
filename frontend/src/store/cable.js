@@ -38,7 +38,7 @@ export default {
     },
 
     initSubscriptions({ dispatch }) {
-      dispatch('payments/subscribeToUpdates', {}, { root: true });
+      dispatch('imports/subscribeToUpdates', {}, { root: true });
     },
   },
 

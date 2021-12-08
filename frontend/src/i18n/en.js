@@ -26,6 +26,12 @@ const groups = {
   unmatched: 'Unmatched',
 };
 
+const imports = {
+  started: 'Import started!',
+  finished: 'Import finished! Total: {paymentsTotal}. Created: {paymentsCreated}',
+  failed: 'Import has failed :(',
+};
+
 const payments = {
   actions: 'Actions',
   bank: 'Bank',
@@ -40,10 +46,6 @@ const payments = {
   searchResults: '{total} payments found',
   transactionType: 'Type',
   withdrawal: 'Cash',
-};
-
-const reports = {
-  uploadSuccess: '{created} payments added!',
 };
 
 const rules = {
@@ -72,7 +74,7 @@ export default {
 
   groups,
   payments,
-  reports,
+  imports,
   rules,
   titles,
   users,

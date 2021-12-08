@@ -16,19 +16,31 @@
       <span v-if="message.tt">{{ $t(...message.tt) }}</span>
       <span v-if="message.error">{{ message.error }}</span>
     </div>
+
     <button
       class="mdl-snackbar__action"
       type="button"
-    />
+      @click="handleClose"
+    >
+      {{ $t('close') }}
+    </button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
     ...mapGetters(['message', 'hasMessage']),
+  },
+
+  methods: {
+    ...mapMutations(['setMessage']),
+
+    handleClose() {
+      this.setMessage({});
+    },
   },
 };
 </script>

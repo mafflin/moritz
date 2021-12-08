@@ -147,16 +147,6 @@ export default {
           break;
       }
     },
-
-    subscribeToUpdates({ rootGetters }) {
-      const cable = rootGetters['cable/cable'];
-      if (!cable) return;
-
-      cable.subscriptions.create(
-        { channel: 'PaymentsChannel' },
-        { received: (id) => console.log(id) },
-      );
-    },
   },
 
   getters: {

@@ -42,7 +42,7 @@ export default {
 
   computed: {
     ...mapGetters('groups', ['listWithUnmatched']),
-    ...mapGetters('reports', ['loading']),
+    ...mapGetters('imports', ['loading']),
     ...mapGetters('payments', [
       'loading',
       'total',
@@ -57,7 +57,7 @@ export default {
   methods: {
     ...mapActions('payments', ['filterList']),
     ...mapActions('groups', ['openEditRules']),
-    ...mapActions('reports', { uploadReport: 'createSingle' }),
+    ...mapActions('imports', { uploadReport: 'createSingle' }),
   },
 };
 </script>

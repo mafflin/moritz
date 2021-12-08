@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_04_160524) do
+ActiveRecord::Schema.define(version: 2021_12_08_142036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -52,6 +52,17 @@ ActiveRecord::Schema.define(version: 2021_12_04_160524) do
     t.string "color"
     t.index ["user_id", "name"], name: "index_groups_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
+  end
+
+  create_table "imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.integer "payments_total", default: 0
+    t.integer "payments_created", default: 0
+    t.string "fail_message"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

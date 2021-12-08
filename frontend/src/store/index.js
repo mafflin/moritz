@@ -4,7 +4,7 @@ import { MESSAGE_TIMEOUT_MS } from '../utils/globals';
 import cable from './cable';
 import groups from './groups';
 import payments from './payments';
-import reports from './reports';
+import imports from './imports';
 import rules from './rules';
 import search from './search';
 import sessions from './sessions';
@@ -16,7 +16,7 @@ export default createStore({
     cable,
     groups,
     payments,
-    reports,
+    imports,
     rules,
     search,
     sessions,
@@ -45,6 +45,8 @@ export default createStore({
     async showMessage({ commit }, { t, tt, error }) {
       commit('setMessage', { t, tt, error });
 
+      if (error) return;
+
       await new Promise((resolve) => setTimeout(resolve, MESSAGE_TIMEOUT_MS));
 
       commit('setMessage', {});
@@ -64,7 +66,7 @@ export default createStore({
       return loading
         || getters['groups/loading']
         || getters['payments/loading']
-        || getters['reports/loading']
+        || getters['imports/loading']
         || getters['rules/loading']
         || getters['search/loading']
         || getters['sessions/loading']
