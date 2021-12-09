@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserIndex from '../pages/users/Index.vue';
 import UserShow from '../pages/users/Show.vue';
 
+import GlobalNavigation from '../components/GlobalNavigation.vue';
 import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
@@ -11,6 +12,7 @@ import Panel from '../pages/users/containers/Panel.vue';
 import PaymentEditDialog from '../pages/users/containers/PaymentEditDialog.vue';
 import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
 import UserCreateDialog from '../pages/users/containers/UserCreateDialog.vue';
+import UserNavigation from '../pages/users/containers/UserNavigation.vue';
 
 import store from '../store';
 
@@ -19,7 +21,10 @@ const routes = [
   {
     path: '/users',
     name: 'Users',
-    component: UserIndex,
+    components: {
+      default: UserIndex,
+      navigation: GlobalNavigation,
+    },
     beforeEnter: () => store
       .dispatch('users/initIndexPage'),
     children: [
@@ -36,6 +41,7 @@ const routes = [
     path: '/users/:id',
     components: {
       default: UserShow,
+      navigation: UserNavigation,
       panel: Panel,
     },
     name: 'User',
