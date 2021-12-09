@@ -3,9 +3,12 @@
     <thead>
       <tr>
         <th
-          v-for="{ key, numeric } in columns"
+          v-for="{ key, numeric, hideOnPhone } in columns"
           :key="key"
-          :class="{ 'mdl-data-table__cell--non-numeric': !numeric }"
+          :class="{
+            'mdl-data-table__cell--non-numeric': !numeric,
+            'mdl-cell--hide-phone': hideOnPhone,
+          }"
         >
           {{ $t(`imports.${key}`) }}
         </th>
@@ -18,9 +21,12 @@
         :key="item.id"
       >
         <td
-          v-for="{ key, numeric } in columns"
+          v-for="{ key, numeric, hideOnPhone } in columns"
           :key="key"
-          :class="{ 'mdl-data-table__cell--non-numeric': !numeric }"
+          :class="{
+            'mdl-data-table__cell--non-numeric': !numeric,
+            'mdl-cell--hide-phone': hideOnPhone,
+          }"
         >
           <span v-if="key === 'status'">
             <import-status
@@ -38,10 +44,10 @@
 import ImportStatus from './ImportStatus.vue';
 
 const COLUMNS = [
-  { key: 'createdAt' },
+  { key: 'createdAt', hideOnPhone: true },
   { key: 'updatedAt' },
   { key: 'status' },
-  { key: 'paymentsTotal', numeric: true },
+  { key: 'paymentsTotal', numeric: true, hideOnPhone: true },
   { key: 'paymentsCreated', numeric: true },
 ];
 

@@ -37,7 +37,6 @@ export default {
   actions: {
     async createSingle({ commit, dispatch, getters: { list } }, file) {
       commit('setLoading', true);
-      dispatch('showMessage', {}, { root: true });
 
       try {
         const { target: { result } } = await fileEncoder(file);

@@ -4,14 +4,14 @@ import UserIndex from '../pages/users/Index.vue';
 import UserShow from '../pages/users/Show.vue';
 
 import GlobalNavigation from '../components/GlobalNavigation.vue';
-import GroupAddDialog from '../pages/users/containers/GroupAddDialog.vue';
-import GroupDeleteDialog from '../pages/users/containers/GroupDeleteDialog.vue';
-import GroupEditDialog from '../pages/users/containers/GroupEditDialog.vue';
-import ImportHistoryDialog from '../pages/users/containers/ImportHistoryDialog.vue';
+import GroupAddDialog from '../pages/users/modals/GroupAddDialog.vue';
+import GroupDeleteDialog from '../pages/users/modals/GroupDeleteDialog.vue';
+import GroupEditDialog from '../pages/users/modals/GroupEditDialog.vue';
+import ImportHistoryDialog from '../pages/users/modals/ImportHistoryDialog.vue';
 import Panel from '../pages/users/containers/Panel.vue';
-import PaymentEditDialog from '../pages/users/containers/PaymentEditDialog.vue';
-import RulesEditDialog from '../pages/users/containers/RulesEditDialog.vue';
-import UserCreateDialog from '../pages/users/containers/UserCreateDialog.vue';
+import PaymentEditDialog from '../pages/users/modals/PaymentEditDialog.vue';
+import RulesEditDialog from '../pages/users/modals/RulesEditDialog.vue';
+import UserCreateDialog from '../pages/users/modals/UserCreateDialog.vue';
 import UserNavigation from '../pages/users/containers/UserNavigation.vue';
 
 import store from '../store';
