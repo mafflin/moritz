@@ -27,9 +27,15 @@ const groups = {
 };
 
 const imports = {
-  started: 'Import started!',
-  finished: 'Import finished! Total: {paymentsTotal}. Created: {paymentsCreated}',
+  createdAt: 'Started',
   failed: 'Import has failed :(',
+  finished: 'Import finished! Total: {paymentsTotal}. Created: {paymentsCreated}',
+  history: 'Last {importHistorySize} imports',
+  paymentsTotal: 'Total',
+  paymentsCreated: 'New',
+  started: 'Import started!',
+  status: 'Status',
+  updatedAt: 'Finished',
 };
 
 const payments = {

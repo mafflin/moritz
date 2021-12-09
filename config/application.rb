@@ -38,5 +38,8 @@ module Moritz
     config.session_store :cookie_store, key: '_interslice_session'
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
+
+    # TODO: Support multiple timezones and format dates on the FE.
+    config.time_zone = 'Berlin'
   end
 end

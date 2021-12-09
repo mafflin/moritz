@@ -56,10 +56,11 @@ export default {
       await dispatch('settings/fetchCurrent', {}, { root: true });
       await dispatch('groups/fetchList', {}, { root: true });
 
+      dispatch('imports/fetchList', {}, { root: true });
       dispatch('payments/updateFilter', query, { root: true });
     },
 
-    async fetchList({ commit }) {
+    async fetchList({ commit, dispatch }) {
       commit('setLoading', true);
 
       try {
@@ -69,13 +70,13 @@ export default {
       } catch (error) {
         commit('setList', []);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    async fetchCurrent({ commit }) {
+    async fetchCurrent({ commit, dispatch }) {
       commit('setLoading', true);
 
       try {
@@ -85,7 +86,7 @@ export default {
       } catch (error) {
         commit('setCurrent', null);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }

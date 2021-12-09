@@ -64,16 +64,20 @@ export default {
       return current.groupColors || [];
     },
 
-    unmatchedGroupId({ current }) {
-      return current.unmatchedGroupId;
+    importHistorySize({ current }) {
+      return current.importHistorySize;
+    },
+
+    loading({ loading }) {
+      return loading;
     },
 
     panelExpanded({ current }) {
       return current.panelExpanded;
     },
 
-    loading({ loading }) {
-      return loading;
+    unmatchedGroupId({ current }) {
+      return current.unmatchedGroupId;
     },
   },
 };

@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createI18n } from 'vue-i18n/index';
 import { sync } from 'vuex-router-sync';
 
+import moment from 'moment';
 import App from './App.vue';
 import messages from './i18n';
 import router from './router';
@@ -19,6 +20,8 @@ const i18n = createI18n({
 });
 
 const app = createApp(App);
+
+moment.locale(navigator.language);
 
 app.mixin(upgradeElement);
 

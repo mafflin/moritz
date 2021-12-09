@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
 
       resource :imports, only: [] do
+        post :fetch_list
         post :create_single
       end
 

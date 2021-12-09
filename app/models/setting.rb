@@ -8,4 +8,8 @@ class Setting < ApplicationRecord
   def unmatched_group_id
     Group::UNMATCHED_ID
   end
+
+  def import_history_size
+    Import::DISPLAYED_HISTORY_SIZE
+  end
 end

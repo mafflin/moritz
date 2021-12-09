@@ -44,7 +44,7 @@ export default {
       await dispatch('fetchList', groupId);
     },
 
-    async fetchList({ commit }, groupId) {
+    async fetchList({ commit, dispatch }, groupId) {
       commit('setLoading', true);
 
       try {
@@ -54,7 +54,7 @@ export default {
       } catch (error) {
         commit('setList', []);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
@@ -99,14 +99,14 @@ export default {
       }
     },
 
-    handleError({ commit }, { response = {}, message }) {
+    handleError({ commit, dispatch }, { response = {}, message }) {
       const { status, data } = response;
       switch (status) {
         case 422:
           commit('setErrors', data);
           break;
         default:
-          console.log(message);
+          dispatch('showMessage', { error: message }, { root: true });
           break;
       }
     },

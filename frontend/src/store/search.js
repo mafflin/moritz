@@ -36,7 +36,7 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async fetchResults({ commit }, q) {
+    async fetchResults({ commit, dispatch }, q) {
       commit('setLoading', true);
       commit('setQ', q);
 
@@ -47,7 +47,7 @@ export default {
       } catch (error) {
         commit('setList', []);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }

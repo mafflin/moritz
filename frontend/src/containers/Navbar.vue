@@ -10,6 +10,24 @@
       <div class="mdl-layout-spacer" />
 
       <nav
+        v-if="current && hasImports"
+        class="mdl-navigation"
+      >
+        <div
+          v-if="hasPending"
+          class="mdl-spinner mdl-js-spinner is-active mr-2"
+        />
+
+        <router-link
+          v-else
+          :to="{ name: 'ImportHistory' }"
+          class="mdl-button mdl-js-button mdl-button--icon mr-2"
+        >
+          <i class="material-icons">history</i>
+        </router-link>
+      </nav>
+
+      <nav
         v-if="current"
         class="mdl-cell--hide-phone"
       >
@@ -69,13 +87,14 @@ export default {
 
   computed: {
     ...mapGetters(['loading']),
-    ...mapGetters('users', ['current']),
+    ...mapGetters('imports', ['hasImports', 'hasPending']),
     ...mapGetters('search', ['q']),
+    ...mapGetters('users', ['current']),
   },
 
   methods: {
-    ...mapActions('users', ['updateCurrent']),
     ...mapActions('search', ['fetchResults']),
+    ...mapActions('users', ['updateCurrent']),
 
     handleImageUpdate(image) {
       this.updateCurrent({ image });
@@ -87,5 +106,9 @@ export default {
 <style lang="css" scoped>
 .mdl-layout-icon {
   font-size: 32px;
+}
+
+.mdl-spinner__layer .mdl-spinner__layer-1 {
+  border-color: white;
 }
 </style>

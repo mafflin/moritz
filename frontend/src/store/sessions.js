@@ -24,13 +24,13 @@ export default {
 
         dispatch('cable/connect', {}, { root: true });
       } catch (error) {
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    async deleteCurrent({ commit }) {
+    async deleteCurrent({ commit, dispatch }) {
       commit('setLoading', true);
 
       try {
@@ -41,7 +41,7 @@ export default {
         commit('payments/reset', {}, { root: true });
         commit('search/reset', {}, { root: true });
       } catch (error) {
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }

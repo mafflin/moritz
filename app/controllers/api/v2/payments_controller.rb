@@ -11,6 +11,15 @@ module Api
         ).perform
       end
 
+      def fetch_search_results
+        @payments = Payments::SearchService.new(
+          user: current_user,
+          q: params[:q]
+        ).perform
+
+        render :fetch_list
+      end
+
       def fetch_single
       end
 
@@ -20,15 +29,6 @@ module Api
         else
           render json: @payment.errors, status: :unprocessable_entity
         end
-      end
-
-      def fetch_search_results
-        @payments = Payments::SearchService.new(
-          user: current_user,
-          q: params[:q]
-        ).perform
-
-        render :fetch_list
       end
 
       private

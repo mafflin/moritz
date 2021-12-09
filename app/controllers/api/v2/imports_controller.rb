@@ -18,6 +18,12 @@ module Api
         head :bad_request
       end
 
+      def fetch_list
+        @imports = current_user.imports
+          .order(:created_at)
+          .last(Import::DISPLAYED_HISTORY_SIZE)
+      end
+
       private
 
       def import_params

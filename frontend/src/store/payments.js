@@ -76,7 +76,7 @@ export default {
       commit('setFilter', { ...filter, date });
     },
 
-    async fetchList({ commit, getters: { query } }) {
+    async fetchList({ commit, dispatch, getters: { query } }) {
       commit('setLoading', true);
       commit('setHighlighted', null);
 
@@ -87,7 +87,7 @@ export default {
       } catch (error) {
         commit('setList', []);
 
-        console.log(error.message);
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         router.push({ query }).catch(() => {});
 
@@ -136,14 +136,14 @@ export default {
       await dispatch('fetchList');
     },
 
-    handleError({ commit }, { response = {}, message }) {
+    handleError({ commit, dispatch }, { response = {}, message }) {
       const { status, data } = response;
       switch (status) {
         case 422:
           commit('setErrors', data);
           break;
         default:
-          console.log(message);
+          dispatch('showMessage', { error: message }, { root: true });
           break;
       }
     },

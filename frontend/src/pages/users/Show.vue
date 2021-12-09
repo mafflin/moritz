@@ -29,25 +29,22 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import PaymentsTable from './components/PaymentsTable.vue';
 import ExpandPanelButton from './components/ExpandPanelButton.vue';
+import PaymentsTable from './components/PaymentsTable.vue';
 import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
-    PaymentsTable,
     ExpandPanelButton,
+    PaymentsTable,
     SearchResults,
   },
 
   computed: {
-    ...mapGetters('settings', ['panelExpanded']),
+    ...mapGetters('imports', { imports: 'list' }),
+    ...mapGetters('payments', ['loading', 'sortedList', 'filter']),
     ...mapGetters('search', ['q', 'list']),
-    ...mapGetters('payments', [
-      'loading',
-      'sortedList',
-      'filter',
-    ]),
+    ...mapGetters('settings', ['panelExpanded']),
   },
 
   mounted() {

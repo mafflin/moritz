@@ -3,13 +3,6 @@ module Api
     class GroupsController < ApplicationController
       before_action :set_group, only: [:fetch_single, :update_single, :delete_single]
 
-      def fetch_list
-        @groups = current_user.groups
-      end
-
-      def fetch_single
-      end
-
       def create_single
         @group = Group.new(group_params)
 
@@ -20,16 +13,23 @@ module Api
         end
       end
 
+      def delete_single
+        @group.destroy
+      end
+
+      def fetch_list
+        @groups = current_user.groups
+      end
+
+      def fetch_single
+      end
+
       def update_single
         if @group.update(group_params)
           render :fetch_single
         else
           render json: @group.errors, status: :unprocessable_entity
         end
-      end
-
-      def delete_single
-        @group.destroy
       end
 
       private

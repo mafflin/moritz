@@ -3,10 +3,6 @@ module Api
     class RulesController < ApplicationController
       before_action :set_rule, only: [:delete_single]
 
-      def fetch_list
-        @rules = current_user.rules.where(group_id: params[:group_id])
-      end
-
       def create_single
         @rule = Rule.new(rule_params)
 
@@ -19,6 +15,10 @@ module Api
 
       def delete_single
         @rule.destroy
+      end
+
+      def fetch_list
+        @rules = current_user.rules.where(group_id: params[:group_id])
       end
 
       private

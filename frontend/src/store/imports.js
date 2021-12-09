@@ -1,35 +1,72 @@
 import axios from 'axios';
 import fileEncoder from '../utils/fileEncoder';
+import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
 
   state: {
+    ids: [],
+    entities: {},
     loading: false,
   },
 
   /* eslint-disable no-param-reassign */
   mutations: {
+    setList(state, items) {
+      const { ids, entities } = normalize(items);
+
+      state.ids = ids;
+      state.entities = entities;
+    },
+
+    setSingle(state, item) {
+      state.entities[item.id] = item;
+    },
+
     setLoading(state, value) {
       state.loading = value;
+    },
+
+    reset(state) {
+      state.ids = [];
     },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async createSingle({ commit, dispatch }, file) {
+    async createSingle({ commit, dispatch, getters: { list } }, file) {
       commit('setLoading', true);
+      dispatch('showMessage', {}, { root: true });
 
       try {
         const { target: { result } } = await fileEncoder(file);
         const encoded = window.btoa(unescape(encodeURIComponent(result)));
-        await axios
+        const { data } = await axios
           .post('/api/v2/imports/create_single', { csv: { encoded } });
+
+        commit('setList', [...list.slice(1, 5), data]);
 
         dispatch('payments/fetchList', {}, { root: true });
         dispatch('showMessage', { t: 'imports.started' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
+    async fetchList({ commit, dispatch }) {
+      commit('setLoading', true);
+
+      try {
+        const { data } = await axios.post('/api/v2/imports/fetch_list');
+
+        commit('setList', data);
+      } catch (error) {
+        commit('setList', []);
+
+        dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
@@ -47,27 +84,45 @@ export default {
       }
     },
 
+    handleImportFinish({ commit, dispatch }, item) {
+      const { paymentsTotal, paymentsCreated } = item;
+
+      commit('setSingle', item);
+      dispatch(
+        'showMessage',
+        { tt: ['imports.finished', { paymentsTotal, paymentsCreated }] },
+        { root: true },
+      );
+    },
+
     subscribeToUpdates({ dispatch, rootGetters }) {
       const cable = rootGetters['cable/cable'];
       if (!cable) return;
 
       cable.subscriptions.create(
         { channel: 'ImportsChannel' },
-        {
-          received: (data) => {
-            const { paymentsTotal, paymentsCreated } = JSON.parse(data);
-            dispatch(
-              'showMessage',
-              { tt: ['imports.finished', { paymentsTotal, paymentsCreated }] },
-              { root: true },
-            );
-          },
-        },
+        { received: (data) => dispatch('handleImportFinish', JSON.parse(data)) },
       );
     },
   },
 
   getters: {
+    list({ ids, entities }) {
+      return ids.map((id) => entities[id]);
+    },
+
+    listSorted(state, { list }) {
+      return list.reverse();
+    },
+
+    hasImports(state, { list }) {
+      return list.length;
+    },
+
+    hasPending(state, { list }) {
+      return list.some(({ status }) => status === 'pending');
+    },
+
     loading({ loading }) {
       return loading;
     },
