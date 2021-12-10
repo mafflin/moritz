@@ -52,7 +52,6 @@ export default {
 
         commit('setList', [...existing, data]);
 
-        dispatch('payments/fetchList', {}, { root: true });
         dispatch('showMessage', { t: 'imports.started' }, { root: true });
       } catch (error) {
         dispatch('handleError', error);
@@ -93,6 +92,8 @@ export default {
       const { paymentsTotal, paymentsCreated } = item;
 
       commit('setSingle', item);
+
+      dispatch('payments/fetchList', {}, { root: true });
       dispatch(
         'showMessage',
         { tt: ['imports.finished', { paymentsTotal, paymentsCreated }] },

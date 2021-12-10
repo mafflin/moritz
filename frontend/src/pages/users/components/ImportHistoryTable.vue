@@ -30,7 +30,7 @@
         >
           <span v-if="key === 'status'">
             <import-status
-              :status="item[key]"
+              :status="item.status"
             />
           </span>
           <span v-else>{{ item[key] }}</span>
