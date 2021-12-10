@@ -6,7 +6,7 @@ module Payments
     end
 
     def perform
-      @user.payments.match(@q).order(FetchService::DEFAULT_ORDER)
+      @user.payments.search(@q)
     end
   end
 end

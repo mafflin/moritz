@@ -1,7 +1,5 @@
 module Payments
   class FetchService < ApplicationService
-    DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'.freeze
-
     def initialize(user:, date: nil, group_id: nil)
       @user = user
       @group_id = group_id
@@ -17,7 +15,7 @@ module Payments
         relation = relation.by_group(group)
       end
 
-      relation.order(DEFAULT_ORDER)
+      relation
     end
 
     private

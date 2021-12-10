@@ -6,10 +6,10 @@ class Payment < ApplicationRecord
 
   validates :credit, presence: true, numericality: true
   validates :debit, presence: true, numericality: true
-  validates :digest, presence: true, uniqueness: true
   validates :withdrawal, numericality: true
-
-  before_validation :generate_digest, on: :create
+  validates :digest, presence: true
+  validates_uniqueness_of :digest, scope: [:left_neighbor_digest, :user_id]
+  validates_uniqueness_of :digest, scope: [:right_neighbor_digest, :user_id]
 
   before_save :round_credit
   before_save :round_debit
@@ -22,6 +22,7 @@ class Payment < ApplicationRecord
     commerz: 'commerz'
   }.freeze
   DIGEST_ALGORITHM = 'sha256'.freeze
+  DIGEST_KEY = 'v1'.freeze
   DIGEST_PARAMS = [
     :booked_at,
     :transaction_type,
@@ -60,10 +61,20 @@ class Payment < ApplicationRecord
       )
     end
 
-    def match(query)
+    def search(query)
       where(
         'concat(beneficiary, details, note, original_debit, original_credit) ilike ?',
         "%#{query}%"
+      )
+    end
+
+    def generate_digest(attrs)
+      values = attrs.values_at(*DIGEST_PARAMS).compact.join
+
+      return nil unless values.present?
+
+      Base64.strict_encode64(
+        OpenSSL::HMAC.digest(DIGEST_ALGORITHM, DIGEST_KEY, values)
       )
     end
   end
@@ -76,15 +87,5 @@ class Payment < ApplicationRecord
 
   def round_debit
     self.debit = debit.round(ROUND_TO)
-  end
-
-  def generate_digest
-    digest = OpenSSL::HMAC.digest(
-      DIGEST_ALGORITHM,
-      user_id,
-      values_at(*DIGEST_PARAMS).join
-    )
-
-    self.digest = Base64.strict_encode64(digest)
   end
 end

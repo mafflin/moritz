@@ -3,19 +3,21 @@ module Api
     class PaymentsController < ApplicationController
       before_action :set_payment, only: [:fetch_single, :update_single]
 
+      DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'.freeze
+
       def fetch_list
         @payments = Payments::FetchService.new(
           user: current_user,
           date: params[:date],
           group_id: params[:group_id]
-        ).perform
+        ).perform.order(DEFAULT_ORDER)
       end
 
       def fetch_search_results
         @payments = Payments::SearchService.new(
           user: current_user,
           q: params[:q]
-        ).perform
+        ).perform.order(DEFAULT_ORDER)
 
         render :fetch_list
       end

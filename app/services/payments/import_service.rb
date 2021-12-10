@@ -6,8 +6,8 @@ module Payments
     end
 
     def perform
-      @report.map do |entry|
-        Payments::CreateService.new(@user, entry).perform
+      [{}, *@report, {}].each_cons(3).map do |left_neighbor, entry, right_neighbor|
+        Payments::CreateService.new(@user, entry, left_neighbor, right_neighbor).perform
       end
     end
   end

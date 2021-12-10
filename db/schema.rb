@@ -85,7 +85,10 @@ ActiveRecord::Schema.define(version: 2021_12_10_160500) do
     t.string "note"
     t.string "bank"
     t.decimal "withdrawal", default: "0.0"
-    t.index ["digest"], name: "index_payments_on_digest", unique: true
+    t.string "left_neighbor_digest"
+    t.string "right_neighbor_digest"
+    t.index ["digest", "user_id", "left_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_left_neighbor_digest", unique: true
+    t.index ["digest", "user_id", "right_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_right_neighbor_digest", unique: true
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
