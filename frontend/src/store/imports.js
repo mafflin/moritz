@@ -35,7 +35,9 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async createSingle({ commit, dispatch, getters: { list } }, file) {
+    async createSingle({
+      commit, dispatch, getters: { list }, rootGetters,
+    }, file) {
       commit('setLoading', true);
 
       try {
@@ -43,8 +45,12 @@ export default {
         const encoded = window.btoa(unescape(encodeURIComponent(result)));
         const { data } = await axios
           .post('/api/v2/imports/create_single', { csv: { encoded } });
+        const importHistorySize = rootGetters['settings/importHistorySize'];
+        const existing = list.length === importHistorySize
+          ? list.slice(1, importHistorySize)
+          : list;
 
-        commit('setList', [...list.slice(1, 5), data]);
+        commit('setList', [...existing, data]);
 
         dispatch('payments/fetchList', {}, { root: true });
         dispatch('showMessage', { t: 'imports.started' }, { root: true });
