@@ -85,6 +85,7 @@ export default {
     },
 
     handleClick() {
+      this.$refs.uploader.value = null;
       this.$refs.uploader.click();
     },
   },
