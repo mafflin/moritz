@@ -5,7 +5,7 @@ export const MESSAGE_TIMEOUT_MS = 5000;
 export const SORTABLE_PAYMENT_ATTRIBUTES = [
   { key: 'bookedAt', width: '10%' },
   { key: 'bank', hideOnPhone: true, hideOnTablet: true },
-  { key: 'transactionType', hideOnPhone: true, hideOnTablet: true },
+  { key: 'transactionType', hideOnPhone: true },
   { key: 'details', width: '35%' },
   { key: 'beneficiary', hideOnPhone: true, hideOnTablet: true },
   { key: 'note', hideOnPhone: true },

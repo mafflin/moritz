@@ -14,7 +14,11 @@
         'mdl-data-table__cell--non-numeric': !numeric,
       }"
     >
-      {{ payment[key] }}
+      <payment-icon
+        v-if="key === 'transactionType'"
+        :transaction-type="payment.transactionType"
+      />
+      <span v-else>{{ payment[key] }}</span>
     </td>
 
     <td v-if="actions">
@@ -32,8 +36,11 @@
 </template>
 
 <script>
+import PaymentIcon from './PaymentIcon.vue';
 
 export default {
+  components: { PaymentIcon },
+
   props: {
     payment: {
       type: Object,
