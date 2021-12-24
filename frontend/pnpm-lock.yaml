@@ -1,11 +1,11 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@rails/actioncable': ^7.0.0
   '@vue/cli-plugin-babel': ^4.5.15
   '@vue/cli-plugin-eslint': ^4.5.15
   '@vue/cli-service': ^4.5.15
   '@vue/compiler-sfc': ^3.2.26
-  actioncable: ^5.2.6
   axios: ^0.24.0
   babel-eslint: ^10.1.0
   core-js: ^3.20.1
@@ -23,7 +23,7 @@ specifiers:
   vuex-router-sync: ^6.0.0-rc.1
 
 dependencies:
-  actioncable: 5.2.6
+  '@rails/actioncable': 7.0.0
   axios: 0.24.0
   core-js: 3.20.1
   lodash: 4.17.21
@@ -1316,6 +1316,10 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
+  /@rails/actioncable/7.0.0:
+    resolution: {integrity: sha512-uKOGaA8xMNuMwsQrH65l4LxLZ4RD2czP0MKBU7PHIbQS6XvYc6xV9HDveGfgumZSZJYJSfUIiKiqh5mjlCOxPA==}
+    dev: false
+
   /@soda/friendly-errors-webpack-plugin/1.8.1_webpack@4.46.0:
     resolution: {integrity: sha512-h2ooWqP8XuFqTXT+NyAFbrArzfQA7R6HTezADrvD9Re8fxMLTPPniLdqVTdDaO0eIoLaAwKT+d6w+5GeTk7Vbg==}
     engines: {node: '>=8.0.0'}
@@ -2070,10 +2074,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
-
-  /actioncable/5.2.6:
-    resolution: {integrity: sha512-ofLHm57nN24zghkl+tQe6IVrZeSJ655lNLQjNQJvtQkeTDqlF30McuMB4o9DqpxdHgW/w0RNWaAQHB6VPlleNQ==}
-    dev: false
 
   /address/1.1.2:
     resolution: {integrity: sha512-aT6camzM4xEA54YVJYSqxz1kv4IHnQZRtThJJHhUMRExaU5spC7jX5ugSwTaTgJliIgs4VhZOk7htClvQ/LmRA==}

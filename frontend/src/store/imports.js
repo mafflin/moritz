@@ -102,10 +102,10 @@ export default {
     },
 
     subscribeToUpdates({ dispatch, rootGetters }) {
-      const cable = rootGetters['cable/cable'];
-      if (!cable) return;
+      const consumer = rootGetters['cable/consumer'];
+      if (!consumer) return;
 
-      cable.subscriptions.create(
+      consumer.subscriptions.create(
         { channel: 'ImportsChannel' },
         { received: (data) => dispatch('handleImportFinish', JSON.parse(data)) },
       );

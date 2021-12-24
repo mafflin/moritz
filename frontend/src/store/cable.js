@@ -1,40 +1,38 @@
-import ActionCable from 'actioncable';
+import { createConsumer } from '@rails/actioncable';
 
 export default {
   namespaced: true,
 
   state: {
-    cableRef: null,
+    ref: null,
   },
 
   /* eslint-disable no-param-reassign */
   mutations: {
-    setCableRef(state, cableRef) {
-      state.cableRef = cableRef;
+    setConsumerRef(state, ref) {
+      state.ref = ref;
     },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
     connect({ commit, dispatch }) {
-      const cableRef = `cable-${Date.now()}`;
-      const cable = ActionCable.createConsumer('/cable');
+      const ref = `cable-${Date.now()}`;
+      const consumer = createConsumer('/cable');
 
-      window[cableRef] = cable;
+      window[ref] = consumer;
 
-      commit('setCableRef', cableRef);
-
+      commit('setConsumerRef', ref);
       dispatch('initSubscriptions');
     },
 
-    disconnect({ commit, getters: { cable, cableRef } }) {
-      if (cable) {
-        cable.subscriptions.consumer.disconnect();
-      }
+    disconnect({ commit, state: { ref }, getters: { consumer } }) {
+      if (!consumer) return;
 
-      window[cableRef] = null;
+      consumer.subscriptions.consumer.disconnect();
+      window[ref] = null;
 
-      commit('setCableRef', null);
+      commit('setConsumerRef', null);
     },
 
     initSubscriptions({ dispatch }) {
@@ -43,8 +41,8 @@ export default {
   },
 
   getters: {
-    cable({ cableRef }) {
-      return window[cableRef];
+    consumer({ ref }) {
+      return window[ref];
     },
   },
 };
