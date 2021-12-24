@@ -7,7 +7,7 @@ class Payment < ApplicationRecord
   validates :credit, presence: true, numericality: true
   validates :debit, presence: true, numericality: true
   validates :withdrawal, numericality: true
-  validates :digest, presence: true
+  validates_presence_of :digest
   validates_uniqueness_of :digest, scope: [:left_neighbor_digest, :user_id]
   validates_uniqueness_of :digest, scope: [:right_neighbor_digest, :user_id]
 

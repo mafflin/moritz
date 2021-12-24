@@ -13,7 +13,7 @@ RSpec.describe Parsers::N26ParseService do
     end
 
     it 'parses all the entries' do
-      expect(@parsed.length).to eq(11)
+      expect(@parsed.length).to eq(12)
     end
 
     it 'replaces the details and transaction_type' do
