@@ -8,6 +8,7 @@ specifiers:
   '@vue/compiler-sfc': ^3.2.26
   axios: ^0.24.0
   babel-eslint: ^10.1.0
+  chart.js: ^3.7.0
   core-js: ^3.20.1
   eslint: ^6.8.0
   eslint-config-airbnb: ^18.2.1
@@ -25,6 +26,7 @@ specifiers:
 dependencies:
   '@rails/actioncable': 7.0.0
   axios: 0.24.0
+  chart.js: 3.7.0
   core-js: 3.20.1
   lodash: 4.17.21
   moment: 2.29.1
@@ -2816,6 +2818,10 @@ packages:
   /chardet/0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
     dev: true
+
+  /chart.js/3.7.0:
+    resolution: {integrity: sha512-31gVuqqKp3lDIFmzpKIrBeum4OpZsQjSIAqlOpgjosHDJZlULtvwLEZKtEhIAZc7JMPaHlYMys40Qy9Mf+1AAg==}
+    dev: false
 
   /check-types/8.0.3:
     resolution: {integrity: sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==}

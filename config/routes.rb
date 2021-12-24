@@ -37,6 +37,10 @@ Rails.application.routes.draw do
         post :update_current
       end
 
+      resource :summaries, only: [] do
+        post :fetch_list
+      end
+
       resource :users, only: [] do
         post :create_single
         post :fetch_current

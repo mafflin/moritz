@@ -14,7 +14,7 @@
       class="mdl-chip__action pr-1"
     >
       <i :class="{ 'material-icons': true, 'mdl-color-text--white': isSelected }">
-        format_underlined
+        question_mark
       </i>
     </span>
 

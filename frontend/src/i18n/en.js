@@ -64,8 +64,10 @@ const titles = {
   app: 'Moritz',
   filter: 'Filter',
   groups: 'Groups',
+  imports: 'Imports',
   payments: 'Payments',
   rules: 'Rules',
+  summary: 'Summary',
   uploads: 'Uploads',
   users: 'Users',
 };

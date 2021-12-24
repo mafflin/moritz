@@ -9,6 +9,7 @@ import rules from './rules';
 import search from './search';
 import sessions from './sessions';
 import settings from './settings';
+import summaries from './summaries';
 import users from './users';
 
 export default createStore({
@@ -21,6 +22,7 @@ export default createStore({
     search,
     sessions,
     settings,
+    summaries,
     users,
   },
 

@@ -1,5 +1,20 @@
 <template>
   <nav
+    class="mdl-navigation"
+  >
+    <div
+      class="mr-2"
+    >
+      <router-link
+        :to="{ name: 'SummaryChart' }"
+        class="mdl-button mdl-js-button mdl-button--icon"
+      >
+        <i class="material-icons">insights</i>
+      </router-link>
+    </div>
+  </nav>
+
+  <nav
     v-if="hasImports"
     class="mdl-navigation"
   >

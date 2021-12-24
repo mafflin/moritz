@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserIndex from '../pages/users/Index.vue';
 import UserShow from '../pages/users/Show.vue';
 
+import SummaryChartDialog from '../pages/users/modals/SummaryChartDialog.vue';
 import GlobalNavigation from '../components/GlobalNavigation.vue';
 import GroupAddDialog from '../pages/users/modals/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/modals/GroupDeleteDialog.vue';
@@ -85,6 +86,13 @@ const routes = [
         path: 'import_history',
         name: 'ImportHistory',
         component: ImportHistoryDialog,
+      },
+      {
+        path: 'summary_chart',
+        name: 'SummaryChart',
+        component: SummaryChartDialog,
+        beforeEnter: () => store
+          .dispatch('summaries/fetchList'),
       },
     ],
   },

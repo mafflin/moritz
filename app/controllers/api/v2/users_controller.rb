@@ -18,7 +18,7 @@ module Api
       end
 
       def fetch_list
-        @users = Users::SearchService.new.perform
+        @users = Users::FetchService.new.perform
       end
 
       def update_current
