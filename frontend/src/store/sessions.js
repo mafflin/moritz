@@ -42,6 +42,7 @@ export default {
         commit('settings/reset', {}, { root: true });
         commit('payments/reset', {}, { root: true });
         commit('search/reset', {}, { root: true });
+        commit('summaries/reset', {}, { root: true });
       } catch (error) {
         dispatch('showMessage', { error: error.message }, { root: true });
       } finally {
