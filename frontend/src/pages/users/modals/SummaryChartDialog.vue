@@ -76,12 +76,12 @@ export default {
     datasets() {
       return this.list.map(({ groupName, groupId, dataset }) => {
         const [groupEl] = this.$refs[groupId];
-        const borderColor = getComputedStyle(groupEl).backgroundColor;
+        const color = getComputedStyle(groupEl).backgroundColor;
         return {
-          borderColor,
+          borderColor: color,
+          backgroundColor: color,
           label: groupName,
           data: dataset.map(({ debit }) => -debit),
-          fill: false,
           tension: 0.1,
         };
       });
@@ -90,7 +90,7 @@ export default {
 
   watch: {
     labels(next, prev) {
-      if (next.length === prev.label) return;
+      if (next.length === prev.length) return;
 
       this.chart.destroy();
       this.drawChart();
@@ -106,7 +106,7 @@ export default {
     ...mapActions('summaries', ['filterList']),
 
     drawChart() {
-      const canvas = this.$refs.chart?.getContext('2d');
+      const canvas = this.$refs.chart.getContext('2d');
       const { labels, datasets } = this;
 
       this.chart = new Chart(canvas, {
