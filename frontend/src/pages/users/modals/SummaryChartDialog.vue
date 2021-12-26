@@ -9,6 +9,18 @@
 
       <span class="right">
         <span
+          v-for="option in displayOptions"
+          :key="option"
+          :class="{
+            'mdl-chip vert-middle clickable ml-2': true,
+            'mdl-color--accent': option === displayed,
+          }"
+          @click="handleDisplayOptionChange(option)"
+        >
+          <span class="mdl-chip__text">{{ $t(`payments.${option}`) }}</span>
+        </span>
+
+        <span
           v-for="option in rangeOptions"
           :key="option"
           :class="{
@@ -57,12 +69,16 @@ import { mapActions, mapGetters } from 'vuex';
 
 const CHART_TYPE = 'line';
 const RANGE_OPTIONS = [3, 6, 12];
+const DISPLAY_OPTIONS = ['debit', 'credit'];
 
 export default {
   data() {
+    const [displayed] = DISPLAY_OPTIONS;
     return {
+      displayed,
       chart: null,
       rangeOptions: RANGE_OPTIONS,
+      displayOptions: DISPLAY_OPTIONS,
     };
   },
 
@@ -74,14 +90,15 @@ export default {
     },
 
     datasets() {
-      return this.list.map(({ groupName, groupId, dataset }) => {
-        const [groupEl] = this.$refs[groupId];
+      const { list, displayed, $refs } = this;
+      return list.map(({ groupName, groupId, dataset }) => {
+        const [groupEl] = $refs[groupId];
         const color = getComputedStyle(groupEl).backgroundColor;
         return {
           borderColor: color,
           backgroundColor: color,
           label: groupName,
-          data: dataset.map(({ debit }) => -debit),
+          data: dataset.map((item) => Math.abs(item[displayed])),
           tension: 0.1,
         };
       });
@@ -92,13 +109,16 @@ export default {
     labels(next, prev) {
       if (next.length === prev.length) return;
 
-      this.chart.destroy();
-      this.drawChart();
+      this.updateChart();
     },
   },
 
   mounted() {
     this.drawChart();
+  },
+
+  unmounted() {
+    this.chart.destroy();
   },
 
   methods: {
@@ -114,9 +134,22 @@ export default {
         data: { labels, datasets },
       });
     },
+
+    updateChart() {
+      this.chart.destroy();
+      this.drawChart();
+    },
+
+    handleDisplayOptionChange(value) {
+      if (this.displayed === value) return;
+
+      this.displayed = value;
+      this.updateChart();
+    },
   },
 };
 </script>
+
 <style scoped>
 .canvas {
   max-height: 90%;
