@@ -58,6 +58,7 @@ const rules = {
   add: 'Add rule',
   manage: 'Manage Rules',
   match: 'Match',
+  showHidden: 'Click here to show {total} hidden rules.',
 };
 
 const titles = {

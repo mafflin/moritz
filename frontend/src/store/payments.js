@@ -162,9 +162,9 @@ export default {
       if (!sort) return list;
 
       const sorted = list.sort((a, b) => {
-        if (a[sort] < b[sort]) { return -1; }
-        if (a[sort] > b[sort]) { return 1; }
-        return 0;
+        const first = a[sort];
+        const second = b[sort];
+        return (!!first) - (!!second) || -(first > second) || +(first < second);
       });
       return asc ? sorted : sorted.reverse();
     },

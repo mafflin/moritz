@@ -3,8 +3,8 @@
     <router-view />
     <router-view name="panel" />
 
-    <expand-panel-button
-      :panel-expanded="panelExpanded"
+    <expand-button
+      :expanded="panelExpanded"
       @toggle="togglePanel"
     />
 
@@ -29,13 +29,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ExpandPanelButton from './components/ExpandPanelButton.vue';
+import ExpandButton from './components/ExpandButton.vue';
 import PaymentsTable from './components/PaymentsTable.vue';
 import SearchResults from './components/SearchResults.vue';
 
 export default {
   components: {
-    ExpandPanelButton,
+    ExpandButton,
     PaymentsTable,
     SearchResults,
   },

@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent="handleSubmit">
-    <div class="my-4">
+    <div
+      v-if="expanded"
+      class="my-4"
+    >
       <span
         v-for="rule in rules"
         :key="rule.match"
@@ -16,6 +19,20 @@
         </button>
       </span>
     </div>
+
+    <div
+      v-if="!expanded && rules.length"
+      class="expand-text clickable my-4"
+      @click="handleExpandButtonClick"
+    >
+      {{ $t('rules.showHidden', { total: rules.length }) }}
+    </div>
+
+    <expand-button
+      v-if="rules.length"
+      :expanded="expanded"
+      @toggle="handleExpandButtonClick"
+    />
 
     <div
       :class="{
@@ -59,8 +76,11 @@
 
 <script>
 import focusOnInput from '../../../mixins/focusOnInput';
+import ExpandButton from './ExpandButton.vue';
 
 export default {
+  components: { ExpandButton },
+
   mixins: [focusOnInput],
 
   props: {
@@ -82,12 +102,17 @@ export default {
   data() {
     return {
       match: '',
+      expanded: true,
     };
   },
 
   methods: {
     handleSubmit() {
       this.$emit('submit', this.match);
+    },
+
+    handleExpandButtonClick() {
+      this.expanded = !this.expanded;
     },
   },
 };
@@ -100,5 +125,9 @@ export default {
 
 .mdl-button {
   right: 0;
+}
+
+.expand-text {
+  text-align: center;
 }
 </style>
