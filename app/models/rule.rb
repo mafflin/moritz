@@ -7,7 +7,7 @@ class Rule < ApplicationRecord
     case_sensitive: false
   }
 
-  before_save :downcase_match
+  before_validation :normalize_attributes
 
   def match_string
     "%#{match}%"
@@ -15,7 +15,7 @@ class Rule < ApplicationRecord
 
   private
 
-  def downcase_match
-    match.downcase!
+  def normalize_attributes
+    self.match = match.strip.downcase
   end
 end

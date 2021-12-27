@@ -18,7 +18,7 @@ module Api
       end
 
       def fetch_list
-        @groups = current_user.groups
+        @groups = current_user.groups.order(:name)
       end
 
       def fetch_single

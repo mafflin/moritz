@@ -123,6 +123,7 @@ export default {
 
         dispatch('users/closeUserModal', {}, { root: true });
         dispatch('showMessage', { t: 'success' }, { root: true });
+        dispatch('fetchList');
       } catch (error) {
         dispatch('handleError', error);
       } finally {

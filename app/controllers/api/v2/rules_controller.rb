@@ -18,7 +18,9 @@ module Api
       end
 
       def fetch_list
-        @rules = current_user.rules.where(group_id: params[:group_id])
+        @rules = current_user.rules
+          .where(group_id: params[:group_id])
+          .order(:match)
       end
 
       private
