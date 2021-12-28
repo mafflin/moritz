@@ -174,19 +174,22 @@ export default {
     },
 
     debit(state, { list }) {
-      return list.map(({ debit }) => debit).reduce((a, b) => a + b, 0);
+      const sum = list.map(({ debit }) => debit).reduce((a, b) => a + b, 0);
+      return Math.round(sum);
     },
 
     credit(state, { list }) {
-      return list.map(({ credit }) => credit).reduce((a, b) => a + b, 0);
+      const sum = list.map(({ credit }) => credit).reduce((a, b) => a + b, 0);
+      return Math.round(sum);
+    },
+
+    withdrawal(state, { list }) {
+      const sum = list.map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0);
+      return Math.round(sum);
     },
 
     delta(state, { debit, credit }) {
       return debit + credit;
-    },
-
-    withdrawal(state, { list }) {
-      return list.map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0);
     },
 
     loading({ loading }) {
