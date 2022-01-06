@@ -1,10 +1,13 @@
 import axios from 'axios';
+import router from '../router';
+import formatErrors from '../utils/formatErrors';
 
 export default {
   namespaced: true,
 
   state: {
     loading: false,
+    errors: {},
   },
 
   /* eslint-disable no-param-reassign */
@@ -12,19 +15,26 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
+
+    setErrors(state, errors = {}) {
+      const formatted = formatErrors(errors);
+
+      state.errors = formatted;
+    },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async createCurrent({ commit, dispatch }, userId) {
+    async createCurrent({ commit, dispatch }, { name, password }) {
       commit('setLoading', true);
+      commit('setErrors', {});
 
       try {
-        await axios.post('/api/v2/sessions/create_current', { userId });
+        await axios.post('/api/v2/sessions/create_current', { name, password });
 
-        dispatch('cable/connect', {}, { root: true });
+        router.push({ name: 'User' });
       } catch (error) {
-        dispatch('showMessage', { error: error.message }, { root: true });
+        dispatch('handleError', error);
       } finally {
         commit('setLoading', false);
       }
@@ -32,6 +42,7 @@ export default {
 
     async deleteCurrent({ commit, dispatch }) {
       commit('setLoading', true);
+      commit('setErrors', {});
 
       try {
         await axios.post('/api/v2/sessions/delete_current');
@@ -43,10 +54,24 @@ export default {
         commit('payments/reset', {}, { root: true });
         commit('search/reset', {}, { root: true });
         commit('summaries/reset', {}, { root: true });
+
+        router.replace({ name: 'Signin' });
       } catch (error) {
-        dispatch('showMessage', { error: error.message }, { root: true });
+        dispatch('handleError', error);
       } finally {
         commit('setLoading', false);
+      }
+    },
+
+    handleError({ commit, dispatch }, { response = {}, message }) {
+      const { status, data } = response;
+      switch (status) {
+        case 422:
+          commit('setErrors', data);
+          break;
+        default:
+          dispatch('showMessage', { error: message }, { root: true });
+          break;
       }
     },
   },
@@ -54,6 +79,10 @@ export default {
   getters: {
     loading({ loading }) {
       return loading;
+    },
+
+    errors({ errors }) {
+      return errors;
     },
   },
 };

@@ -8,14 +8,18 @@ const globals = {
   delete: 'Delete',
   edit: 'Edit',
   explore: 'Explore',
+  login: 'Login',
   logout: 'Logout',
   new: 'New',
+  notFound: 'Not found!',
   search: 'Search',
   signup: 'Sign up',
+  signin: 'Sign in',
   success: 'Success!',
   submit: 'Submit',
   total: 'Total',
   upload: 'Upload',
+  unauthorized: 'Access denied!',
 };
 
 const groups = {
@@ -75,6 +79,7 @@ const titles = {
 
 const users = {
   name: 'User name',
+  password: 'Password',
   updateSuccess: 'User updated!',
 };
 

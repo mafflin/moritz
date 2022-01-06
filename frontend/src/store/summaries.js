@@ -68,6 +68,8 @@ export default {
     },
 
     dateRange(state, { list }) {
+      if (!list.length) return [];
+
       const [{ dataset }] = list;
       return dataset.map(({ month }) => month);
     },

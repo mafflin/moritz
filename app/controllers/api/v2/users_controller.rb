@@ -17,10 +17,6 @@ module Api
       def fetch_current
       end
 
-      def fetch_list
-        @users = Users::FetchService.new.perform
-      end
-
       def update_current
         if Users::UpdateService.new(user: @user, params: user_params).perform
           render :fetch_current
@@ -38,7 +34,7 @@ module Api
       end
 
       def user_params
-        params.require(:user).permit(:name, :avatar_base64)
+        params.require(:user).permit(:name, :password, :avatar_base64)
       end
     end
   end

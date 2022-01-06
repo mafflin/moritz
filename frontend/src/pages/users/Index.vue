@@ -1,26 +1,23 @@
 <template>
   <div class="mdl-grid">
+    <div class="mdl-layout-spacer" />
+
     <router-view />
 
-    <user-card
-      v-for="(user, index) in list"
-      :key="index"
-      :user="user"
-    />
+    <div class="mdl-layout-spacer" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import UserCard from './components/UserCard.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: {
-    UserCard,
+  computed: {
+    ...mapGetters('sessions', ['errors']),
   },
 
-  computed: {
-    ...mapGetters('users', ['list', 'loading']),
+  methods: {
+    ...mapActions('sessions', ['createCurrent']),
   },
 };
 </script>

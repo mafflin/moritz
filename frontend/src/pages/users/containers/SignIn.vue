@@ -1,16 +1,12 @@
 <template>
-  <dialog
-    open
-    class="mdl-dialog"
-    @keydown.esc="closeIndexModal"
-  >
+  <div class="mdl-cell">
     <h4 class="mdl-dialog__title">
-      {{ $t('signup') }}
+      {{ $t('signin') }}
     </h4>
 
     <div class="mdl-dialog__content">
-      <user-form
-        :user="user"
+      <login-form
+        :login="login"
         :errors="errors"
         @change="handleFieldChange"
         @submit="handleSubmit"
@@ -22,31 +18,31 @@
         class="mdl-button mdl-button--raised mdl-button--accent"
         @click="handleSubmit"
       >
-        {{ $t('submit') }}
+        {{ $t('signin') }}
       </button>
 
-      <button
+      <router-link
+        :to="{ name: 'Signup' }"
         class="mdl-button"
-        @click="closeIndexModal"
       >
-        {{ $t('cancel') }}
-      </button>
+        {{ $t('signup') }}
+      </router-link>
     </div>
-  </dialog>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import UserForm from '../components/UserForm.vue';
+import LoginForm from '../components/LoginForm.vue';
 
 export default {
   components: {
-    UserForm,
+    LoginForm,
   },
 
   data() {
     return {
-      user: {
+      login: {
         name: '',
         password: '',
       },
@@ -54,20 +50,21 @@ export default {
   },
 
   computed: {
-    ...mapGetters('users', ['errors']),
+    ...mapGetters('sessions', ['errors']),
   },
 
   methods: {
-    ...mapActions('users', ['createSingle', 'closeIndexModal']),
+    ...mapActions('users', ['closeIndexModal']),
+    ...mapActions('sessions', ['createCurrent']),
 
     handleFieldChange(attrs) {
-      this.user = { ...this.user, ...attrs };
+      this.login = { ...this.login, ...attrs };
     },
 
     handleSubmit() {
-      const { user, createSingle } = this;
+      const { login, createCurrent } = this;
 
-      createSingle(user);
+      createCurrent(login);
     },
   },
 };

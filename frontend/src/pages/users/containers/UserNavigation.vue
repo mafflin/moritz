@@ -41,12 +41,12 @@
   </nav>
 
   <nav class="mdl-navigation">
-    <router-link
-      :to="{ name: 'Users' }"
-      class="mdl-navigation__link"
+    <a
+      class="mdl-navigation__link clickable"
+      @click="deleteCurrent"
     >
       <span>{{ $t('logout') }}</span>
-    </router-link>
+    </a>
   </nav>
 
   <nav
@@ -84,6 +84,7 @@ export default {
   methods: {
     ...mapActions('search', ['fetchResults']),
     ...mapActions('users', ['updateCurrent']),
+    ...mapActions('sessions', ['deleteCurrent']),
 
     handleImageUpdate(image) {
       this.updateCurrent({ image });

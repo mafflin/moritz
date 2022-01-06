@@ -10,7 +10,7 @@
       }"
     >
       <input
-        id="user-name"
+        id="user-login"
         ref="input"
         v-model="name"
         class="mdl-textfield__input"
@@ -18,10 +18,10 @@
       >
 
       <label
-        for="user-name"
+        for="user-login"
         class="mdl-textfield__label"
       >
-        {{ $t('users.name') }}
+        {{ $t('login') }}
 
       </label>
     </div>
@@ -71,7 +71,7 @@ export default {
   mixins: [focusOnInput],
 
   props: {
-    user: {
+    login: {
       type: Object,
       default: null,
     },
