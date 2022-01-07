@@ -59,12 +59,6 @@ export default {
 
       state.errors = formatted;
     },
-
-    reset(state) {
-      state.ids = [];
-      state.filter = Object.keys(state.filter)
-        .reduce((acc, key) => ({ ...acc, [key]: null }), {});
-    },
   },
   /* eslint-enable no-param-reassign */
 

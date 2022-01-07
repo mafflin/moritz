@@ -13,7 +13,7 @@ const globals = {
   new: 'New',
   notFound: 'Not found!',
   search: 'Search',
-  signup: 'Sign up',
+  signup: 'Create account',
   signin: 'Sign in',
   success: 'Success!',
   submit: 'Submit',
@@ -80,6 +80,8 @@ const titles = {
 const users = {
   name: 'User name',
   password: 'Password',
+  passwordConfirmation: 'Confirm password',
+  passwordsDoNotMatch: 'Passwords do not match!',
   updateSuccess: 'User updated!',
 };
 
@@ -87,8 +89,8 @@ export default {
   ...globals,
 
   groups,
-  payments,
   imports,
+  payments,
   rules,
   titles,
   users,

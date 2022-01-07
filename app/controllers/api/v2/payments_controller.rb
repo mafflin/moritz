@@ -29,7 +29,7 @@ module Api
         if @payment.update(payment_params)
           render :fetch_single
         else
-          render json: @payment.errors, status: :unprocessable_entity
+          render_errors json: @payment.errors, status: :unprocessable_entity
         end
       end
 

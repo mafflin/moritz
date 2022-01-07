@@ -27,11 +27,6 @@ export default {
     setQ(state, q) {
       state.q = q;
     },
-
-    reset(state) {
-      state.q = null;
-      state.ids = [];
-    },
   },
   /* eslint-enable no-param-reassign */
 

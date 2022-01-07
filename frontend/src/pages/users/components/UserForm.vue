@@ -90,6 +90,7 @@ export default {
     return {
       nameLocal: '',
       passwordLocal: '',
+      passwordConfirmationLocal: '',
     };
   },
 
@@ -115,6 +116,18 @@ export default {
         this.passwordLocal = password;
 
         this.$emit('change', { password });
+      },
+    },
+
+    passwordConfirmation: {
+      get() {
+        return this.passwordConfirmationLocal;
+      },
+
+      set(passwordConfirmation) {
+        this.passwordConfirmationLocal = passwordConfirmation;
+
+        this.$emit('change', { passwordConfirmation });
       },
     },
   },

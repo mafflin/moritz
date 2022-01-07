@@ -28,15 +28,13 @@ export default {
       state.errors = formatted;
     },
 
-    reset(state) {
-      state.current = null;
-    },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
     async initShowPage({ dispatch }, { query }) {
       await dispatch('fetchCurrent');
+      await dispatch('cable/connect', {}, { root: true });
       await dispatch('settings/fetchCurrent', {}, { root: true });
       await dispatch('groups/fetchList', {}, { root: true });
 
@@ -69,6 +67,7 @@ export default {
           .post('/api/v2/users/update_current', { user: { avatarBase64 } });
 
         commit('setCurrent', data);
+
         dispatch('showMessage', { t: 'users.updateSuccess' }, { root: true });
       } catch (error) {
         dispatch('showMessage', { error: error.message }, { root: true });

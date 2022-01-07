@@ -24,9 +24,9 @@ module Users
       *, type = meta.split('data:')
       decoded = Base64.decode64(image)
 
-      raise(UpdateError, 'Unprocessable image!') if !image || !type
-      raise(UpdateError, 'Unsupported image format!') unless IMAGE_TYPES.include?(type)
-      raise(UpdateError, 'Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
+      raise(AvatarUpdateError, 'Unprocessable image!') if !image || !type
+      raise(AvatarUpdateError, 'Unsupported image format!') unless IMAGE_TYPES.include?(type)
+      raise(AvatarUpdateError, 'Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
 
       @user.avatar.purge
       @user.avatar.attach(
@@ -37,6 +37,6 @@ module Users
     end
   end
 
-  class UpdateError < StandardError
+  class AvatarUpdateError < StandardError
   end
 end

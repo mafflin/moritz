@@ -5,12 +5,12 @@ module Api
       before_action :set_user, only: [:fetch_current, :update_current]
 
       def create_single
-        @user = User.new(user_params)
+        @user = User.create(user_params)
 
-        if @user.save
+        if @user.persisted?
           render :fetch_current, status: :created
         else
-          render json: @user.errors, status: :unprocessable_entity
+          render_errors json: @user.errors, status: :unprocessable_entity
         end
       end
 
@@ -23,8 +23,8 @@ module Api
         else
           head :unprocessable_entity
         end
-      rescue Users::UpdateError => e
-        render json: { avatar: [e] }, status: :unprocessable_entity
+      rescue Users::AvatarUpdateError => e
+        render_errors json: { avatar: [e] }, status: :unprocessable_entity
       end
 
       private
@@ -34,7 +34,8 @@ module Api
       end
 
       def user_params
-        params.require(:user).permit(:name, :password, :avatar_base64)
+        params.require(:user)
+          .permit(:name, :password, :password_confirmation, :avatar_base64)
       end
     end
   end

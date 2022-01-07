@@ -31,10 +31,6 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
-
-    reset(state) {
-      state.filter = { range: DEFAULT_RANGE };
-    },
   },
   /* eslint-enable no-param-reassign */
 

@@ -9,7 +9,7 @@ module Api
         if @group.save
           render :fetch_single, status: :created
         else
-          render json: @group.errors, status: :unprocessable_entity
+          render_errors json: @group.errors, status: :unprocessable_entity
         end
       end
 
@@ -28,7 +28,7 @@ module Api
         if @group.update(group_params)
           render :fetch_single
         else
-          render json: @group.errors, status: :unprocessable_entity
+          render_errors json: @group.errors, status: :unprocessable_entity
         end
       end
 

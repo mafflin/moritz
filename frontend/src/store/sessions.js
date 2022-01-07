@@ -32,7 +32,7 @@ export default {
       try {
         await axios.post('/api/v2/sessions/create_current', { name, password });
 
-        router.push({ name: 'User' });
+        router.replace({ name: 'User' });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -46,20 +46,15 @@ export default {
 
       try {
         await axios.post('/api/v2/sessions/delete_current');
+        await router.replace({ name: 'Signin' });
 
         dispatch('cable/disconnect', {}, { root: true });
-
-        commit('users/reset', {}, { root: true });
-        commit('settings/reset', {}, { root: true });
-        commit('payments/reset', {}, { root: true });
-        commit('search/reset', {}, { root: true });
-        commit('summaries/reset', {}, { root: true });
-
-        router.replace({ name: 'Signin' });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
         commit('setLoading', false);
+
+        await router.go('');
       }
     },
 
