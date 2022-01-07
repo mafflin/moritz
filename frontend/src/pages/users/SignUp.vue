@@ -51,7 +51,6 @@
           >
             <input
               id="user-password"
-              ref="input"
               v-model="password"
               class="mdl-textfield__input"
               type="password"
@@ -82,7 +81,6 @@
           >
             <input
               id="user-password-confirmation"
-              ref="input"
               v-model="passwordConfirmation"
               class="mdl-textfield__input"
               type="password"

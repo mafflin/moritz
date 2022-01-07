@@ -24,6 +24,13 @@
         {{ $t('login') }}
 
       </label>
+
+      <span
+        class="mdl-textfield__error"
+        visibility="visibile"
+      >
+        {{ errors.name }}
+      </span>
     </div>
 
     <div
@@ -35,17 +42,10 @@
     >
       <input
         id="user-password"
-        ref="input"
         v-model="password"
         class="mdl-textfield__input"
         type="password"
       >
-      <span
-        class="mdl-textfield__error"
-        visibility="visibile"
-      >
-        {{ errors.name }}
-      </span>
 
       <label
         for="user-password"
@@ -54,6 +54,13 @@
         {{ $t('users.password') }}
 
       </label>
+
+      <span
+        class="mdl-textfield__error"
+        visibility="visibile"
+      >
+        {{ errors.password }}
+      </span>
     </div>
 
     <input

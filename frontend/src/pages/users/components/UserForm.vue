@@ -35,7 +35,6 @@
     >
       <input
         id="user-password"
-        ref="input"
         v-model="password"
         class="mdl-textfield__input"
         type="password"

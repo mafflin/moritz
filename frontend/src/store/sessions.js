@@ -25,12 +25,13 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async createCurrent({ commit, dispatch }, { name, password }) {
+    async createCurrent({ commit, dispatch }, session) {
+      commit('setMessage', {}, { root: true });
       commit('setLoading', true);
       commit('setErrors', {});
 
       try {
-        await axios.post('/api/v2/sessions/create_current', { name, password });
+        await axios.post('/api/v2/sessions/create_current', session);
 
         router.replace({ name: 'User' });
       } catch (error) {
@@ -54,18 +55,19 @@ export default {
       } finally {
         commit('setLoading', false);
 
-        await router.go('');
+        await router.go();
       }
     },
 
     handleError({ commit, dispatch }, { response = {}, message }) {
       const { status, data } = response;
+      const error = data.message || message;
       switch (status) {
         case 422:
           commit('setErrors', data);
           break;
         default:
-          dispatch('showMessage', { error: message }, { root: true });
+          dispatch('showMessage', { error }, { root: true });
           break;
       }
     },

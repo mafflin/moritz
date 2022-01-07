@@ -24,7 +24,7 @@ module Api
           head :unprocessable_entity
         end
       rescue Users::AvatarUpdateError => e
-        render_errors json: { avatar: [e] }, status: :unprocessable_entity
+        render_errors json: { message: e.message }, status: :unprocessable_entity
       end
 
       private

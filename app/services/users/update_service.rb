@@ -1,6 +1,6 @@
 module Users
   class UpdateService < ApplicationService
-    IMAGE_SIZE_LIMIT = 2.megabytes
+    IMAGE_SIZE_LIMIT_MB = 2
     IMAGE_TYPES = [
       'image/jpeg',
       'image/png'
@@ -24,9 +24,9 @@ module Users
       *, type = meta.split('data:')
       decoded = Base64.decode64(image)
 
-      raise(AvatarUpdateError, 'Unprocessable image!') if !image || !type
-      raise(AvatarUpdateError, 'Unsupported image format!') unless IMAGE_TYPES.include?(type)
-      raise(AvatarUpdateError, 'Image should be smaller than 2Mb!') if decoded.bytesize > IMAGE_SIZE_LIMIT
+      raise UnprocessableImageError if !image || !type
+      raise UnsupportedTypeError unless IMAGE_TYPES.include?(type)
+      raise ImageSizeExcidedError if decoded.bytesize > IMAGE_SIZE_LIMIT_MB.megabytes
 
       @user.avatar.purge
       @user.avatar.attach(
@@ -38,5 +38,23 @@ module Users
   end
 
   class AvatarUpdateError < StandardError
+  end
+
+  class UnprocessableImageError < AvatarUpdateError
+    def message
+      'Unprocessable image.'
+    end
+  end
+
+  class UnsupportedTypeError < AvatarUpdateError
+    def message
+      'Unsupported image format.'
+    end
+  end
+
+  class ImageSizeExcidedError < AvatarUpdateError
+    def message
+      "Image should be smaller than #{UpdateService::IMAGE_SIZE_LIMIT_MB} MB!"
+    end
   end
 end

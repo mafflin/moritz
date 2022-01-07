@@ -70,7 +70,8 @@ export default {
 
         dispatch('showMessage', { t: 'users.updateSuccess' }, { root: true });
       } catch (error) {
-        dispatch('showMessage', { error: error.message }, { root: true });
+        const { message, response } = error;
+        dispatch('showMessage', { error: response?.data?.message || message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
