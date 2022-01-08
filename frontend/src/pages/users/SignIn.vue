@@ -8,12 +8,29 @@
       </h4>
 
       <div class="mdl-dialog__content">
-        <login-form
-          :login="login"
-          :errors="errors"
-          @change="handleFieldChange"
-          @submit="handleSubmit"
-        />
+        <form
+          @submit.prevent="handleSubmit"
+        >
+          <text-input
+            v-model="name"
+            :label="$t('login')"
+            :errors="errors.name"
+            focus
+          />
+
+          <text-input
+            v-model="password"
+            :label="$t('users.password')"
+            :errors="errors.password"
+            type="password"
+          />
+
+          <input
+            class="hidden"
+            type="submit"
+            value="Submit"
+          >
+        </form>
       </div>
 
       <div class="mdl-dialog__actions">
@@ -39,19 +56,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import LoginForm from './components/LoginForm.vue';
+import TextInput from '../../components/TextInput.vue';
 
 export default {
   components: {
-    LoginForm,
+    TextInput,
   },
 
   data() {
     return {
-      login: {
-        name: '',
-        password: '',
-      },
+      name: '',
+      password: '',
     };
   },
 
@@ -63,14 +78,10 @@ export default {
     ...mapActions('users', ['closeIndexModal']),
     ...mapActions('sessions', ['createCurrent']),
 
-    handleFieldChange(attrs) {
-      this.login = { ...this.login, ...attrs };
-    },
-
     handleSubmit() {
-      const { login, createCurrent } = this;
+      const { name, password, createCurrent } = this;
 
-      createCurrent(login);
+      createCurrent({ name, password });
     },
   },
 };

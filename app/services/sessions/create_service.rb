@@ -27,7 +27,7 @@ module Sessions
 
   class TooManyAtemptsError < StandardError
     def message
-      'Too many atempts!'
+      "Too many atempts! Try again in #{Session::FAIL_WINDOW_MIN} minutes."
     end
   end
 end

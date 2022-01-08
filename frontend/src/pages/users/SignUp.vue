@@ -11,95 +11,24 @@
         <form
           @submit.prevent="handleSubmit"
         >
-          <div
-            :class="{
-              'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-              'is-invalid': errors.name,
-              'is-dirty': name,
-            }"
-          >
-            <input
-              id="user-name"
-              ref="input"
-              v-model="name"
-              class="mdl-textfield__input"
-              type="text"
-            >
+          <text-input
+            v-model="name"
+            :label="$t('users.name')"
+            :errors="errors.name"
+            focus
+          />
 
-            <label
-              for="user-name"
-              class="mdl-textfield__label"
-            >
-              {{ $t('users.name') }}
+          <text-input
+            v-model="password"
+            :label="$t('users.password')"
+            :errors="errors.password"
+          />
 
-            </label>
-
-            <span
-              class="mdl-textfield__error"
-              visibility="visibile"
-            >
-              {{ errors.name }}
-            </span>
-          </div>
-
-          <div
-            :class="{
-              'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-              'is-invalid': errors.password,
-              'is-dirty': password,
-            }"
-          >
-            <input
-              id="user-password"
-              v-model="password"
-              class="mdl-textfield__input"
-              type="password"
-            >
-
-            <label
-              for="user-password"
-              class="mdl-textfield__label"
-            >
-              {{ $t('users.password') }}
-
-            </label>
-
-            <span
-              class="mdl-textfield__error"
-              visibility="visibile"
-            >
-              {{ errors.password }}
-            </span>
-          </div>
-
-          <div
-            :class="{
-              'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-              'is-invalid': errors.passwordConfirmation,
-              'is-dirty': passwordConfirmation,
-            }"
-          >
-            <input
-              id="user-password-confirmation"
-              v-model="passwordConfirmation"
-              class="mdl-textfield__input"
-              type="password"
-            >
-
-            <label
-              for="user-password-confirmation"
-              class="mdl-textfield__label"
-            >
-              {{ $t('users.passwordConfirmation') }}
-            </label>
-
-            <span
-              class="mdl-textfield__error"
-              visibility="visibile"
-            >
-              {{ errors.passwordConfirmation }}
-            </span>
-          </div>
+          <text-input
+            v-model="passwordConfirmation"
+            :label="$t('users.passwordConfirmation')"
+            :errors="errors.passwordConfirmation"
+          />
 
           <input
             class="hidden"
@@ -132,8 +61,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import TextInput from '../../components/TextInput.vue';
 
 export default {
+  components: { TextInput },
+
   data() {
     return {
       name: '',
