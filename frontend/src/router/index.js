@@ -13,6 +13,7 @@ import GroupEditDialog from '../pages/users/modals/GroupEditDialog.vue';
 import ImportHistoryDialog from '../pages/users/modals/ImportHistoryDialog.vue';
 import Panel from '../pages/users/containers/Panel.vue';
 import PaymentEditDialog from '../pages/users/modals/PaymentEditDialog.vue';
+import PaymentDeleteDialog from '../pages/users/modals/PaymentDeleteDialog.vue';
 import RulesEditDialog from '../pages/users/modals/RulesEditDialog.vue';
 import UserNavigation from '../pages/users/containers/UserNavigation.vue';
 
@@ -48,7 +49,7 @@ const routes = [
       navigation: UserNavigation,
       panel: Panel,
     },
-    beforeEnter: ({ query }) => store.dispatch('users/initShowPage', { query }),
+    beforeEnter: async ({ query }) => store.dispatch('users/initShowPage', { query }),
     children: [
       {
         path: 'add_group',
@@ -71,13 +72,22 @@ const routes = [
         path: 'edit_rules/:groupId',
         name: 'EditRules',
         component: RulesEditDialog,
-        beforeEnter: ({ params: { groupId } }) => store.dispatch('rules/initModal', groupId),
+        beforeEnter: async ({ params: { groupId } }) => store.dispatch('rules/initModal', groupId),
       },
       {
         path: 'edit_payment/:paymentId',
         name: 'EditPayment',
         component: PaymentEditDialog,
-        beforeEnter: ({ params: { paymentId } }) => store.dispatch(
+        beforeEnter: async ({ params: { paymentId } }) => store.dispatch(
+          'payments/fetchSingle',
+          paymentId,
+        ),
+      },
+      {
+        path: 'delete_payment/:paymentId',
+        name: 'DeletePayment',
+        component: PaymentDeleteDialog,
+        beforeEnter: async ({ params: { paymentId } }) => store.dispatch(
           'payments/fetchSingle',
           paymentId,
         ),
@@ -91,7 +101,7 @@ const routes = [
         path: 'summary_chart',
         name: 'SummaryChart',
         component: SummaryChartDialog,
-        beforeEnter: () => store.dispatch('summaries/fetchList'),
+        beforeEnter: async () => store.dispatch('summaries/fetchList'),
       },
     ],
   },

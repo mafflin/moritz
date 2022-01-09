@@ -125,6 +125,23 @@ export default {
       }
     },
 
+    async deleteSingle({ commit, dispatch, getters }) {
+      commit('setLoading', true);
+
+      try {
+        const { id } = getters.selected;
+        await axios.post('/api/v2/payments/delete_single', { id });
+
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+        dispatch('fetchList');
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
     async filterList({ commit, dispatch }, filter) {
       commit('setFilter', filter);
 

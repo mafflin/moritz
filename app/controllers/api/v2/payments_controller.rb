@@ -1,9 +1,13 @@
 module Api
   module V2
     class PaymentsController < ApplicationController
-      before_action :set_payment, only: [:fetch_single, :update_single]
+      before_action :set_payment, only: [:delete_single, :fetch_single, :update_single]
 
       DEFAULT_ORDER = 'payments.booked_at DESC, payments.created_at DESC'.freeze
+
+      def delete_single
+        @payment.destroy
+      end
 
       def fetch_list
         @payments = Payments::FetchService.new(

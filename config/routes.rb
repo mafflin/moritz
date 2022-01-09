@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       end
 
       resource :payments, only: [] do
+        post :delete_single
         post :fetch_list
         post :fetch_search_results
         post :fetch_single
