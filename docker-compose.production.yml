@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  postgres:
+    restart: always
+    volumes:
+      - ./postgres/production:/var/lib/postgresql/data
+    env_file: .env
+
+  nginx:
+    build:
+      context: ./nginx
+    image: moritz_nginx
+    restart: always
+    volumes:
+      - ./public:/public
+      - ./nginx/certs:/etc/letsencrypt
+      - ./nginx/production.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - net
+    depends_on:
+      - backend
+    command: /bin/sh -c 'crond && nginx -g "daemon off;"'
+
+  backend:
+    volumes:
+      - ./tmp:/app/tmp
+      - ./storage:/app/storage
+    restart: always
+    env_file: .env
+
+  frontend:
+    volumes:
+      - ./frontend:/app
+      - ./public:/app/dist
+    env_file: .env
+    command: /bin/sh -c 'pnpm install && pnpm build'

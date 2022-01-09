@@ -19,6 +19,8 @@ services:
     build:
       context: .
     image: moritz_backend
+    expose:
+      - 3000
     networks:
       - net
     depends_on:

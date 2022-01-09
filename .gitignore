@@ -23,3 +23,16 @@
 
 # Ignore env secrets
 .env
+
+# Ignore production nginx config and certs
+/nginx/production.conf
+/nginx/certs/*
+!/nginx/certs/.keep
+
+# Ignore db-volume
+/postgres/*
+!/postgres/.keep
+
+# Ignore FE-generated assets
+/public/*
+!/public/robots.txt
