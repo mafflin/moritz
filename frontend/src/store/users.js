@@ -32,8 +32,11 @@ export default {
   /* eslint-enable no-param-reassign */
 
   actions: {
-    async initShowPage({ dispatch }, { query }) {
+    async initShowPage({ dispatch, getters }, { query }) {
       await dispatch('fetchCurrent');
+
+      if (!getters.current) return;
+
       await dispatch('cable/connect', {}, { root: true });
       await dispatch('settings/fetchCurrent', {}, { root: true });
       await dispatch('groups/fetchList', {}, { root: true });
