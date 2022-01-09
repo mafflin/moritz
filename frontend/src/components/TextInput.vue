@@ -3,7 +3,7 @@
     :class="{
       'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
       'is-invalid': errors,
-      'is-dirty': input,
+      'is-dirty': isDirty,
     }"
   >
     <input
@@ -42,8 +42,8 @@ export default {
       type: String,
       required: true,
     },
-    value: {
-      type: String,
+    modelValue: {
+      type: [String, Number],
       default: null,
     },
     errors: {
@@ -67,28 +67,38 @@ export default {
   data() {
     return {
       inputId: `input-${Date.now()}`,
-      valueLocal: '',
+      value: '',
     };
   },
 
   computed: {
     input: {
       get() {
-        return this.valueLocal;
+        return this.value;
       },
 
       set(name) {
-        this.valueLocal = name;
+        this.value = name;
 
         this.$emit('update:modelValue', name);
       },
     },
+
+    isDirty() {
+      return this.type === 'number' ? String(this.input) : this.input;
+    },
+  },
+
+  updated() {
+    if (this.modelValue === this.value) return;
+
+    this.value = this.modelValue;
   },
 
   mounted() {
-    if (!this.value) return;
+    if (!this.modelValue) return;
 
-    this.valueLocal = this.value;
+    this.value = this.modelValue;
   },
 };
 </script>
