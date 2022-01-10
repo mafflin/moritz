@@ -25,6 +25,7 @@ services:
       - net
     depends_on:
       - postgres
+      - redis
     working_dir: /app
     command: ./docker-entrypoint.sh
     stop_signal: SIGINT

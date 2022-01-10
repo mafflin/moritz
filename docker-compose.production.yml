@@ -7,6 +7,33 @@ services:
       - ./postgres/production:/var/lib/postgresql/data
     env_file: .env
 
+  backend:
+    restart: always
+    volumes: &backend_volumes
+      - ./tmp:/app/tmp
+      - ./storage:/app/storage
+    env_file: .env
+
+  sidekiq:
+    image: moritz_backend
+    restart: always
+    volumes:
+      *backend_volumes
+    networks:
+      - net
+    depends_on:
+      - postgres
+      - redis
+    env_file: .env
+    command: /bin/sh -c 'bundle exec sidekiq'
+
+  frontend:
+    volumes:
+      - ./frontend:/app
+      - ./public:/app/dist
+    env_file: .env
+    command: /bin/sh -c 'pnpm build'
+
   nginx:
     build:
       context: ./nginx
@@ -24,17 +51,3 @@ services:
     depends_on:
       - backend
     command: /bin/sh -c 'crond && nginx -g "daemon off;"'
-
-  backend:
-    volumes:
-      - ./tmp:/app/tmp
-      - ./storage:/app/storage
-    restart: always
-    env_file: .env
-
-  frontend:
-    volumes:
-      - ./frontend:/app
-      - ./public:/app/dist
-    env_file: .env
-    command: /bin/sh -c 'pnpm install && pnpm build'
