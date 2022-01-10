@@ -14,19 +14,6 @@ services:
       - ./storage:/app/storage
     env_file: .env
 
-  sidekiq:
-    image: moritz_backend
-    restart: always
-    volumes:
-      *backend_volumes
-    networks:
-      - net
-    depends_on:
-      - postgres
-      - redis
-    env_file: .env
-    command: /bin/sh -c 'bundle exec sidekiq'
-
   frontend:
     volumes:
       - ./frontend:/app
