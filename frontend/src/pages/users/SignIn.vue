@@ -12,9 +12,10 @@
           @submit.prevent="handleSubmit"
         >
           <text-input
-            v-model="name"
-            :label="$t('login')"
-            :errors="errors.name"
+            v-model="email"
+            :label="$t('users.email')"
+            :errors="errors.email"
+            type="email"
             focus
           />
 
@@ -65,7 +66,7 @@ export default {
 
   data() {
     return {
-      name: '',
+      email: '',
       password: '',
     };
   },
@@ -79,9 +80,9 @@ export default {
     ...mapActions('sessions', ['createCurrent']),
 
     handleSubmit() {
-      const { name, password, createCurrent } = this;
+      const { email, password, createCurrent } = this;
 
-      createCurrent({ name, password });
+      createCurrent({ email, password });
     },
   },
 };

@@ -12,22 +12,31 @@
           @submit.prevent="handleSubmit"
         >
           <text-input
+            v-model="email"
+            :label="$t('users.email')"
+            :errors="errors.email"
+            type="email"
+            focus
+          />
+
+          <text-input
             v-model="name"
             :label="$t('users.name')"
             :errors="errors.name"
-            focus
           />
 
           <text-input
             v-model="password"
             :label="$t('users.password')"
             :errors="errors.password"
+            type="password"
           />
 
           <text-input
             v-model="passwordConfirmation"
             :label="$t('users.passwordConfirmation')"
             :errors="errors.passwordConfirmation"
+            type="password"
           />
 
           <input
@@ -68,6 +77,7 @@ export default {
 
   data() {
     return {
+      email: '',
       name: '',
       password: '',
       passwordConfirmation: '',
@@ -83,10 +93,12 @@ export default {
 
     handleSubmit() {
       const {
-        name, password, passwordConfirmation, createSingle,
+        email, name, password, passwordConfirmation, createSingle,
       } = this;
 
-      createSingle({ name, password, passwordConfirmation });
+      createSingle({
+        email, name, password, passwordConfirmation,
+      });
     },
   },
 };

@@ -85,6 +85,7 @@ const titles = {
 };
 
 const users = {
+  email: 'Email',
   name: 'User name',
   password: 'Password',
   passwordConfirmation: 'Confirm password',

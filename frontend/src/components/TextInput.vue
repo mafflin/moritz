@@ -66,7 +66,7 @@ export default {
 
   data() {
     return {
-      inputId: `input-${Date.now()}`,
+      inputId: `input-${this.label}-${Date.now()}`,
       value: '',
     };
   },

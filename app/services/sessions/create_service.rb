@@ -1,7 +1,7 @@
 module Sessions
   class CreateService < ApplicationService
-    def initialize(name:, remote_ip:, session:)
-      @user = User.find_by(name: name)
+    def initialize(email:, remote_ip:, session:)
+      @user = User.find_by(email: email.downcase)
       @session = session
       @remote_ip = remote_ip
     end
