@@ -7,6 +7,10 @@ services:
       - ./postgres/production:/var/lib/postgresql/data
     env_file: .env
 
+  redis:
+    restart: always
+    env_file: .env
+
   backend:
     restart: always
     volumes: &backend_volumes
