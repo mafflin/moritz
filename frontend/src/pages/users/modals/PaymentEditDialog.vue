@@ -6,6 +6,16 @@
   >
     <h4 class="mdl-dialog__title">
       {{ $t('edit') }}
+
+      <router-link
+        type="button"
+        class="mdl-button mdl-js-button mdl-button--icon"
+        :to="{ name: 'DeletePayment' }"
+      >
+        <i class="material-icons">
+          delete
+        </i>
+      </router-link>
     </h4>
 
     <div class="mdl-dialog__content">

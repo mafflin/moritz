@@ -4,14 +4,13 @@ module Api
       skip_before_action :require_login
 
       def create_current
-        user_id = params[:user_id]
-
-        if User.find(user_id)
-          session[:current_user_id] = user_id
-        else
-          session[:current_user_id] = nil
-          head :unauthorized
-        end
+        Sessions::CreateService
+          .new(email: params[:email], remote_ip: request.remote_ip, session: session)
+          .perform(params[:password])
+      rescue Sessions::InvalidCredentialsError => e
+        render_errors json: { message: e.message }, status: :unauthorized
+      rescue Sessions::TooManyAtemptsError => e
+        render_errors json: { message: e.message }, status: :too_many_requests
       end
 
       def delete_current

@@ -8,14 +8,18 @@ const globals = {
   delete: 'Delete',
   edit: 'Edit',
   explore: 'Explore',
+  login: 'Login',
   logout: 'Logout',
   new: 'New',
+  notFound: 'Not found!',
   search: 'Search',
-  signup: 'Sign up',
+  signup: 'Create account',
+  signin: 'Sign in',
   success: 'Success!',
   submit: 'Submit',
   total: 'Total',
   upload: 'Upload',
+  unauthorized: 'Access denied!',
 };
 
 const groups = {
@@ -43,14 +47,21 @@ const payments = {
   bank: 'Bank',
   beneficiary: 'Beneficiary',
   bookedAt: 'Date',
+  createdAt: 'Created at',
   credit: 'Credit',
+  currency: 'Currency',
+  customerReference: 'Customer reference',
   debit: 'Debit',
   delta: 'Delta',
   details: 'Details',
+  externalCreditorId: 'External creditor ID',
+  id: 'ID',
+  mandateReference: 'Mandate reference',
   noPayments: 'No payments found. Try to adjust filters.',
   note: 'Note',
   searchResults: '{total} payments found',
   transactionType: 'Type',
+  updatedAt: 'Updated at',
   withdrawal: 'Cash',
 };
 
@@ -74,7 +85,11 @@ const titles = {
 };
 
 const users = {
+  email: 'Email',
   name: 'User name',
+  password: 'Password',
+  passwordConfirmation: 'Confirm password',
+  passwordsDoNotMatch: 'Passwords do not match!',
   updateSuccess: 'User updated!',
 };
 
@@ -82,8 +97,8 @@ export default {
   ...globals,
 
   groups,
-  payments,
   imports,
+  payments,
   rules,
   titles,
   users,

@@ -2,67 +2,37 @@
   <form
     @submit.prevent="$emit('submit')"
   >
-    <div
-      :class="{
-        'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-        'is-invalid': errors.note,
-        'is-dirty': noteLocal,
-      }"
-    >
-      <input
-        id="payment-note"
-        ref="input"
-        v-model="note"
-        class="mdl-textfield__input"
-        type="text"
-      >
-      <label
-        for="payment-note"
-        class="mdl-textfield__label"
-      >
-        {{ $t('payments.note') }}
-      </label>
-      <span
-        class="mdl-textfield__error"
-        visibility="visibile"
-      >
-        {{ errors.note }}
-      </span>
-    </div>
+    <text-input
+      v-model="note"
+      :label="$t('payments.note')"
+      :errors="errors.note"
+      focus
+    />
 
-    <div
-      :class="{
-        'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-        'is-invalid': errors.withdrawal,
-        'is-dirty': withdrawalLocal.toString(),
-      }"
+    <text-input
+      v-model="withdrawal"
+      :label="$t('payments.withdrawal')"
+      :errors="errors.withdrawal"
+      type="number"
+    />
+
+    <input
+      class="hidden"
+      type="submit"
+      value="Submit"
     >
-      <input
-        id="payment-withdrawal"
-        v-model="withdrawal"
-        class="mdl-textfield__input"
-        type="number"
-      >
-      <label
-        for="payment-withdrawal"
-        class="mdl-textfield__label"
-      >
-        {{ $t('payments.withdrawal') }}
-      </label>
-      <span
-        class="mdl-textfield__error"
-        visibility="visibile"
-      >
-        {{ errors.withdrawal }}
-      </span>
-    </div>
   </form>
 </template>
 
 <script>
 import focusOnInput from '../../../mixins/focusOnInput';
+import TextInput from '../../../components/TextInput.vue';
 
 export default {
+  components: {
+    TextInput,
+  },
+
   mixins: [focusOnInput],
 
   props: {

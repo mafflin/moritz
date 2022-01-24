@@ -15,6 +15,10 @@ test_db_connection() {
   exit 1
 }
 
+create_tmp_dirs() {
+  mkdir -p /app/tmp/pids /app/tmp/sockets
+}
+
 remove_outdated_pids() {
   rm -rf /app/tmp/pids/server.pid
 }
@@ -55,6 +59,7 @@ run_app() {
 
 # MAIN
 
+create_tmp_dirs
 remove_outdated_pids
 install_gems
 test_db_connection

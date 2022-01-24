@@ -71,6 +71,12 @@
         {{ errors.match }}
       </span>
     </div>
+
+    <input
+      class="hidden"
+      type="submit"
+      value="Submit"
+    >
   </form>
 </template>
 

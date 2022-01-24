@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       end
 
       resource :payments, only: [] do
+        post :delete_single
         post :fetch_list
         post :fetch_search_results
         post :fetch_single
@@ -44,7 +45,6 @@ Rails.application.routes.draw do
       resource :users, only: [] do
         post :create_single
         post :fetch_current
-        post :fetch_list
         post :update_current
       end
     end

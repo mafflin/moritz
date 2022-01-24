@@ -31,10 +31,6 @@ export default {
     setLoading(state, value) {
       state.loading = value;
     },
-
-    reset(state) {
-      state.filter = { range: DEFAULT_RANGE };
-    },
   },
   /* eslint-enable no-param-reassign */
 
@@ -68,6 +64,8 @@ export default {
     },
 
     dateRange(state, { list }) {
+      if (!list.length) return [];
+
       const [{ dataset }] = list;
       return dataset.map(({ month }) => month);
     },

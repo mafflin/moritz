@@ -9,7 +9,7 @@ module Api
         if @rule.save
           render :fetch_single, status: :created
         else
-          render json: @rule.errors, status: :unprocessable_entity
+          render_errors json: @rule.errors, status: :unprocessable_entity
         end
       end
 

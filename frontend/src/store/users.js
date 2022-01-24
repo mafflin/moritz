@@ -2,14 +2,11 @@ import axios from 'axios';
 import router from '../router';
 import fileEncoder from '../utils/fileEncoder';
 import formatErrors from '../utils/formatErrors';
-import normalize from '../utils/normalize';
 
 export default {
   namespaced: true,
 
   state: {
-    ids: [],
-    entities: {},
     errors: {},
     current: null,
     loading: false,
@@ -17,13 +14,6 @@ export default {
 
   /* eslint-disable no-param-reassign */
   mutations: {
-    setList(state, items) {
-      const { ids, entities } = normalize(items);
-
-      state.ids = ids;
-      state.entities = entities;
-    },
-
     setCurrent(state, user) {
       state.current = user;
     },
@@ -38,42 +28,21 @@ export default {
       state.errors = formatted;
     },
 
-    reset(state) {
-      state.current = null;
-    },
   },
   /* eslint-enable no-param-reassign */
 
   actions: {
-    initIndexPage({ dispatch }) {
-      dispatch('fetchList');
-      dispatch('sessions/deleteCurrent', {}, { root: true });
-    },
-
-    async initShowPage({ dispatch }, { id, query }) {
-      await dispatch('sessions/createCurrent', id, { root: true });
+    async initShowPage({ dispatch, getters }, { query }) {
       await dispatch('fetchCurrent');
+
+      if (!getters.current) return;
+
+      await dispatch('cable/connect', {}, { root: true });
       await dispatch('settings/fetchCurrent', {}, { root: true });
       await dispatch('groups/fetchList', {}, { root: true });
 
       dispatch('imports/fetchList', {}, { root: true });
       dispatch('payments/updateFilter', query, { root: true });
-    },
-
-    async fetchList({ commit, dispatch }) {
-      commit('setLoading', true);
-
-      try {
-        const { data } = await axios.post('/api/v2/users/fetch_list');
-
-        commit('setList', data);
-      } catch (error) {
-        commit('setList', []);
-
-        dispatch('showMessage', { error: error.message }, { root: true });
-      } finally {
-        commit('setLoading', false);
-      }
     },
 
     async fetchCurrent({ commit, dispatch }) {
@@ -86,7 +55,7 @@ export default {
       } catch (error) {
         commit('setCurrent', null);
 
-        dispatch('showMessage', { error: error.message }, { root: true });
+        dispatch('handleError', error);
       } finally {
         commit('setLoading', false);
       }
@@ -101,25 +70,26 @@ export default {
           .post('/api/v2/users/update_current', { user: { avatarBase64 } });
 
         commit('setCurrent', data);
+
         dispatch('showMessage', { t: 'users.updateSuccess' }, { root: true });
       } catch (error) {
-        dispatch('showMessage', { error: error.message }, { root: true });
+        const { message, response } = error;
+        dispatch('showMessage', { error: response?.data?.message || message }, { root: true });
       } finally {
         commit('setLoading', false);
       }
     },
 
-    async createSingle({ commit, dispatch, getters: { list } }, { name }) {
+    async createSingle({ commit, dispatch }, user) {
       commit('setLoading', true);
       commit('setErrors', {});
 
       try {
-        const { data } = await axios
-          .post('/api/v2/users/create_single', { user: { name } });
-        commit('setList', [...list, data]);
+        await axios.post('/api/v2/users/create_single', { user });
 
-        dispatch('closeIndexModal');
         dispatch('showMessage', { t: 'success' }, { root: true });
+
+        router.push({ name: 'Signin' });
       } catch (error) {
         dispatch('handleError', error);
       } finally {
@@ -133,30 +103,28 @@ export default {
         case 422:
           commit('setErrors', data);
           break;
+        case 401:
+          router.replace({ name: 'Signin' });
+          break;
         default:
           dispatch('showMessage', { error: message }, { root: true });
           break;
       }
     },
 
-    closeUserModal({ getters, rootGetters }) {
-      const { id } = getters.current;
+    closeUserModal({ rootGetters }) {
       const query = rootGetters['payments/query'];
 
-      router.push({ name: 'User', params: { id }, query })
+      router.push({ name: 'User', query })
         .catch(() => {});
     },
 
     closeIndexModal() {
-      router.push({ name: 'Users' });
+      router.push({ name: 'Signin' });
     },
   },
 
   getters: {
-    list({ ids, entities }) {
-      return ids.map((id) => entities[id]);
-    },
-
     current({ current }) {
       return current;
     },

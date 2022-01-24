@@ -1,32 +1,11 @@
 <template>
   <form @submit.prevent="$emit('submit')">
-    <div
-      :class="{
-        'mdl-textfield mdl-js-textfield mdl-textfield--floating-label': true,
-        'is-invalid': errors.name,
-        'is-dirty': groupName,
-      }"
-    >
-      <input
-        id="group-name"
-        ref="input"
-        v-model="name"
-        class="mdl-textfield__input"
-        type="text"
-      >
-      <label
-        for="group-name"
-        class="mdl-textfield__label"
-      >
-        {{ $t('groups.enterName') }}
-      </label>
-      <span
-        class="mdl-textfield__error"
-        visibility="visibile"
-      >
-        {{ errors.name }}
-      </span>
-    </div>
+    <text-input
+      v-model="name"
+      :label="$t('groups.enterName')"
+      :errors="errors.name"
+      focus
+    />
 
     <div>
       <span
@@ -43,13 +22,21 @@
         </i>
       </span>
     </div>
+
+    <input
+      class="hidden"
+      type="submit"
+      value="Submit"
+    >
   </form>
 </template>
 
 <script>
+import TextInput from '../../../components/TextInput.vue';
 import focusOnInput from '../../../mixins/focusOnInput';
 
 export default {
+  components: { TextInput },
   mixins: [focusOnInput],
 
   props: {

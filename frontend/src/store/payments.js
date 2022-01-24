@@ -59,12 +59,6 @@ export default {
 
       state.errors = formatted;
     },
-
-    reset(state) {
-      state.ids = [];
-      state.filter = Object.keys(state.filter)
-        .reduce((acc, key) => ({ ...acc, [key]: null }), {});
-    },
   },
   /* eslint-enable no-param-reassign */
 
@@ -131,6 +125,23 @@ export default {
       }
     },
 
+    async deleteSingle({ commit, dispatch, getters }) {
+      commit('setLoading', true);
+
+      try {
+        const { id } = getters.selected;
+        await axios.post('/api/v2/payments/delete_single', { id });
+
+        dispatch('users/closeUserModal', {}, { root: true });
+        dispatch('showMessage', { t: 'success' }, { root: true });
+        dispatch('fetchList');
+      } catch (error) {
+        dispatch('handleError', error);
+      } finally {
+        commit('setLoading', false);
+      }
+    },
+
     async filterList({ commit, dispatch }, filter) {
       commit('setFilter', filter);
 
@@ -161,11 +172,9 @@ export default {
     sortedList(state, { list, filter: { sort, asc } }) {
       if (!sort) return list;
 
-      const sorted = list.sort((a, b) => {
-        const first = a[sort];
-        const second = b[sort];
-        return (!!first) - (!!second) || -(first > second) || +(first < second);
-      });
+      const sorted = list.sort((a, b) => (!!a[sort]) - (!!b[sort])
+        || -(a[sort] > b[sort])
+        || +(a[sort] < b[sort]));
       return asc ? sorted : sorted.reverse();
     },
 
@@ -174,17 +183,23 @@ export default {
     },
 
     debit(state, { list }) {
-      const sum = list.map(({ debit }) => debit).reduce((a, b) => a + b, 0);
+      const sum = list
+        .map(({ debit }) => debit)
+        .reduce((a, b) => a + b, 0);
       return Math.round(sum);
     },
 
     credit(state, { list }) {
-      const sum = list.map(({ credit }) => credit).reduce((a, b) => a + b, 0);
+      const sum = list
+        .map(({ credit }) => credit)
+        .reduce((a, b) => a + b, 0);
       return Math.round(sum);
     },
 
     withdrawal(state, { list }) {
-      const sum = list.map(({ withdrawal }) => withdrawal).reduce((a, b) => a + b, 0);
+      const sum = list
+        .map(({ withdrawal }) => withdrawal)
+        .reduce((a, b) => a + b, 0);
       return Math.round(sum);
     },
 

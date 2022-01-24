@@ -4,6 +4,14 @@ class ApplicationController < ActionController::API
 
   protected
 
+  def render_errors(args)
+    args[:json] = HashWithIndifferentAccess
+      .new(args[:json])
+      .deep_transform_keys { |key| key.camelize(:lower) }
+
+    render(args)
+  end
+
   def current_user
     if (user_id = session[:current_user_id])
       @current_user ||= User.find(user_id)
