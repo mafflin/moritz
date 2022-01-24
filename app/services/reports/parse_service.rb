@@ -11,7 +11,7 @@ module Reports
       },
       {
         service: Parsers::CommerzParseService,
-        match: 'Bank code of account of initiator,IBAN of account of initiator,Category'
+        match: 'Bank code of account of initiator,IBAN of account of initiator'
       },
       {
         service: Parsers::RevolutParseService,
