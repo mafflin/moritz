@@ -1,28 +1,28 @@
 <template>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <navbar />
+    <nav-bar />
 
     <main class="mdl-layout__content">
-      <loading />
+      <loading-bar />
       <router-view name="panel" />
 
       <router-view />
     </main>
 
-    <snackbar />
+    <snack-bar />
   </div>
 </template>
 
 <script>
-import Navbar from './containers/Navbar.vue';
-import Loading from './containers/Loading.vue';
-import Snackbar from './containers/Snackbar.vue';
+import NavBar from './containers/NavBar.vue';
+import LoadingBar from './containers/LoadingBar.vue';
+import SnackBar from './containers/SnackBar.vue';
 
 export default {
   components: {
-    Navbar,
-    Loading,
-    Snackbar,
+    NavBar,
+    LoadingBar,
+    SnackBar,
   },
 };
 </script>

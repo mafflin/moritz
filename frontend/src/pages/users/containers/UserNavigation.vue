@@ -34,7 +34,7 @@
   </nav>
 
   <nav class="mdl-cell--hide-phone">
-    <search
+    <search-form
       :q="q"
       @submit="fetchResults"
     />
@@ -66,12 +66,12 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import FileUploadButton from '../../../components/FileUploadButton.vue';
-import Search from '../../../components/Search.vue';
+import SearchForm from '../../../components/SearchForm.vue';
 
 export default {
   components: {
     FileUploadButton,
-    Search,
+    SearchForm,
   },
 
   computed: {

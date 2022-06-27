@@ -49,7 +49,9 @@ export default createStore({
 
       if (error) return;
 
+      /* eslint-disable no-promise-executor-return */
       await new Promise((resolve) => setTimeout(resolve, MESSAGE_TIMEOUT_MS));
+      /* eslint-enable no-promise-executor-return */
 
       commit('setMessage', {});
     },

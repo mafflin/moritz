@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_10_122833) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -21,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.uuid "record_id", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
   end
@@ -33,7 +32,7 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.text "metadata"
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -47,8 +46,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
   create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "color"
     t.index ["user_id", "name"], name: "index_groups_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
@@ -60,8 +59,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.integer "payments_created", default: 0
     t.string "fail_message"
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
@@ -79,8 +78,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.decimal "credit", default: "0.0"
     t.date "booked_at"
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "digest"
     t.string "note"
     t.string "bank"
@@ -97,8 +96,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.string "match"
     t.uuid "group_id"
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_rules_on_group_id"
     t.index ["user_id", "match"], name: "index_rules_on_user_id_and_match", unique: true
     t.index ["user_id"], name: "index_rules_on_user_id"
@@ -108,8 +107,8 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.boolean "failed", default: false
     t.string "remote_ip"
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
@@ -117,15 +116,15 @@ ActiveRecord::Schema.define(version: 2022_01_10_122833) do
     t.boolean "panel_expanded", default: false
     t.boolean "dark_theme", default: false
     t.uuid "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_settings_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "password_digest"
     t.string "email"
     t.boolean "blocked", default: false

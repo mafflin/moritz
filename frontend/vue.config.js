@@ -9,6 +9,5 @@ module.exports = {
         target: 'http://backend:3000',
       },
     },
-    progress: false,
   },
 };

@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import NotFound from '../pages/users/NotFound.vue';
 import SignIn from '../pages/users/SignIn.vue';
 import SignUp from '../pages/users/SignUp.vue';
-import UserShow from '../pages/users/Show.vue';
+import UserShow from '../pages/users/UserShow.vue';
 
 import SummaryChartDialog from '../pages/users/modals/SummaryChartDialog.vue';
 import GlobalNavigation from '../components/GlobalNavigation.vue';
@@ -11,7 +11,7 @@ import GroupAddDialog from '../pages/users/modals/GroupAddDialog.vue';
 import GroupDeleteDialog from '../pages/users/modals/GroupDeleteDialog.vue';
 import GroupEditDialog from '../pages/users/modals/GroupEditDialog.vue';
 import ImportHistoryDialog from '../pages/users/modals/ImportHistoryDialog.vue';
-import Panel from '../pages/users/containers/Panel.vue';
+import MainPanel from '../pages/users/containers/MainPanel.vue';
 import PaymentEditDialog from '../pages/users/modals/PaymentEditDialog.vue';
 import PaymentDeleteDialog from '../pages/users/modals/PaymentDeleteDialog.vue';
 import RulesEditDialog from '../pages/users/modals/RulesEditDialog.vue';
@@ -47,7 +47,7 @@ const routes = [
     components: {
       default: UserShow,
       navigation: UserNavigation,
-      panel: Panel,
+      panel: MainPanel,
     },
     beforeEnter: async ({ query }) => store.dispatch('users/initShowPage', { query }),
     children: [
