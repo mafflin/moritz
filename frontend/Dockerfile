@@ -1,8 +1,8 @@
-FROM node:17-alpine
+FROM node:18-alpine
 
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-RUN apk --no-cache add python2 python3 make g++
+RUN apk --no-cache add python3 make g++
 
 COPY .npmrc /
 COPY package.json /
