@@ -19,4 +19,4 @@ services:
     volumes:
       - ./frontend:/app
     env_file: .env
-    command: /bin/sh -c 'pnpm i && pnpm run serve'
+    command: /bin/sh -c 'pnpm i && pnpm run dev'

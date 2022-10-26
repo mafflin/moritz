@@ -8,7 +8,7 @@ COPY .npmrc /
 COPY package.json /
 COPY package-lock.json /
 
-RUN npm i --location=global pnpm @vue/cli \
+RUN npm i --location=global pnpm \
 	&& pnpm i
 
 ADD . /app
