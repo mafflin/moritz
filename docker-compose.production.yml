@@ -23,7 +23,7 @@ services:
       - ./frontend:/app
       - ./public:/app/dist
     env_file: .env
-    command: /bin/sh -c 'pnpm build'
+    command: /bin/sh -c 'pnpm run build'
 
   nginx:
     build:
