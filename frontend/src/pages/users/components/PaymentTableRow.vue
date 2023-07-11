@@ -26,6 +26,7 @@
         type="button"
         class="mdl-button mdl-js-button mdl-button--icon"
         :to="{ name: 'EditPayment', params: { paymentId: payment.id } }"
+        @click.stop
       >
         <i class="material-icons mdl-color-text--blue-grey">
           note_alt

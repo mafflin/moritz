@@ -5,13 +5,17 @@
     @keydown.esc="closeUserModal"
   >
     <h4 class="mdl-dialog__title">
-      {{ $t('imports.history', { importHistorySize }) }}
+      {{ $t('info') }}
     </h4>
 
     <div class="mdl-dialog__content">
-      <import-history-table
-        :imports="listSorted"
-      />
+      <p
+        v-for="attr in attributes"
+        :key="attr"
+      >
+        <strong>{{ $t(`payments.${attr}`) }}: </strong>
+        <span>{{ selected[attr] }}</span>
+      </p>
     </div>
 
     <div class="mdl-dialog__actions">
@@ -28,17 +32,19 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ImportHistoryTable from '../components/ImportHistoryTable.vue';
+
 import focusOnInput from '../../../mixins/focusOnInput';
 
 export default {
-  components: { ImportHistoryTable },
-
   mixins: [focusOnInput],
 
   computed: {
-    ...mapGetters('imports', ['listSorted']),
-    ...mapGetters('settings', ['importHistorySize']),
+    ...mapGetters('payments', ['selected']),
+
+    attributes() {
+      return Object.keys(this.selected)
+        .filter((key) => !!this.selected[key]);
+    },
   },
 
   methods: {

@@ -26,9 +26,7 @@
         class="mdl-button"
         @click="closeUserModal"
       >
-        <span ref="close">
-          {{ $t('cancel') }}
-        </span>
+        {{ $t('cancel') }}
       </button>
     </div>
   </dialog>

@@ -5,7 +5,7 @@
     @keydown.esc="closeUserModal"
   >
     <h4 class="mdl-dialog__title">
-      {{ $t('groups.deleteHint') }}
+      {{ $t('deleteHint') }}
     </h4>
 
     <div class="mdl-dialog__content">
@@ -30,9 +30,7 @@
         class="mdl-button"
         @click="closeUserModal"
       >
-        <span ref="close">
-          {{ $t('cancel') }}
-        </span>
+        {{ $t('cancel') }}
       </button>
     </div>
   </dialog>

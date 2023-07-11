@@ -15,7 +15,9 @@
         :sort="filter.sort"
         :asc="filter.asc"
         actions
+        clickable
         @sort="filterList"
+        @row-click="openInfoPayment"
       />
     </div>
 
@@ -53,7 +55,7 @@ export default {
 
   methods: {
     ...mapActions('settings', ['togglePanel']),
-    ...mapActions('payments', ['fetchList', 'filterList']),
+    ...mapActions('payments', ['fetchList', 'filterList', 'openInfoPayment']),
     ...mapActions('search', ['filterPaymentsList']),
   },
 };

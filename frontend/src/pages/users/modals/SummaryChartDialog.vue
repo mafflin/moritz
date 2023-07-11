@@ -52,12 +52,11 @@
 
     <div class="mdl-dialog__actions">
       <button
+        ref="input"
         class="mdl-button"
         @click="closeUserModal"
       >
-        <span ref="close">
-          {{ $t('close') }}
-        </span>
+        {{ $t('close') }}
       </button>
     </div>
   </dialog>
@@ -66,12 +65,15 @@
 <script>
 import Chart from 'chart.js/auto';
 import { mapActions, mapGetters } from 'vuex';
+import focusOnInput from '../../../mixins/focusOnInput';
 
 const CHART_TYPE = 'line';
 const RANGE_OPTIONS = [3, 6, 12];
 const DISPLAY_OPTIONS = ['debit', 'credit'];
 
 export default {
+  mixins: [focusOnInput],
+
   data() {
     const [displayed] = DISPLAY_OPTIONS;
     return {

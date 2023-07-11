@@ -159,6 +159,10 @@ export default {
           break;
       }
     },
+
+    openInfoPayment(state, { id: paymentId }) {
+      router.push({ name: 'InfoPayment', params: { paymentId } });
+    },
   },
 
   getters: {

@@ -14,6 +14,7 @@ import ImportHistoryDialog from '../pages/users/modals/ImportHistoryDialog.vue';
 import MainPanel from '../pages/users/containers/MainPanel.vue';
 import PaymentEditDialog from '../pages/users/modals/PaymentEditDialog.vue';
 import PaymentDeleteDialog from '../pages/users/modals/PaymentDeleteDialog.vue';
+import PaymentInfoDialog from '../pages/users/modals/PaymentInfoDialog.vue';
 import RulesEditDialog from '../pages/users/modals/RulesEditDialog.vue';
 import UserNavigation from '../pages/users/containers/UserNavigation.vue';
 
@@ -87,6 +88,15 @@ const routes = [
         path: 'delete_payment/:paymentId',
         name: 'DeletePayment',
         component: PaymentDeleteDialog,
+        beforeEnter: async ({ params: { paymentId } }) => store.dispatch(
+          'payments/fetchSingle',
+          paymentId,
+        ),
+      },
+      {
+        path: 'info/:paymentId',
+        name: 'InfoPayment',
+        component: PaymentInfoDialog,
         beforeEnter: async ({ params: { paymentId } }) => store.dispatch(
           'payments/fetchSingle',
           paymentId,
