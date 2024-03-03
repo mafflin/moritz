@@ -5,7 +5,7 @@ module Api
 
       def create_current
         Sessions::CreateService
-          .new(email: params[:email], remote_ip: request.remote_ip, session: session)
+          .new(email: params[:email], remote_ip: request.remote_ip, session:)
           .perform(params[:password])
       rescue Sessions::InvalidCredentialsError => e
         render_errors json: { message: e.message }, status: :unauthorized

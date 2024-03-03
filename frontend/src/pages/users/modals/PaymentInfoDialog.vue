@@ -10,11 +10,11 @@
 
     <div class="mdl-dialog__content">
       <p
-        v-for="attr in attributes"
-        :key="attr"
+        v-for="[key, value] in attributes"
+        :key="key"
       >
-        <strong>{{ $t(`payments.${attr}`) }}: </strong>
-        <span>{{ selected[attr] }}</span>
+        <strong>{{ $t(`payments.${key}`) }}: </strong>
+        <span>{{ value }}</span>
       </p>
     </div>
 
@@ -39,11 +39,13 @@ export default {
   mixins: [focusOnInput],
 
   computed: {
-    ...mapGetters('payments', ['selected']),
+    ...mapGetters('payments', { payment: 'selected' }),
+    ...mapGetters('groups', { group: 'selected' }),
 
     attributes() {
-      return Object.keys(this.selected)
-        .filter((key) => !!this.selected[key]);
+      console.log(this.group);
+      return Object.entries(this.payment)
+        .filter(([, value]) => !!value);
     },
   },
 

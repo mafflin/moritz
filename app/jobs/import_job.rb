@@ -19,7 +19,7 @@ class ImportJob < ApplicationJob
       user,
       ApplicationController.render(
         partial: 'api/v2/imports/import',
-        locals: { import: import }
+        locals: { import: }
       )
     )
   end

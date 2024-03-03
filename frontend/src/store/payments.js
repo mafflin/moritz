@@ -160,8 +160,8 @@ export default {
       }
     },
 
-    openInfoPayment(state, { id: paymentId }) {
-      router.push({ name: 'InfoPayment', params: { paymentId } });
+    openInfoPayment({ getters: { query } }, { id: paymentId }) {
+      router.push({ name: 'InfoPayment', query, params: { paymentId } });
     },
   },
 
