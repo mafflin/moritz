@@ -21,7 +21,7 @@ services:
       - ./frontend:/app
       - ./public:/app/dist
     env_file: .env
-    command: /bin/sh -c 'pnpm i && pnpm run build'
+    command: deno task build
 
   nginx:
     build:
