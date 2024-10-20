@@ -17,4 +17,4 @@ services:
     volumes:
       - ./frontend:/app
     env_file: .env
-    command: deno task dev
+    command: /bin/sh -c 'deno install && deno task dev'
