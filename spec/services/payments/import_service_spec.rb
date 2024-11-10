@@ -14,7 +14,7 @@ RSpec.describe Payments::ImportService do
     end
 
     it 'creates all the payments' do
-      expect(@payments.length).to eq(12)
+      expect(@payments.length).to eq(11)
     end
   end
 end

@@ -12,10 +12,10 @@ module Parsers
 
       {
         bank: BANK,
-        booked_at: Date.strptime(entry['Date'], DATE_FORMAT),
-        transaction_type: entry['Transaction type'],
-        details: entry['Payee'],
-        customer_reference: entry['Payment reference'],
+        booked_at: Date.strptime(entry['Booking Date'], DATE_FORMAT),
+        transaction_type: entry['Type'],
+        details: entry['Partner Name'],
+        customer_reference: entry['Payment Reference'],
         currency: entry['Type Foreign Currency'],
         original_debit: is_debit ? original_amount : nil,
         original_credit: !is_debit ? original_amount : nil,

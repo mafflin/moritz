@@ -1,13 +1,12 @@
-"Date","Payee","Account number","Transaction type","Payment reference","Category","Amount (EUR)","Amount (Foreign Currency)","Type Foreign Currency","Exchange Rate"
-"2021-08-01","MVG HANDY TICKET","","MasterCard Payment","","Transport & Car","-3.4","-3.4","EUR","1.0"
-"2021-08-02","GOOGLE *ABCD.9999-8","","MasterCard Payment","","Media & Electronics","-5.99","-5.99","EUR","1.0"
-"2021-08-05","MVG HANDY TICKET","","MasterCard Payment","","Transport & Car","-3.4","-3.4","EUR","1.0"
-"2021-08-05","PAYPAL *BIKE24 GMBH","","MasterCard Payment","","Transport & Car","82.99","82.99","EUR","1.0"
-"2021-08-05","DM-Drogerie Markt","","MasterCard Payment","","Healthcare & Drug Stores","-13.15","-13.15","EUR","1.0"
-"2021-08-15","Hachapuri","","MasterCard Payment","","Bars & Restaurants","-111.29","-38965.0","HUF","0.002856"
-"2021-09-17","Some Guy","DE99000000000000000000","Income","Transferred twice a day","Miscellaneous","200.0","","",""
-"2021-09-17","Some Guy","DE99000000000000000000","Income","Transferred twice a day","Miscellaneous","200.0","","",""
-"2021-09-19","PAYPAL *DBVERTRIEBG","","MasterCard Payment","","Travel & Holidays","-14.0","-14.0","EUR","1.0"
-"2021-09-20","BRUNO COSTA LOPES","","MasterCard Payment","","Shopping","-11.4","-11.4","EUR","1.0"
-"2021-10-04","Moxy Cologne Airport","","MasterCard Payment","","Travel & Holidays","-127.95","-127.95","EUR","1.0"
-"2021-10-04","RYANAIR INFLIGHT","","MasterCard Payment","","Travel & Holidays","-6.0","-6.0","EUR","1.0"
+"Booking Date","Value Date","Partner Name","Partner Iban",Type,"Payment Reference","Account Name","Amount (EUR)","Original Amount","Original Currency","Exchange Rate"
+2024-09-11,2024-09-11,"PAYPAL *MONSROYALE",,Presentment,,"Main Account",-37.99,37.99,EUR,1
+2024-09-11,2024-09-11,"PAYPAL *HSBIKEDISCO",,Presentment,,"Main Account",-221.24,221.24,EUR,1
+2024-09-15,2024-09-14,"HANDYPARKEN MUENCHEN",,Presentment,,"Main Account",-3.77,3.77,EUR,1
+2024-09-17,2024-09-17,"PAYPAL *BIKE24 GMBH",,Presentment,,"Main Account",-123.47,123.47,EUR,1
+2024-09-19,2024-09-19,"HANDYPARKEN MUENCHEN",,Presentment,,"Main Account",-3.43,3.43,EUR,1
+2024-09-24,2024-09-24,"GELATERIA HAPPY DAYS",,Presentment,,"Main Account",-3,3,EUR,1
+2024-09-01,2024-09-01,"Axel Rose",GB999900000000000001,"Credit Transfer","Sent from G-Bank","Main Account",500.00,,,
+2024-09-24,2024-09-24,"Revolut**1111*",,Presentment,,"Main Account",-200,200,EUR,1
+2024-09-26,2024-09-25,"EDEKA Reschke",,Presentment,,"Main Account",-33.75,33.75,EUR,1
+2024-09-27,2024-09-26,"HANDYPARKEN MUENCHEN",,Presentment,,"Main Account",-3.87,3.87,EUR,1
+2024-09-27,2024-09-26,CHOCOLAB,,Presentment,,"Main Account",-6.83,6.83,EUR,1

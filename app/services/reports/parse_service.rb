@@ -7,7 +7,7 @@ module Reports
       },
       {
         service: Parsers::N26ParseService,
-        match: '"Date","Payee","Account number"'
+        match: '"Booking Date","Value Date","Partner Name","Partner Iban"'
       },
       {
         service: Parsers::CommerzParseService,
