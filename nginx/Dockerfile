@@ -1,3 +1,3 @@
-FROM nginx:1.23-alpine
+FROM nginx:1.27-alpine
 
 RUN apk --no-cache add certbot
