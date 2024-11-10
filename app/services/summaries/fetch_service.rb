@@ -1,7 +1,7 @@
 module Summaries
   class FetchService < ApplicationService
     DEFAULT_MONTH_RANGE = 12
-    GROUP_BY_DATE_FORMAT = '%b (%y)'.freeze
+    GROUP_BY_DATE_FORMAT = '%Y-%m'.freeze
 
     def initialize(user:, date: nil, range: DEFAULT_MONTH_RANGE)
       @user = user
@@ -21,8 +21,6 @@ module Summaries
 
         {
           group_id: group.id,
-          group_name: group.name,
-          group_color: group.color,
           dataset: dataset(payments)
         }
       end
@@ -38,8 +36,8 @@ module Summaries
 
           {
             month: month,
-            debit: items.sum(&:debit).to_f,
-            credit: items.sum(&:credit).to_f
+            debit: items.sum(&:debit).abs.to_f,
+            credit: items.sum(&:credit).abs.to_f
           }
         end
     end

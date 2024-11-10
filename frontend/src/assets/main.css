@@ -8,6 +8,10 @@
   top: 64px;
 }
 
+.mdl-dialog--wide {
+  max-width: 1200px;
+}
+
 .mdl-card__actions {
   text-align: end;
 }

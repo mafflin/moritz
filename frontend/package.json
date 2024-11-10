@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@carbon/charts": "^1.22.0",
     "@rails/actioncable": "^7.1.3",
     "axios": "^1.7.2",
-    "chart.js": "^4.4.3",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
     "vue": "^3.4.27",

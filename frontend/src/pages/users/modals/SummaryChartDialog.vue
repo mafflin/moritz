@@ -1,52 +1,21 @@
 <template>
   <dialog
     open
-    class="mdl-dialog"
+    class="mdl-dialog mdl-dialog--wide"
     @keydown.esc="closeUserModal"
   >
     <h4 class="mdl-dialog__title">
       {{ $t('titles.summary') }}
-
-      <span class="right">
-        <span
-          v-for="option in displayOptions"
-          :key="option"
-          :class="{
-            'mdl-chip vert-middle clickable ml-2': true,
-            'mdl-color--accent': option === displayed,
-          }"
-          @click="handleDisplayOptionChange(option)"
-        >
-          <span class="mdl-chip__text">{{ $t(`payments.${option}`) }}</span>
-        </span>
-
-        <span
-          v-for="option in rangeOptions"
-          :key="option"
-          :class="{
-            'mdl-chip vert-middle clickable ml-2': true,
-            'mdl-color--accent': option === filter.range,
-          }"
-          @click="filterList({ range: option })"
-        >
-          <span class="mdl-chip__text">{{ option }}</span>
-        </span>
-      </span>
     </h4>
 
     <div class="mdl-dialog__content">
-      <canvas
-        ref="chart"
-        class="canvas"
-        width="600"
-        height="600"
-      />
+      <div ref="chartContainer" />
 
       <span
-        v-for="{ groupColor, groupId } in list"
-        :key="groupId"
-        :ref="groupId"
-        :class="`mdl-color--${groupColor} hidden`"
+        v-for="{ color, id } in groups"
+        :key="id"
+        :ref="id"
+        :class="`mdl-color--${color} hidden`"
       />
     </div>
 
@@ -63,55 +32,56 @@
 </template>
 
 <script>
-import Chart from 'chart.js/auto';
+import '@carbon/charts/styles.css';
 import { mapActions, mapGetters } from 'vuex';
+import { AreaChart } from '@carbon/charts';
 import focusOnInput from '../../../mixins/focusOnInput';
 
-const CHART_TYPE = 'line';
-const RANGE_OPTIONS = [3, 6, 12];
-const DISPLAY_OPTIONS = ['debit', 'credit'];
+const OPTIONS = {
+  axes: {
+    left: {
+      mapsTo: 'debit',
+      scaleType: 'linear',
+    },
+    bottom: {
+      mapsTo: 'month',
+      scaleType: 'time',
+    },
+  },
+  curve: 'curveMonotoneX',
+  height: '500px',
+};
 
 export default {
   mixins: [focusOnInput],
 
   data() {
-    const [displayed] = DISPLAY_OPTIONS;
     return {
-      displayed,
       chart: null,
-      rangeOptions: RANGE_OPTIONS,
-      displayOptions: DISPLAY_OPTIONS,
     };
   },
 
   computed: {
-    ...mapGetters('summaries', ['list', 'dateRange', 'filter']),
+    ...mapGetters('summaries', ['list', 'filter']),
+    ...mapGetters('groups', { groups: 'list' }),
 
-    labels() {
-      return this.dateRange;
+    scale() {
+      const { groups, $refs } = this;
+      return groups.reduce((acc, { id, name }) => {
+        const [element] = $refs[id];
+        const color = getComputedStyle(element).backgroundColor;
+        return { ...acc, [name]: color };
+      }, {});
     },
 
-    datasets() {
-      const { list, displayed, $refs } = this;
-      return list.map(({ groupName, groupId, dataset }) => {
-        const [groupEl] = $refs[groupId];
-        const color = getComputedStyle(groupEl).backgroundColor;
-        return {
-          borderColor: color,
-          backgroundColor: color,
-          label: groupName,
-          data: dataset.map((item) => Math.abs(item[displayed])),
-          tension: 0.1,
-        };
-      });
-    },
-  },
-
-  watch: {
-    labels(next, prev) {
-      if (next.length === prev.length) return;
-
-      this.updateChart();
+    data() {
+      return this.list.reduce((acc, { dataset, groupId }) => {
+        const groupName = this.groups.find((group) => groupId === group.id)?.name;
+        return [
+          ...acc,
+          ...dataset.map((data) => ({ ...data, group: groupName })),
+        ];
+      }, []);
     },
   },
 
@@ -120,48 +90,21 @@ export default {
   },
 
   unmounted() {
-    this.chart.destroy();
+    this.destroyChart();
   },
 
   methods: {
     ...mapActions('users', ['closeUserModal']),
-    ...mapActions('summaries', ['filterList']),
 
     drawChart() {
-      const canvas = this.$refs.chart.getContext('2d');
-      const { labels, datasets } = this;
-
-      this.chart = new Chart(canvas, {
-        type: CHART_TYPE,
-        data: { labels, datasets },
-      });
+      const { data, scale, $refs: { chartContainer } } = this;
+      const options = { ...OPTIONS, color: { scale } };
+      this.chart = new AreaChart(chartContainer, { data, options });
     },
 
-    updateChart() {
-      this.chart.destroy();
-      this.drawChart();
-    },
-
-    handleDisplayOptionChange(value) {
-      if (this.displayed === value) return;
-
-      this.displayed = value;
-      this.updateChart();
+    destroyChart() {
+      this.chart.components.forEach((component) => component.destroy());
     },
   },
 };
 </script>
-
-<style scoped>
-.canvas {
-  max-height: 90%;
-}
-
-.vert-middle {
-  vertical-align: middle;
-}
-
-.right {
-  float: right;
-}
-</style>
