@@ -36,3 +36,6 @@
 # Ignore FE-generated assets
 /public/*
 !/public/robots.txt
+
+# Ignore macOS files
+**/.DS_Store

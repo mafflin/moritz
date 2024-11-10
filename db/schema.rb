@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
+ActiveRecord::Schema[7.2].define(version: 2022_01_10_122833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "groups", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "user_id"
     t.datetime "created_at", null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
-  create_table "imports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "imports", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
     t.integer "payments_total", default: 0
     t.integer "payments_created", default: 0
@@ -64,7 +64,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["user_id"], name: "index_imports_on_user_id"
   end
 
-  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "payments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "beneficiary"
     t.string "transaction_type"
     t.string "details"
@@ -91,7 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
-  create_table "rules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "rules", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "match"
     t.uuid "group_id"
@@ -103,7 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
-  create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "sessions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.boolean "failed", default: false
     t.string "remote_ip"
     t.uuid "user_id"
@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_10_122833) do
     t.index ["user_id"], name: "index_settings_on_user_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
