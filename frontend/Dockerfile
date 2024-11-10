@@ -1,6 +1,6 @@
-FROM denoland/deno:2.0.2
+FROM node:23-alpine
 
 ADD . /app
 WORKDIR /app
 
-RUN deno install
+RUN npm install

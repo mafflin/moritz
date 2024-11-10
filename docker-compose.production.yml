@@ -21,7 +21,7 @@ services:
       - ./frontend:/app
       - ./public:/app/dist
     env_file: .env
-    command: /bin/sh -c 'deno install && deno task build'
+    command: /bin/sh -c 'npm install && npm run build'
 
   nginx:
     build:
