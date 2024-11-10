@@ -1,7 +1,8 @@
 import axios from 'axios';
 import normalize from '../utils/normalize';
 
-const DEFAULT_RANGE = 12;
+export const RANGE_OPTIONS = [12, 24, 36, 48, 60];
+const [DEFAULT_RANGE] = RANGE_OPTIONS;
 
 export default {
   namespaced: true,
@@ -61,13 +62,6 @@ export default {
   getters: {
     list({ ids, entities }) {
       return ids.map((id) => entities[id]);
-    },
-
-    dateRange(state, { list }) {
-      if (!list.length) return [];
-
-      const [{ dataset }] = list;
-      return dataset.map(({ month }) => month);
     },
 
     filter({ filter }) {

@@ -6,6 +6,20 @@
   >
     <h4 class="mdl-dialog__title">
       {{ $t('titles.summary') }}
+
+      <span class="right">
+        <span
+          v-for="option in rangeOptions"
+          :key="option"
+          :class="{
+            'mdl-chip vert-middle clickable ml-2': true,
+            'mdl-color--accent': option === filter.range,
+          }"
+          @click="filterList({ range: option })"
+        >
+          <span class="mdl-chip__text">{{ option }}</span>
+        </span>
+      </span>
     </h4>
 
     <div class="mdl-dialog__content">
@@ -33,9 +47,10 @@
 
 <script>
 import '@carbon/charts/styles.css';
-import { mapActions, mapGetters } from 'vuex';
 import { AreaChart } from '@carbon/charts';
+import { mapActions, mapGetters } from 'vuex';
 import focusOnInput from '../../../mixins/focusOnInput';
+import { RANGE_OPTIONS } from '../../../store/summaries';
 
 const OPTIONS = {
   axes: {
@@ -58,6 +73,7 @@ export default {
   data() {
     return {
       chart: null,
+      rangeOptions: RANGE_OPTIONS,
     };
   },
 
@@ -85,6 +101,12 @@ export default {
     },
   },
 
+  watch: {
+    list() {
+      this.updateChart();
+    },
+  },
+
   mounted() {
     this.drawChart();
   },
@@ -95,11 +117,16 @@ export default {
 
   methods: {
     ...mapActions('users', ['closeUserModal']),
+    ...mapActions('summaries', ['filterList']),
 
     drawChart() {
       const { data, scale, $refs: { chartContainer } } = this;
       const options = { ...OPTIONS, color: { scale } };
       this.chart = new AreaChart(chartContainer, { data, options });
+    },
+
+    updateChart() {
+      this.chart.model.setData(this.data);
     },
 
     destroyChart() {
@@ -108,3 +135,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.vert-middle {
+  vertical-align: middle;
+}
+
+.right {
+  float: right;
+}
+</style>
