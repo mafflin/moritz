@@ -1,24 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
-import NotFound from '../pages/users/NotFound.vue';
-import SignIn from '../pages/users/SignIn.vue';
-import SignUp from '../pages/users/SignUp.vue';
-import UserShow from '../pages/users/UserShow.vue';
-
-import SummaryChartDialog from '../pages/users/modals/SummaryChartDialog.vue';
-import GlobalNavigation from '../components/GlobalNavigation.vue';
-import GroupAddDialog from '../pages/users/modals/GroupAddDialog.vue';
-import GroupDeleteDialog from '../pages/users/modals/GroupDeleteDialog.vue';
-import GroupEditDialog from '../pages/users/modals/GroupEditDialog.vue';
-import ImportHistoryDialog from '../pages/users/modals/ImportHistoryDialog.vue';
-import MainPanel from '../pages/users/containers/MainPanel.vue';
-import PaymentEditDialog from '../pages/users/modals/PaymentEditDialog.vue';
-import PaymentDeleteDialog from '../pages/users/modals/PaymentDeleteDialog.vue';
-import PaymentInfoDialog from '../pages/users/modals/PaymentInfoDialog.vue';
-import RulesEditDialog from '../pages/users/modals/RulesEditDialog.vue';
-import UserNavigation from '../pages/users/containers/UserNavigation.vue';
-
 import store from '../store';
+
+const NotFound = () => import('../pages/users/NotFound.vue');
+const SignIn = () => import('../pages/users/SignIn.vue');
+const SignUp = () => import('../pages/users/SignUp.vue');
+const UserShow = () => import('../pages/users/UserShow.vue');
+
+const SummaryChartDialog = () => import('../pages/users/modals/SummaryChartDialog.vue');
+const GlobalNavigation = () => import('../components/GlobalNavigation.vue');
+const GroupAddDialog = () => import('../pages/users/modals/GroupAddDialog.vue');
+const GroupDeleteDialog = () => import('../pages/users/modals/GroupDeleteDialog.vue');
+const GroupEditDialog = () => import('../pages/users/modals/GroupEditDialog.vue');
+const ImportHistoryDialog = () => import('../pages/users/modals/ImportHistoryDialog.vue');
+const MainPanel = () => import('../pages/users/containers/MainPanel.vue');
+const PaymentEditDialog = () => import('../pages/users/modals/PaymentEditDialog.vue');
+const PaymentDeleteDialog = () => import('../pages/users/modals/PaymentDeleteDialog.vue');
+const PaymentInfoDialog = () => import('../pages/users/modals/PaymentInfoDialog.vue');
+const RulesEditDialog = () => import('../pages/users/modals/RulesEditDialog.vue');
+const UserNavigation = () => import('../pages/users/containers/UserNavigation.vue');
 
 const routes = [
   { path: '/', redirect: '/user' },
