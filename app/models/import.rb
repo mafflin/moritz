@@ -1,11 +1,11 @@
 class Import < ApplicationRecord
   belongs_to :user
 
-  enum status: [
+  enum :status, [
     :pending,
     :finished,
     :failed
-  ], _default: :pending
+  ], default: :pending
 
   TIMEOUT = 30.minutes
   DISPLAYED_HISTORY_SIZE = 5

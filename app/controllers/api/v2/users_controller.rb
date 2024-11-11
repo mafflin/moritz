@@ -1,7 +1,7 @@
 module Api
   module V2
     class UsersController < ApplicationController
-      skip_before_action :require_login, only: [:fetch_list, :create_single]
+      skip_before_action :require_login, only: [:create_single]
       before_action :set_user, only: [:fetch_current, :update_current]
 
       def create_single

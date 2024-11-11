@@ -7,6 +7,8 @@ module Api
         Sessions::CreateService
           .new(email: params[:email], remote_ip: request.remote_ip, session:)
           .perform(params[:password])
+
+        head :no_content
       rescue Sessions::InvalidCredentialsError => e
         render_errors json: { message: e.message }, status: :unauthorized
       rescue Sessions::TooManyAtemptsError => e

@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2022_01_10_122833) do
+ActiveRecord::Schema[8.0].define(version: 2022_01_10_122833) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -86,8 +86,10 @@ ActiveRecord::Schema[7.2].define(version: 2022_01_10_122833) do
     t.decimal "withdrawal", default: "0.0"
     t.string "left_neighbor_digest"
     t.string "right_neighbor_digest"
-    t.index ["digest", "user_id", "left_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_left_neighbor_digest", unique: true
-    t.index ["digest", "user_id", "right_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_right_neighbor_digest", unique: true
+    t.index ["digest", "user_id", "left_neighbor_digest"],
+name: "index_payments_on_digest_and_user_id_and_left_neighbor_digest", unique: true
+    t.index ["digest", "user_id", "right_neighbor_digest"],
+name: "index_payments_on_digest_and_user_id_and_right_neighbor_digest", unique: true
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 

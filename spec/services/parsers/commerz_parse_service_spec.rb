@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 require 'rails_helper'
 
 RSpec.describe Parsers::CommerzParseService do
@@ -48,3 +49,4 @@ RSpec.describe Parsers::CommerzParseService do
     end
   end
 end
+# rubocop:enable Layout/LineLength
