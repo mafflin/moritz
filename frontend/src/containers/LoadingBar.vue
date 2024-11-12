@@ -22,7 +22,7 @@ export default {
   position: fixed;
   height: 5px;
   width: 100%;
-  z-index: 9;
+  z-index: 101;
 }
 
 .mdl-progress {
