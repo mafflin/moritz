@@ -75,6 +75,7 @@ export default createStore({
         || getters['search/loading']
         || getters['sessions/loading']
         || getters['settings/loading']
+        || getters['summaries/loading']
         || getters['users/loading'];
     },
   },
