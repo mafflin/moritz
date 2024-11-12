@@ -86,10 +86,8 @@ ActiveRecord::Schema[8.0].define(version: 2022_01_10_122833) do
     t.decimal "withdrawal", default: "0.0"
     t.string "left_neighbor_digest"
     t.string "right_neighbor_digest"
-    t.index ["digest", "user_id", "left_neighbor_digest"],
-name: "index_payments_on_digest_and_user_id_and_left_neighbor_digest", unique: true
-    t.index ["digest", "user_id", "right_neighbor_digest"],
-name: "index_payments_on_digest_and_user_id_and_right_neighbor_digest", unique: true
+    t.index ["digest", "user_id", "left_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_left_neighbor_digest", unique: true
+    t.index ["digest", "user_id", "right_neighbor_digest"], name: "index_payments_on_digest_and_user_id_and_right_neighbor_digest", unique: true
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
