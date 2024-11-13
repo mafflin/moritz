@@ -28,18 +28,22 @@ module Summaries
 
     private
 
-    def dataset(payments)
-      (@date_start..@date_end).map { |date| date.strftime(GROUP_BY_DATE_FORMAT) }
+    def date_range_month_steps
+      (@date_start..@date_end)
+        .map { |date| date.strftime(GROUP_BY_DATE_FORMAT) }
         .uniq
-        .map do |month|
-          items = payments[month] || []
+    end
 
-          {
-            month: month,
-            debit: items.sum(&:debit).abs.to_f,
-            credit: items.sum(&:credit).abs.to_f
-          }
-        end
+    def dataset(payments)
+      date_range_month_steps.map do |month|
+        items = payments[month] || []
+
+        {
+          month:,
+          debit: items.sum(&:debit).abs.to_f,
+          credit: items.sum(&:credit).abs.to_f
+        }
+      end
     end
   end
 end
