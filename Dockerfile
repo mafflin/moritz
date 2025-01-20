@@ -9,7 +9,7 @@ RUN apk update \
       tzdata \
       libpq postgresql-client postgresql-dev\
       build-base make gcompat \
-      libgcrypt-dev libxml2 libxml2-dev \
+      libgcrypt-dev libxml2 libxml2-dev yaml-dev \
       curl wget git \
       nodejs
 
